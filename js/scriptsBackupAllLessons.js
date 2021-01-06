@@ -165,7 +165,7 @@ klonowanie projektu np. jesjli pracujemy na innym komputerze
 
 wejsc w folder na komputerze gdzie bedzie sklonowany projekt z github
 git clone link do repozetorium ktory mamy sklonowac skopiojowac i wstawic tutaj i dodac nazwe folderu w ktory klonujemy
-przyklad: git clone https://github.com/sergiovood/JavaScript.git project_remove
+przyklad: git clone https://github.com/sergiovood/JavaScript.git project_2
 zacznie sie klonowanie projektu na nowy komputer
 
 
