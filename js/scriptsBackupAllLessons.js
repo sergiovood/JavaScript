@@ -175,7 +175,8 @@ czasem podczas polaczenia projektow (merge) będzie trzeba wpisac notatke > pote
 --------------------------------------------------------------------
 Plik .gitignore
 dodawac do kazdego projektu, czasami projekt moze wazyc duzo MB, a ten plik pomoze nie pobierac wszystkiego tylko to co nie jest ignorowane gitem. 
+--------------------------------------------------------------------
+GitKraken - program do vizualnego zarządzania gitem. 
 */
-
 
 //---------------------------------------------------------------------------------------------------
