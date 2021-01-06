@@ -180,3 +180,109 @@ GitKraken - program do vizualnego zarządzania gitem.
 */
 
 //---------------------------------------------------------------------------------------------------
+//Lesson 12 - Zadanie
+/* Задание на урок:
+
+1) Создать переменную numberOfFilms и в неё поместить ответ от пользователя на вопрос:
+'Сколько фильмов вы уже посмотрели?'
+
+2) Создать объект personalMovieDB и в него поместить такие свойства:
+    - count - сюда передается ответ на первый вопрос
+    - movies - в это свойство поместить пустой объект
+    - actors - тоже поместить пустой объект
+    - genres - сюда поместить пустой массив
+    - privat - в это свойство поместить boolean(логическое) значение false
+
+3) Задайте пользователю по два раза вопросы:
+    - 'Один из последних просмотренных фильмов?'
+    - 'На сколько оцените его?'
+Ответы стоит поместить в отдельные переменные
+Записать ответы в объект movies в формате: 
+    movies: {
+        'logan': '8.1'
+    }
+
+Проверить, чтобы все работало без ошибок в консоли */
+
+const numberOfFilms = +prompt('Ile filmów już wiedziałeś?', '');
+
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genders: [],
+    privat: false
+};
+//Deklaracja zmiennych jednym zamachem
+const a = prompt('Jaki film ostatnio widziałeś?', ''),
+      b = prompt('Jaką ocenę zasługuje film?', ''),
+      c = prompt('Jaki film ostatnio widziałeś?', ''),
+      d = prompt('Jaką ocenę zasługuje film?', '');
+
+//Przydzielenie odpowiedzi do objektu movies i wlaczenia odpowiedzi Jaki film oraz jaki posiada ranking
+personalMovieDB.movies[a] = b;
+personalMovieDB.movies[c] = d;
+
+//wyswietlamy w konsoli wynik dla sprawdzenia poprawnosci zapisanych danych
+console.log(personalMovieDB);
+
+
+//---------------------------------------------------------------------------------------------------
+//Lesson 12 - Warunki
+
+// if (4 == 9) {
+//     console.log('Ok!');
+// } else{
+//     console.log('error');
+// }
+
+// const num = 50;
+
+// if (num < 49) {
+//     console.log('Error');
+// } else if (num > 100) {
+//     console.log("Zadużo");
+// } else {
+//     console.log('Ok');
+// }
+// // ? - Operator warunkowy, тернарный оператор
+// (num === 50) ? console.log('OK') : console.log('Error');
+
+// Konstrukacja Switch 
+// standardowo porownuje tylko dokladne znaczenia, a nie jak if wicej > czy mniej <
+const num = 50;
+
+switch (num) {
+    case 49:
+        console.log('Nie prawda');
+        break;
+    case 100:
+        console.log('Nie prawda');
+        break;
+    case 50:
+        console.log('Prawda');
+        break;
+    default:
+        console.log('Nie tym razem');
+        break;
+}
+
+// switch tak samo zadzial z typem string, rezultat bedzie taki sam
+const num = "50";
+
+switch (num) {
+    case "49":
+        console.log('Nie prawda');
+        break;
+    case "100":
+        console.log('Nie prawda');
+        break;
+    case "50":
+        console.log('Prawda');
+        break;
+    default:
+        console.log('Nie tym razem');
+        break;
+}
+
+//---------------------------------------------------------------------------------------------------
