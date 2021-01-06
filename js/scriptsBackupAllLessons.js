@@ -160,15 +160,21 @@ git commit -a -m"Podac informacje jakich zmian dokonalizmy"- stworzyć punk przy
 
 git log - zobaczyc wszystkie commity(punkty kontrolne) ktore byly robione
 git pull - przed pracą nad projektem zawsze trzeba pobrac ostatnie zmiany
-
-klonowanie projektu np. jesjli pracujemy na innym komputerze
-
+--------------------------------------------------------------------
+Klonowanie projektu np. jesjli pracujemy na innym komputerze
 wejsc w folder na komputerze gdzie bedzie sklonowany projekt z github
 git clone link do repozetorium ktory mamy sklonowac skopiojowac i wstawic tutaj i dodac nazwe folderu w ktory klonujemy
 przyklad: git clone https://github.com/sergiovood/JavaScript.git project_2
 zacznie sie klonowanie projektu na nowy komputer
-
-
+--------------------------------------------------------------------
+Polaczenia dwoch projektow - Merge.
+Czasami zapomniemy zrobibic przed poczatkiem pracy nad projektem git pull i nie pobralismy aktualnych danych, robimy jeszcze na starych plikach.
+I zeby nie zaczynac odnowa trzeba polaczyc dwa projekty w jedno. Czyli najpierw pobrac wszystko git pull 
+i wtedy dodac nasze zmiane git add -A, git commit -a -m""zmiany", git push
+czasem podczas polaczenia projektow (merge) będzie trzeba wpisac notatke > potem wcisnac ctrl + c i jeszcze raz ctrl + c > potem wpisac :wq! i wcisnac enter
+--------------------------------------------------------------------
+Plik .gitignore
+dodawac do kazdego projektu, czasami projekt moze wazyc duzo MB, a ten plik pomoze nie pobierac wszystkiego tylko to co nie jest ignorowane gitem. 
 */
 
 
