@@ -228,7 +228,7 @@ console.log(personalMovieDB);
 
 
 //---------------------------------------------------------------------------------------------------
-//Lesson 12 - Warunki
+//Lesson 13 - Warunki
 
 // if (4 == 9) {
 //     console.log('Ok!');
@@ -268,9 +268,9 @@ switch (num) {
 }
 
 // switch tak samo zadzial z typem string, rezultat bedzie taki sam
-const num = "50";
+const num2 = "50";
 
-switch (num) {
+switch (num2) {
     case "49":
         console.log('Nie prawda');
         break;
@@ -283,6 +283,42 @@ switch (num) {
     default:
         console.log('Nie tym razem');
         break;
+}
+
+//---------------------------------------------------------------------------------------------------
+//Lesson 14 - Cyckle 
+//https://learn.javascript.ru/while-for
+
+let num3 = 55;
+
+while (num3 <= 55){
+    console.log(num3);
+    num3++
+}
+
+do {
+    console.log(num3);
+    num3++;
+}
+while (num3 < 55);
+
+for (let i = 1; i < 8; i++) {
+    console.log(num3);
+    num3++;
+}
+
+for (let i = 1; i < 10; i++) {
+    if (i === 6) {
+        break;
+    }
+    console.log(i);
+}
+
+for (let i = 1; i < 10; i++) {
+    if (i === 6) {
+        continue;
+    }
+    console.log(i);
 }
 
 //---------------------------------------------------------------------------------------------------

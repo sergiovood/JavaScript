@@ -1,58 +1,51 @@
 "use strict";
 
-//Lesson 12 - Warunki
+// Lesson 15 - Zadanie czesc 2
+/*1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
 
-// if (4 == 9) {
-//     console.log('Ok!');
-// } else{
-//     console.log('error');
-// }
+2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
+отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
+возвращаем пользователя к вопросам опять
 
-// const num = 50;
+3) При помощи условий проверить  personalMovieDB.count, и если он меньше 10 - вывести сообщение
+"Просмотрено довольно мало фильмов", если от 10 до 30 - "Вы классический зритель", а если больше - 
+"Вы киноман". А если не подошло ни к одному варианту - "Произошла ошибка"
 
-// if (num < 49) {
-//     console.log('Error');
-// } else if (num > 100) {
-//     console.log("Zadużo");
-// } else {
-//     console.log('Ok');
-// }
-// // ? - Operator warunkowy, тернарный оператор
-// (num === 50) ? console.log('OK') : console.log('Error');
+4) Потренироваться и переписать цикл еще двумя способами*/
 
-// Konstrukacja Switch 
-// standardowo porownuje tylko dokladne znaczenia, a nie jak if wicej > czy mniej <
-const num = 50;
+const numberOfFilms = +prompt('Ile filmów już wiedziałeś?', '');
 
-switch (num) {
-    case 49:
-        console.log('Nie prawda');
-        break;
-    case 100:
-        console.log('Nie prawda');
-        break;
-    case 50:
-        console.log('Prawda');
-        break;
-    default:
-        console.log('Nie tym razem');
-        break;
+let num = 0,
+    a = '',
+    b = '';
+
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genders: [],
+    privat: false
+};  
+
+
+while (num < 2){
+    a = prompt('Jaki film ostatnio widziałeś?', '');
+    b = prompt('Jaką ocenę zasługuje film?', '');
+    if (a != '' && b != '' && a != null && b != null && a.length < 50){
+        personalMovieDB.movies[a] = b;
+        num++;  
+    }
 }
 
-// switch tak samo zadzial z typem string, rezultat bedzie taki sam
-const num = "50";
-
-switch (num) {
-    case "49":
-        console.log('Nie prawda');
-        break;
-    case "100":
-        console.log('Nie prawda');
-        break;
-    case "50":
-        console.log('Prawda');
-        break;
-    default:
-        console.log('Nie tym razem');
-        break;
+if (personalMovieDB.count <= 10) {
+    alert("Просмотрено довольно мало фильмов");
+} else if (10 < personalMovieDB.count <= 30){
+    alert("Вы классический зритель");
+} else if (personalMovieDB.count > 30){
+    alert("Вы киноман");
+} else{
+    alert("Произошла ошибка");  
 }
+
+//wyswietlamy w konsoli wynik dla sprawdzenia poprawnosci zapisanych danych
+console.log(personalMovieDB);
