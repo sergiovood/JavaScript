@@ -1,5 +1,5 @@
 "use strict";
-
+//Wszystkie lekcje
 
 //---------------------------------------------------------------------------------------------------
 //Lessons 6 - Object 
@@ -320,5 +320,193 @@ for (let i = 1; i < 10; i++) {
     }
     console.log(i);
 }
+
+//---------------------------------------------------------------------------------------------------
+// Lesson 15 - Zadanie czesc 2
+/*1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
+
+2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
+отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
+возвращаем пользователя к вопросам опять
+
+3) При помощи условий проверить  personalMovieDB.count, и если он меньше 10 - вывести сообщение
+"Просмотрено довольно мало фильмов", если от 10 до 30 - "Вы классический зритель", а если больше - 
+"Вы киноман". А если не подошло ни к одному варианту - "Произошла ошибка"
+
+4) Потренироваться и переписать цикл еще двумя способами*/
+
+const numberOfFilms = +prompt('Ile filmów już wiedziałeś?', '');
+
+let num = 0,
+    a = '',
+    b = '';
+
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genders: [],
+    privat: false
+};  
+
+//wersja z WHILE
+while (num < 2){
+    a = prompt('Jaki film ostatnio widziałeś?', '');
+    b = prompt('Jaką ocenę zasługuje film?', '');
+    if (a != '' && b != '' && a != null && b != null && a.length < 50){
+        personalMovieDB.movies[a] = b;
+        num++;  
+    }
+}
+
+//wersja z FOR
+for (let i = 0; i < 2; i++) {
+    const a = prompt('Один из последних просмотренных фильмов?', ''),
+          b = prompt('На сколько оцените его?', '');
+
+    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+        personalMovieDB.movies[a] = b;
+        console.log('done');
+    } else {
+        console.log('error');
+        i--;
+    }
+}
+
+//wersja z Do - While
+//zrobić
+
+if (personalMovieDB.count <= 10) {
+    alert("Просмотрено довольно мало фильмов");
+} else if (10 < personalMovieDB.count <= 30){
+    alert("Вы классический зритель");
+} else if (personalMovieDB.count > 30){
+    alert("Вы киноман");
+} else{
+    alert("Произошла ошибка");  
+}
+
+//wyswietlamy w konsoli wynik dla sprawdzenia poprawnosci zapisanych danych
+console.log(personalMovieDB);
+
+//---------------------------------------------------------------------------------------------------
+// Lesson 16 - Function
+//Dodatkowe materialy
+// https://medium.com/nuances-of-programming/%D1%8F-%D0%BD%D0%B8%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0-%D0%BD%D0%B5-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB-%D0%B7%D0%B0%D0%BC%D1%8B%D0%BA%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B2-javascript-%D1%87%D0%B0%D1%81%D1%82%D1%8C-%D0%BF%D0%B5%D1%80%D0%B2%D0%B0%D1%8F-3c3f02041970
+// https://learn.javascript.ru/closures
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+// Typy finkcji: https://drive.google.com/file/d/1Xuw7feRJ-2ZzE_U7E4MZMXh1HLVljcU8/view
+
+
+
+console.log(calc(4,3));
+console.log(calc(5,6));
+console.log(calc(19,6));
+
+let num = 20; //globalna zmienna
+
+//Typ funkcji Function declaration
+function showFirstMessage (text) {  
+    console.log(text);
+    num = 10; //zmiana zmiennej num z 20 na 10
+}
+
+showFirstMessage("Hello World!");
+console.log(num);
+
+function calc(a, b){
+    return (a+b); // koniec funkcji, jesli oddac nizej kod w funkcji on juz nie bedzie dzialal
+}
+
+console.log(calc(4,3));
+console.log(calc(5,6));
+console.log(calc(19,6));  // funkcji typu Function declaration można wyżwietlać nawet na początku dokumentu, jeszcze przed deklaracją funkcji, w kazdym miejscu skryptu.
+
+function ret(){
+    let num = 50; // lokalna zmienna dostepna tylko w srodku funkcji
+    return num;
+}
+
+const anotherNum = ret(); // wynik funkcji zapisujemy do zewnetrzenj zmiennej
+console.log(anotherNum);
+
+
+//Typ: Function Expression
+const logger = function() {
+    console.log("Hello");
+}; // w tym sposobie trzeba pamientac o ; na koncu, bo jest to funkcja ktora zapisana odrazu do zmiennej. Function declaration.
+
+logger();  // wyzwać funcję można tylko po deklaracji kodu.
+
+
+//Typ - arrow Function - stzalkowa funkcja, nowy standart ES6
+//ma swoje ograniczniea, dziala automatycznie bez wyzwania, dlatego nie wszedzie moze byc wykorzystywana.
+//1
+const calcTwo = (a, b) => a + b;
+//2
+const calcThree = a => a + b;
+//3
+const calcFour = (a, b) => {
+    console.log('5');
+    return(a + b);
+};  // tutaj tez pamietac zeby zamknac na koncu ;
+
+//---------------------------------------------------------------------------------------------------
+//Lesson - 17 - Методы и свойстава строк и чисел
+//Dodatkowe materialy
+//https://learn.javascript.ru/string
+//https://learn.javascript.ru/number
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Number
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String
+
+const str = "test";
+console.log(str.leght); // dlugosc string
+
+const arr = [1, 2, 4]
+console.log(arr.leght); // dlugosc array
+
+const strTwo = "test";
+console.log(strTwo[2]); // wynik literk S. 
+
+//console.log(strTwo[2] = 'd'); // w taki bezposerdni sposob zamiana literki nie zadziala, jest to nie poprawny zapis.
+
+//Metody
+console.log(strTwo.toUpperCase()); //DUZE litery
+console.log(strTwo.toLowerCase()); //male litery
+console.log(str);
+
+const fruit = "Some fruit";
+console.log(fruit.indexOf("fruit"));  // znalezenie indeksu dla: fruit
+console.log(fruit.indexOf("q")); // takiej litery nie bedzie dlatego wynik bedzie: -1
+
+const logg = "Hello world";
+
+//metoda - slice() - podajemy jeden lub dwa argumenty . Jesli podamy jeden to wytniemy tekst od zadanego miejsca i do konca.
+console.log(logg.slice(6, 11));  // spacja nie liczy sie, dlatego zaczynamy z 6 a nie z 7
+// konczymy na 11 bo jesli na 10 to zakonczymy na literce d i ona nie bedzie wlaczona do wyniku.
+console.log(logg.slice(-5, -1)); // цнсштфс od konca (z prawej strony) tez mozna
+
+//Metod substring()  - tez wycina tekst
+console.log(logg.substring(6, 11)); // takze zwroci: world
+// ta metoda nie wspiera wycinanie od konca jak w metodzie slice.
+
+//Method - substr() - przyjmuje dwa argumenty (początek i długość - ile symboli trzeba wyciąć)
+console.log(logg.substr(6, 5)); // róznica w tym że na końcu nie podajemy ostatniego indeksu wyciniania jak w poprzednich metodach
+// podajemy indekst rozpoczecia i dalej ile literek wyciac po rozpoczenciu.
+
+//Metod - Math.własciwosc();
+const num = 12.2;
+
+//Match.round() - okrąglenia liczby
+console.log(Math.round(num)); //wynik 12
+
+//Metod - parseInt() - zmienia liczbe w cala liczbe i jesli liczba byla zapisana jako string to zamieni sie number 
+const test = '12.2px';
+console.log(parseInt(test)); //wynik 12 - liczba nie tekst
+
+//Metod - parseFloat() - tak samo jak wyzej tylko zwraca nie calkowite liczby
+console.log(parseFloat(test)); //wynik 12.2 - liczba
+
+console.dir(Number); //sprawdzić w przegliądarce -> console. Wszystkie metody i właściwości dla Number. 
 
 //---------------------------------------------------------------------------------------------------
