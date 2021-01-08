@@ -473,7 +473,6 @@ console.log(strTwo[2]); // wynik literk S.
 //Metody
 console.log(strTwo.toUpperCase()); //DUZE litery
 console.log(strTwo.toLowerCase()); //male litery
-console.log(str);
 
 const fruit = "Some fruit";
 console.log(fruit.indexOf("fruit"));  // znalezenie indeksu dla: fruit
