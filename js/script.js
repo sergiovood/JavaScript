@@ -1,3 +1,3 @@
 "use strict";
 
-//lesson 19 - 
+//Lesson - 21 - Array - tablica - масив

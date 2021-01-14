@@ -601,5 +601,93 @@ function showMyDB(hidden){
  writeYourGenres();
 
  //---------------------------------------------------------------------------------------------------
+//lesson 19 - Callback - function
+// https://learn.javascript.ru/callbacks
 
+function first (){
+    // Do something
+    setTimeout(function() { //задержка 
+        console.log(1);
+    }, 500); //задержка выполенения в пол секунди
+}
 
+function second() {  //здесь нет задержки
+    console.log(2);
+}
+
+first();
+second();
+//Запомнить правило, еесли функции идут одно за другой это не значит что выводяться одна за другой
+//иногда большая функцция выполняеться дольше чем маленькая что может привести к не очивидному результату
+//это плохо когда мы должны получить снача даные с большой функции, чтобы передать результат в мальнукую.
+//если вторая выполниться быстрее первой функции то может вывести не тот результат что нам нужною
+
+//Callback funkcja - to funkcja która rozpoczyna swoje działanie po kolei, najpierw pierwsza musi skonczyc prace, 
+//a tylko potem kolejna zacznie działanie.
+
+//Szablon callback funkcji
+//w miejsce argumenta callback można będzie wyswać wynik innej funkcji
+function learnJs(lang, callback) { 
+    console.log(`Uczy się: ${lang}`);
+    callback();
+}
+
+function done() {
+    console.log('Juz skonczylem lekcje');
+}
+
+learnJs('JavaScript', done);  //WAZNE: done zapisujemy bez (), bo my ja nie вызываем, а только передаем. 
+//Схема работы
+//Функция LearnJs -> выполни функию done 
+//только тогда, когда ты дойдешь до callback() в ауткции LearnJs
+//Функция Done передаеться в место аргумента callback і только 
+//внутри уже вызиваеться callback(); - что запускает вторую функциию и выводить результат один за другим
+
+ //---------------------------------------------------------------------------------------------------
+
+ //Lesson - 20 Объекты, Деструктуризация объекта
+
+ //Деструктуризация объекта - https://learn.javascript.ru/destructuring#destrukturizatsiya-obekta
+ // Объекты Javascript в примерах - https://javascript.ru/tutorial/object/intro
+ //Дескрипторы, геттеры и сеттеры свойств - https://learn.javascript.ru/descriptors-getters-setters
+ // Объекты: перебор свойств - https://learn.javascript.ru/object-for-in
+ 
+ const options = {
+     name:'test',
+     width: 1024,
+     height: 1024,
+     colors: {
+         border: 'black',
+         bg: 'red'
+     },
+     makeTest: function() {  //Metoda - która będzie pracować w środku Objektu
+         console.log("Test");
+     }
+ };
+ 
+ options.makeTest(); // Właczamy metodę
+ 
+ //Destruktyracja objektu
+ const {border, bg} = options.colors; //wycigamy potrzebne nam wlasciwosci
+ console.log(border); //wyswietlamy to co nam trzeba, jednoczesnie sprawdzamy czy dziala destrukturyzacja
+ 
+ //Objekty mają swoje włożone metody, które pomagają szybciej rozwiązywać zadania, o których mozna poczytac w dokumentacji
+ console.log(Object.keys(options).lenght); //Metod Object.keys - spawdza ile wlasciwosci jest w objekcie
+ 
+ // console.log(options.name)
+ 
+ // delete options.name;  // usunac test z objektu
+ // console.log(options);
+ 
+ //Przeliterowac objekt 
+ for (let key in options) {
+     if (typeof(options[key]) === 'object'){ //typeof sprawdzamy czy jest typem danych object
+         for (let i in options[key]) {
+             console.log(`Właściwości ${i} ma znaczenie ${options[key][i]}`);
+         } 
+     }else {
+         console.log(`Właściwość ${key} ma znaczenie ${options[key]}`);
+ }
+
+ //--------------------------------------------------------------------------------------------------
+ 
