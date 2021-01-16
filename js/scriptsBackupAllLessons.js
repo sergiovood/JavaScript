@@ -690,4 +690,246 @@ learnJs('JavaScript', done);  //WAZNE: done zapisujemy bez (), bo my ja nie вы
  }
 
  //--------------------------------------------------------------------------------------------------
- 
+ //Lesson - 21 - Array - tablica - масив и псевдомасивы
+
+//  Быстрая сортировка http://algolist.ru/sort/quick_sort.php
+// Дескрипторы, геттеры и сеттеры свойств https://learn.javascript.ru/descriptors-getters-setters
+// Отличие for...of от for...in в javascript  http://coldfox.ru/article/5c7ffe64bbf20e61c12c7348/%D0%9E%D1%82%D0%BB%D0%B8%D1%87%D0%B8%D0%B5-for-of-%D0%BE%D1%82-for-in-%D0%B2-javascript
+
+const arr = [1, 13, 26, 8, 10];
+arr.sort(); //sortuje po pierwszemu numeru, dlatego potrzebujemy ponizsza funkcje zeby bylo ok
+console.log(arr);
+
+function compareNum(a, b){  //collback funkcja ktora pomoga w poprawnym sortuwaniu 
+    return a - b;
+}
+
+// console.log(arr.length); //licze dlugosc od 1 a nie od 0 
+
+//Iteracja po tablicy
+
+//METODA: forEach
+// arr.forEach(function(item, i, arr){
+//     console.log(`${i}: ${item} w środku tablicy ${arr}`);
+// });
+
+// arr[99] = 0; //na 99 pozycji zapiszemy 0 do tablicy
+// console.log(arr.length); // wyswietli dlugosc masywu 100 elementow, jest to blad
+// console.log(arr); // wyswietli, ze mamy 94 puste elementy w tablicy, bo zapisalismy 0 nie na kolejne wolne miejsce a na 99, co powoduje stworzenia pustych znaczeń
+
+// arr.pop();
+// console.log(arr); //usunie ostatnie znaczenie 8
+
+// arr.push(10);  //dodaje na koniec tablicy 10
+// console.log(arr);
+
+// for (let i = 0; i < arr.length; i++) {
+//     console.log(arr[i]);
+// }
+
+//METODA for of 
+// for (let value of arr) {  //iteracja po tablicy 
+//     console.log(value);
+// }
+
+// const str = prompt("", "");
+// const products = str.split(", ");
+// products.sort();
+// console.log(products.join(';'));
+
+
+
+//--------------------------------------------------------------------------------------------------
+//Lesson 22 - Rozne metody kopiowania objektow/tablicy do nowych zmiennych
+// Копирование объектов в JavaScript - https://medium.com/@stasonmars/%D0%BA%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2-%D0%B2-javascript-d25c261a7aff
+// Метод Object.assign() - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+// ... Spread - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+
+// Передача по ссылке или по значению, Spread оператор (ES6-ES9)
+// Передача даных по значению, работает только с приметивными типами даных
+
+//----
+// let a = 5,
+//     b = a; //przkazujemy liczbe 5 do nowej zmiennej b
+// b = b + 5; //modyfikujemy zmienne b
+// console.log(b); //rowna 10
+// console.log(a); //rowna sie 5
+//-----
+//Z złożonymi typami zmiennych tak nie zadziala, bo przekazuje sie nie zawierające się dane, a link do tej zmiennej
+// //Link - передача по ссылке
+
+// const obj = {  //tworzymy objekt
+//     a: 5, 
+//     b: 1
+// };
+
+// const copy = obj; //do coby kladziemy link ktory bedzie prowadzil do zmiennej obj, jest to tylko link a nie kopia struktury calego objektu do nowej zmiennej
+// //zmienna copy nie zawiera strukture ktore zawiera obj, tylko odnosnik do tej struktury
+// copy.a = 10; //probujemy modyfikowac objekt copy, ale docelowo modefikowany jest objekt obj, bo zmienna copy zawiera link do niego, a kopie tego objektu.
+
+// //wyswieli sie nam dwa taki same rezultaty
+// console.log(copy); //ta zmienna wyswietli tak naprawde obj, bo w srodu ma link ktory do niej prowadzi
+// console.log(obj); 
+
+
+// Jak Kopiować objekt do innej zmiennej
+// Kopie są 2 typów:
+// Głeboka kopia | Prosta kopia 
+// Głeboka kopia - jeśli np. w objekcie, tablice kopjowane takze inne wstawione w srodku objekty i tablicy
+// Prosta kopia  - jest wtedy kiedy kopiowany jest tylko pierwszy rząd znaczeń, a jeśli objekt/tablica zawiera w srodku inne wstawione objekty/tablicy wtedy oni beda już kopiowane jako linki do nich a nie cala strukture, co oznacza ze przy zmianie znaczenia w skpjowanym objekcie/tablicy beda modyfikowac sie takze znaczenia w glownym objekcie/tablicy
+
+//Prosta kopia (tylko gorne znaczenia objektu, wstawione objekty w objekt beda dalej kpiowane jako linki) - tworzymy funkcje ktora bedzie kopjowac objekt
+function copy(mainObj){
+    let objCopy = {};
+
+    let key;
+    for (key in mainObj) {
+        objCopy[key] = mainObj[key];
+    }
+    return objCopy;
+}
+//tworzymy objekt ktory bedziemy kopjowac do innej zmiennej
+const numbers = {
+    a: 2,
+    b: 5,
+    c: {
+        x: 7,
+        y: 4
+    }
+};
+//kopiujemy zmienna za pomoca funkcji do innej zmiennej
+const newNumbers = copy(numbers);
+
+//modyfikujemy znaczenie już w skopjowanym objekcie
+newNumbers.a = 10;
+newNumbers.c.x = 10; // zostanie zmodyfikowane juz nie w kopii a w glownym objekcie, bo sa to juz linki, funkcja nie kupjujie tak gleboko strukture
+//sprawdzamy czy kopia po zmianie rozni sie do po docelowego objektu
+console.log(newNumbers); //powinno byc a:10
+console.log(numbers); //powinno zostac a:2
+// -----
+
+const add = {
+    d: 17,
+    e: 20
+};
+
+//Metoda pracy z objektamy, kopiowanie za pomoca metody a nie funkcji
+
+// Object.assign(nazwa jaki objekt bierzemy, nazwa z jakim objektem wlaczymy)
+// console.log(Object.assign(numbers, add));
+
+// Tak samo można zrobic tylko juz z pustym objektom, wzic jeden i skopijowac do pustego (Prosta kopia - tylko pierwsze znaczenia z rzadu)
+const clone = Object.assign({}, add); // zapisujemy wszystko w objekt clone
+
+clone.d = 20;
+
+console.log(add);
+console.log(clone);
+
+
+//Kopiowanie Tablicy - Array
+//za pomocą metody .slice();
+const oldArray = ['a', 'b', 'c'];
+const newArray = oldArray.slice();
+
+//sprawdzamy czy przy zmianie znaczenia w skopjowanej tablicy, nie zmienia to same znaczenie w tablicy glownej
+newArray[1] = 'sdfsdfd';
+console.log(newArray);
+console.log(oldArray);
+
+//...nazwa - Spread оператор разворота(выдобывания информаци), разварачивает структуру и привращает ее просто в набор каких то отдельных друг от друга данных
+// jeśli tablica - [...nazwa]
+//jeśli objekt - {...nazwa}
+const video = ['youtube', 'vimeo', 'rutube'],
+        blogs = ['wordpress', 'livejournal', 'blogger'],
+        //wlaczenia dwoch zmiennych w jedna z dodatkowa informacja
+        // [...nazwa zmiennej, ...nazwa zmiennej, jesli trzeba dodatkowe dane];
+        internet = [...video, ...blogs, 'vk', 'facebook'];
+// sprawdzamy polaczenia 
+console.log(internet);
+
+
+ //przyklad bardziej skomplikowany
+
+ //musimy w funkcje przyjac trzy odzielne dane i wyswietlic ich
+function log(a, b, c) {
+    console.log(a);
+    console.log(b);
+    console.log(c);
+}
+//mamy zbior danych, nie bedziemy mogli te dane odrazu przekazac do funkcji
+const num = [2, 5, 7]; 
+//za pomoca ... spread operatora rozkladamy tablice na trzy odzielnne dane, i funkcja automatycznie bedzie mogla wyswietlic trzy elementy
+log(...num);
+//------
+
+// kopia tablicy za pomoca ... spread operatora, a nie za pomoca .slice()
+const array = ['a', 'b'];
+
+const newArrayOne = [...array];
+console.log(newArrayOne);
+
+// kopia objektu za pomoca ... spread operatora
+const q = {
+    one: 1,
+    two: 2
+};
+
+const newObj = {...q};
+console.log(newObj);
+
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 23 - ООП обектно ориентированое програмирование
+// а также один из стилей ООП - Прототипно-оринтированое наследие 
+
+// Ghj __proto__ - Object.prototype.__proto__ -  https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/proto
+// Dziedziczenie bez __proto__ - Prototype methods, objects without __proto__ - https://javascript.info/prototype-methods
+
+//Пример - Легковой автомобиль - обьект
+// Свойства - колеса, двигатель, фары, двери, радио, динамики
+// Метод - езда, светить фарами, перевозка грузов, перевозка людей
+
+"skdlfjsld" //zwykly typ danych
+
+let str = "some"; 
+let strObj = new String(str); // на основании строки str создаем новую строку
+console.log(typeof(str)); //tutaj bedzie typ string
+console.log(typeof(strObj)); //tutaj bedzie typ Object, poniewaz wykorzystalismy wbudowany metod dla stringu, dlatego zwraca juz objekt a nie string
+console.dir([1,2,3]); //zobaczyc w konsoli przegliadarki jak wygliada lancuch prototypow
+
+//PROTOTYPY
+//Tworzymy glowny prototyp ktory bedzie dziedziczyl innym objektom swoje wlasciwosci
+const soldier = { //duzy prototyp ktory opisuje zownierzy w calosci
+    health: 400,
+    armor: 100,
+    sayHello: function() {
+        console.log("Hello");
+    }
+};
+
+//Wersja 1
+//Tworzymy pusty objekt jonh i odrazu ustawiemy dla niego prototyp
+const jonh = Object.create(soldier);
+jonh.sayHello(); // testujemy jonj umie umiec Hello dziedziczony z swojego prototypu soldier
+
+
+//Wersja 2 
+//jeśli trzeba ustawić prototyp dynamicznie, czyli jesli jonh juz istnieje to wtedy ustawiamy dla niego prototyp
+const jonh = {   //objekt jonh ktory bedzie mial swoje wlasciwosci, a takze dziedziczy wlasciwosci u swojego prototypa
+    health: 100
+};
+Object.setPrototypeOf(jonh, soldier);
+
+
+//Wersja 3
+//przestarzaly format __proto__ ktory juz nie jest wykorzystywany
+jonh.__proto__ = soldier; // przestarzaly zapis - przydzielenia prototypu do objektu
+console.log(jonh.armor); // jonh ma teraz dostep do wlasciwosci swojego prototypa, wyswietli sie armor: 100;
+jonh.sayHello(); // testujemy jonj umie umiec Hello dziedziczony z swojego prototypu soldier
+
+
+//--------------------------------------------------------------------------------------------------
+
