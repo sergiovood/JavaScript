@@ -707,11 +707,11 @@ function compareNum(a, b){  //collback funkcja ktora pomoga w poprawnym sortuwan
 // console.log(arr.length); //licze dlugosc od 1 a nie od 0 
 
 //Iteracja po tablicy
-
 //METODA: forEach
-// arr.forEach(function(item, i, arr){
-//     console.log(`${i}: ${item} w środku tablicy ${arr}`);
-// });
+const arr = [1, 13, 26, 8, 10];
+arr.forEach(function(item, i, arr){  //forEach - перебирает таблицу, item - każdy element, i - liczba po kolei zaczynajac od 0, arr - wyswietli cala tablice. 
+    console.log(`${i}: ${item} w środku tablicy ${arr}`);
+ });
 
 // arr[99] = 0; //na 99 pozycji zapiszemy 0 do tablicy
 // console.log(arr.length); // wyswietli dlugosc masywu 100 elementow, jest to blad
@@ -932,4 +932,443 @@ jonh.sayHello(); // testujemy jonj umie umiec Hello dziedziczony z swojego proto
 
 
 //--------------------------------------------------------------------------------------------------
+//Lesson 24 - refaktoring koda 
+/* Задание на урок:
 
+1) У нас уже есть рабочее приложение, состоящее из отдельных функций. Представьте, что
+перед вами стоит задача переписать его так, чтобы все функции стали методами объекта personalMovieDB
+Такое случается в реальных продуктах при смене технологий или подхода к архитектуре программы
+
+2) Создать метод toggleVisibleMyDB, который при вызове будет проверять свойство privat. Если оно false - он
+переключает его в true, если true - переключает в false. Протестировать вместе с showMyDB.
+
+3) В методе writeYourGenres запретить пользователю нажать кнопку "отмена" или оставлять пустую строку. 
+Если он это сделал - возвращать его к этому же вопросу. После того, как все жанры введены - 
+при помощи метода forEach вывести в консоль сообщения в таком виде:
+"Любимый жанр #(номер по порядку, начиная с 1) - это (название из массива)"*/
+
+
+
+const personalMovieDB = {
+    count: 0,
+    movies: {},
+    actors: {},
+    genres: [],
+    privat: false,
+    start: function() {
+        personalMovieDB.count = +prompt('Ile filmów już wiedziałeś?', '');
+    
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)){
+            personalMovieDB.count = +prompt('Ile filmów już wiedziałeś?', '');
+        }
+    },
+    rememberMyFilms: function(){
+        for (let i = 0; i < 2; i++) {
+            const a = prompt('Один из последних просмотренных фильмов?', ''),
+                  b = prompt('На сколько оцените его?', '');
+        
+            if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+                personalMovieDB.movies[a] = b;
+                console.log('done');
+            } else {
+                console.log('error');
+                i--;
+            }
+        }
+    },
+    detectedPersonalLevel: function() {
+        if (personalMovieDB.count <= 10) {
+            alert("Просмотрено довольно мало фильмов");
+        } else if (10 < personalMovieDB.count <= 30){
+            alert("Вы классический зритель");
+        } else if (personalMovieDB.count > 30){
+            alert("Вы киноман");
+        } else{
+            alert("Произошла ошибка");  
+        }
+    },
+    showMyDB: function(hidden){
+        if (!hidden) {
+            console.log(personalMovieDB);
+        }
+     },
+     toggleVisibleMyDB: function(){
+        if (personalMovieDB.privat){
+            personalMovieDB.privat = false;
+        }else{
+            personalMovieDB.privat = true;
+        }
+    },
+     //wyswietlamy w konsoli wynik dla sprawdzenia poprawnosci zapisanych danych
+    //najpier sprawdzamy prywatnosc danych przed wyswietleniem
+     writeYourGenres: function() {
+        //Standardowy wariant zapisu:
+            // for (let i = 1; i < 4; i++) {
+            //      const userGenres = prompt(`Ваш любимый жанр под номером: ${i}`);
+            //      personalMovieDB.genres[i - 1] = userGenres;
+            //  }
+            //Lepszy warian zapisu, bez tworzenia dodatkowych zmiennych, mniej kodu.
+             for (let i = 1; i < 2; i++) {
+                // let genre = prompt(`Ваш любимый жанр под номером: ${i}`); // [i-1] - trzeba podac zeby zapis w array zaczynala sie od 0
+                
+                // if(genre === '' || genre == null) {
+                //     console.log('Wprowadziles niepoprawne dane lub nie podales zadnych danych');
+                //     i--;
+                // } else {
+                //     personalMovieDB.genres[i - 1] = genre;
+                // }
+
+                let genres = prompt('Wprowadz swoje ulubione gatunki filmow przez przecinek').toLocaleUpperCase();// dodajemy metod zeby wszystko bylo w malym registrze, co pozwoli potem poprawnie posortowac metoda sort()
+                if(genres === '' || genres == null) {
+                    console.log('Wprowadziles niepoprawne dane lub nie podales zadnych danych');
+                    i--;
+                } else {
+                    personalMovieDB.genres = genres.split(', '); //dzieli zdanie na czesci w momencie kiedy jest znaleziony przecinek
+                    personalMovieDB.genres.sort(); //sortuje gatunki filmow po alfabecie. Pamietac ze metoda sort() slowa z wyzszym registrze posortuje wyzej od slow w malym registrze, dlatego trzeba wszystko w maly registr przeksztawcic, jak na poczatku funkcji
+            }   
+            //Pokazujemy jakie gatunki filmow wprowadzil uzytkownik    
+            personalMovieDB.genres.forEach((item, i) => {  //za pomoca forEach() - проходимся по таблице, w item zapisuje sie zakdy element z tablicy, i wyswietli liczbe elementu 
+                     console.log(`Любимый жанр ${i + 1} - ${item}`); // i zaczyna sie od 0 zera, ale dla UI dla uzytkownika lepiej zaczac od 1 dlatego dodajemy jeden 
+                 });
+                //bo jesli nie podamy, zapis zaczynac sie bedzie od 1, bo w naszym cykle for startujemy od 1. 
+            }
+        
+
+    }
+};
+
+
+//--------------------------------------------------------------------------------------------------
+//Lesson - 26 - Динамическая типизация в JS - 
+// Jest to mozliwosc jednego typu danych zamieniac sie w inny
+// czyli string moze stac sie number, i na odwrot, object moze stac sie typem boolean 
+// Typy danych - https://drive.google.com/file/d/1Nm2PDGru199Yf0c9l1T-upYbi0UkEj1F/view
+// Style cssText Property - https://www.w3schools.com/jsref/prop_style_csstext.asp
+
+//To String
+
+// 1) Rzadko wykorzystywane przeksztawcenie
+console.log(typeof(String(null))); // wynik - String, bo to co w srodku String() jest juz w '' niezaleznie od znaczenia
+console.log((String(null))); // jak to wyglida w konsoli
+console.log(typeof(String(4))); // tutaj to samo co wyzej
+
+//2)
+console.log(typeof(5 + "")); //takie dodanie do "" przeksztawca number w string
+console.log((5 + "")); //wynik juz bedzie stringiem
+console.log(typeof(null + '')); //tez string
+
+// stara wersja 
+const num = 5;
+console.log("https://vk.com/catalog/" + num); //liczba dodana do stringu bedzie stringiem
+
+//nowa wersja - Interpolacja
+const num = 5;
+console.log(`https://vk.com/catalog/${num}`);
+
+//tworzymy style css, ktora musi byc jako string
+const fontSize = 26 + 'px'; 
+
+//To number
+//1 Rzadko wykorzystywany
+console.log(typeof(Number('4')));  //przeksztawci w number
+
+//2 Czesto wykorzystywany - unarny plus
+console.log(typeof(+'5'));
+let answ = +prompt("Hello", "");
+
+//3 Rzadko wykorzystywany
+console.log(typeof(parseInt('15px', 10))); //parseInt(string, сисстема исчисления 10 - означает десетичная)
+console.log(parseInt('15px', 10)); //pozwala na przeksztawcenie string to number
+
+
+// To boolean
+// Zawsze False - 0 , '', null, undefined, NaN;
+// 1
+let switcher = null; //false
+if (switcher) {
+    console.log('Working...');
+}
+
+switcher = 1; //true
+if (switcher) {
+    console.log('Working...');
+}
+
+// 2 Prawie nigdy nie wykorzystywany
+console.log(typeof(Boolean('4'))); //boolean
+console.log(Boolean(' ')); // tutaj bedzie True, w srodku jest spacja, a znaczy ze nie jest puste
+
+// 3 Prawie nigdy nie wykorzystywany
+console.log(typeof(!!"44444")); // !! - przeksztawca w znaczenie booolean
+console.log(!!"44444"); //wynik true
+
+
+
+//--------------------------------------------------------------------------------------------------
+
+//Lesson - 27 - Задачи с собеседований на понимание основ
+//Zadania -  https://drive.google.com/file/d/1xXLFKnhETnMqI444sm4Jq1fpEcLQlnyb/view
+
+//Какое будет выведено значение: 
+let x = 5; alert( x++ );  
+// x = 5 - bo najpierw zwraca 5 piec a tylko potem powieksza o 1 
+// jesli zmienimy forme zapisu ++x to wtedy odrazu powiększymy i wyswietlisie 6
+
+
+//Чему равно такое выражение: 
+// [ ] + false - null + true ?
+console.log(typeof([] + false - null + true));
+//wynik "NaN"
+// [] - pusta tabliza oznacza "" czyli pusty string
+// jesli dodawac cos do stringa to automatycznie staje sie stringiem
+// potem chcemy odjac od stringa null co oznacza NaN nie numeryczny typ danych Not a number
+// NaN + true dalej będzie "NaN"
+
+
+//Что выведет этот код: 
+let y = 1; 
+let x = y = 2; 
+alert(x);  
+// x = 2
+
+
+//Чему равна сумма: 
+// [ ] + 1 + 2 //
+//wynik - "12" - jako string
+//pusty array [] to samo co string
+// dodanie do stringu powoduje przeksztawcenie w string
+// jeszcze jedno dodanie poprostu dodaje numer do tekstu ktory juz jest i przerabia na tekst
+
+
+//Что выведет этот код: 
+alert("1"[0]);
+//wynik: 1
+// string tez mozna rozdielic na indeksy
+// prosty string sklada sie tylko z jednego indeksu zaczynajac z 0
+// dwa zerowe indeksy wyswietlaja 1
+
+
+//Чему равно 
+console.log(2 && 1 && null && 0 && undefined)
+// wynik: null
+// operator && i będzie szedł z lewa na prawo dopóki będzie prawda
+// 2 - true, 1 - true, null - false, dalej kod nie będzie sprawdzany
+// zwracasię to znaczenie gdzie zostało znaleziono false, czyli null
+
+
+// Есть ли разница между выражениями? 
+console.log(!!( 1 && 2 ) === (1 && 2));
+//wynik: false
+// !!- przeksztawca (1 && 2) w typ boolean
+// dlatego nie będzie się równac znaczeniu bez !!
+
+
+// Что выведет этот код: 
+alert( null || 2 && 3 || 4 );
+//wynik: 3
+//jeśli nie wiemy jaki operator zadziała pierwszy 
+// sprawdzamy pierwszenstwo operatorów - https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Operatory/Pierwsze%C5%84stwo_operator%C3%B3w
+// im wieksza liczba tym szybciej bedzie sie wykonywac w kodzie
+// && - jest na 6 miejscu, || na 5 miejscu, czyli najpierw wykona sie &&
+// w porownaniu 2 && 3 bedzie zwracany wiekszy element czyli 3
+// potem porownujemy null z wynikiem || 3
+// operator || przestaje dzialac jesli jest true
+// null jest false, znaczy dalej nam zostaje 3
+// potem porownujemy 3 || 4, operator przestaje dzialac bo 3 jest true, dlatego zwracana jest 3
+
+
+//Правда ли что a == b ?
+const a = [1, 2, 3]; 
+const b = [1, 2, 3];
+console.log(a == b);
+//false
+//net rozne indeksy w komorce pamieci
+
+
+//Что выведет этот код: 
+alert( +"Infinity" );
+//wynik: Infinity
+
+
+//Верно ли сравнение: 
+console.log("Ёжик" > "яблоко");
+// wynik: false 
+// taki wynik przez zakodowanie znakow i na ktorym miejscy znajdujesie w tablicy
+// widocznie znak Ё jest mniejszy po znaczeniu od я w tablicy unicode 
+// https://en.wikipedia.org/wiki/Cyrillic_(Unicode_block)
+
+
+//Чему равно 
+console.log(0 || "" || 2 || undefined || true || falsе);
+// wynik: 2
+// kiedy jest porownanie || lub
+// wtedy od konczy prace na pierwszej prawdzie ktora znajdzie i zwraca znaczenie, czyli 2
+
+
+//--------------------------------------------------------------------------------------------------
+
+// Lesson - 28 - Получение элементов со страницы
+// Знаете ли вы селекторы? - https://learn.javascript.ru/css-selectors
+// Немного о псевдомассивах (массивоподобных объектах или коллекциях) - https://habr.com/ru/post/336136/
+
+//getElementById(); - znaczy wez jeden id 
+//wpisujem tylko jeden unikalny id
+const box = document.getElementById('box');
+console.log(box);
+
+//UWAGA: metoda pobiera wszystkie elementy ze strony o podanej nazwie 
+//i zapisuje ich do pseudo tablicy [], nawet jesli jest tylko jeden taki element na stronie 
+const btns = document.getElementsByTagName('button');
+console.log(btns);
+//możliwości wycigania z tablicy potrzebne nam elementy np. 2 przycisk
+//Metoda 1 - do zmiennej zapisujemy odrazu rugi element z tablicy
+const btns2 = document.getElementsByTagName('button')[1];
+console.log(btns2);
+//Metoda 2 - do zmiennej zapisujemy najpierw szystkie elementy z tablicy, a potem wyswietlamy potrzebny nam element
+const btns3 = document.getElementsByTagName('button');
+console.log(btns3[2]);
+
+//pobieramy wszystkie ELEMENTY przez wybraną klasę
+const circles = document.getElementsByClassName('circle');
+console.log(circles);
+
+//Selektor - czesto wykorzystywany w zamian powyzszym
+//querySelectorAll() - wspiera wszystko z css, klasy, #id, atrybuty, kombinacja wszystkie miedzy soba itd.
+const hearts = document.querySelectorAll('.heart'); //podanie klasy juz z kropka
+console.log(hearts);
+
+//Selector posiada jeden metod forEach() - ktora bedzie zbierac wszystkie elementy z pseudotablicy zapisanej do zmiennej
+hearts.forEach(item => {
+    console.log(item);
+});
+
+//Ten selektor wyswietla tylko pierwszy element spotkany na stronie
+const oneHeart = document.querySelector('.heart');
+console.log(oneHeart);
+const oneDiv = document.querySelector('div');
+console.log(oneDiv);
+
+//Can I use - https://caniuse.com/
+
+//Pobieramy elementy ze strony z którymi będziemy pracować i zapisujemy do zmiennych
+const box = document.getElementById('box'),
+      btns = document.getElementsByTagName('button'),
+      circles = document.getElementsByClassName('circle'),
+      wrapper = document.querySelector('.wrapper'),
+      hearts = wrapper.querySelectorAll('.heart'),
+      oneHeart = wrapper.querySelector('.heart');
+
+//Zmiana stylów róznych elementów na stronie
+
+//zobaczymy co mozemy zrobic z tym objektem
+//console.dir(box); // sprawdzamy w przegliadarce rozne metody
+
+//dodaje do objektow na stronie swoje style
+//wszystkie doane style beda inline style(najwyzszy priorytet wykonania) 
+// czyli dodaja sie bezposrednio do kodu html jako np. style="color:blue; background-color:#000000"
+
+// znaczenia dla stylow musza byc zapisane jako string w ''
+
+//Metoda 1 - osobne dodanie stylów
+//nazwaZmiennej.style.nazwaStylu = 'znaczenie';
+//lub
+//nazwaZmiennej[indekst w tablicy].style.nazwaStylu = 'znaczenie';
+
+//Nazwy stylów zapisane z tą metodą powinne być bez myslnika '-', tylko w formacie camleCase
+//czyli nie background-color, a backgroundColor
+
+box.style.backgroundColor = 'blue'; 
+box.style.width = '500px'; //zapisac dokladnie jak w css, czyli 500px, a nie prosto 500
+
+btns[1].style.borderRadius = '100%'; //zmieniamy drugi przycisk na stronie
+circles[0].style.backgroundColor = 'red';
+// nie zapisywac jak ponizej, bo twedy my odlolujemy sie do tablicy[], a nie do elemntu i nie bedzie dzialac
+// circles.style.backgroundColor = 'red';
+
+
+//Metoda 2 - nadanie odrazu wszystkich stylow ciagiem jak w CSS 
+// nazwaZmiennej.style.cssText = '' lub ``
+//tutaj już format nie camleCase a taki jak w css
+box.style.cssText = 'background-color: blue; width:500px;';
+
+
+//Cykly - zadko wykorzystywane poniewaz jest metoda forEach dla wlasciwosci nazwaZmiennej.querySelectorAll('nazwa w css')
+//Tworzymy cykl zeby przejsc po elemntach w tablicy i dodac jakis styl
+// for (let i = 0; i < hearts.length; i++) {
+//     hearts[i].style.backgroundColor = 'blue';
+// }
+
+//Metoda forEach dla przejscia po tablicy i zmianie stylu dla wybranych elemntów
+//w srodek forEach(wstawiemy zawsze callback funkcje)
+hearts.forEach(item =>{
+        item.style.backgroundColor = 'blue';
+});
+
+
+// Metody dla pracy z elementami strony
+// Tworzymy elementy 
+// Metoda - document.createElement('nazwa elementu na stronie');
+const div = document.createElement('div'); // tworzy element tylko w srodku js pliku
+
+// Tak samo mozemy stworzyc - текстовые узлы(Node, czyli texkstowa Noda)
+// document.createTextNode('Text'); - rzeadko wykorzystywany
+// const text = document.createTextNode('Tutaj bylem');
+
+// Właściwość która jest bardzo popularna do pracy z elementami na stronie: 
+// classList()
+// nazwaZmiennej.classList.nazwaMetody('np. nazwaKlasy');
+// Możliwości: dodawanie classList.add, usunięcie, sprawdzenie czy coś jest w środku, a nawet sprawdzenie ilości przypisanych klas do elementa 
+div.classList.add('black');
+
+// Wstawiania/usuwanie elementow na stronie
+// w DOM bierzemy tag <rodzica> w który bedziemy wstawiac nasz element
+
+// 1
+// metoda .append(); - wstawia element na koniec w wybranym rodzicu
+// jest jeszcze appendChild() - ale jest przestarzaly
+
+document.body.append(div); //element pojawi sie na koncu w tegu body
+
+// Można czesto zobaczyc jak na poczatku pobierany jest element, a potem odrazu wstawiany gdzies indziej
+// bez zapisawania do zmiennej, jesli wiecej juz nie planuemy dzialac z ty, elementem
+
+// document.querySelector('.wrapper').append(div);
+
+//2
+// wrapper.append(div); //wstawi element na koncu w rodzicu
+// wrapper.prepend(div); //wstawi element na poczatek w wybranym rodzicu
+
+//3
+// hearts[0].before(div); //wstawiamy PRZED konkretnym elementem w wybranym rodzicu
+// wrapper.insertBefore(div, hearts[1]); //stara wersja zapisu
+
+//4
+// hearts[0].after(div);  //wstawiamy PO konkretnym elemencie w wybranym rodzicu
+
+//5
+// circles[0].remove(); //usuwamy konkretny element z tablicy circles
+//wrapper.removeChild(hearts[1]);
+
+//6
+// hearts[0].replaceWith(circles[0]);  //zamieniamy konkretny element na inny konkretny element z naszych tablic gdzie sa zaciagniete elementy ze strony
+// wrapper.replaceChilde(circles[0], hearts[0]); //stara wersja
+
+
+// Dynamiczne dodawanie wsrodek bloku informacji
+        // roznica w metodach polega na bezpieczenstwu
+        // w jeden mozna wstawic kod a w drugi tylko tekst, 
+        // i wszystko zalezy od zadania co np. chcemy dostac od uzytkownika
+        // innerHTML pozwala dodawac w srodek i tekst i tagi html
+div.innerHTML = "<h1>Hello world</h2>";
+
+        //textContent pozwala dowac tylko tekst
+// div.textContent = "Hello";
+
+        // Jak wstawić kawałek kodu przed lub po tegu 
+div.insertAdjacentHTML('afterbegin', '<h2 style="background-color: #cfcfcf;">Hello</h2>');
+// nazwaZmiennej.insertAdjacentHTML('WlasciwoscZponirzszejListy', 'kod html ktory chcemy dodac');
+//Lista wlasciwosci - wstawic dane html:
+// beforebegin - z zewnatrz PRZED ELEMENTEM w naszym przypadku div z klasa .black 
+// beforeend - z zewnatrz tylko PO ZAKONCZENIU ELEMENTU tiv
+// afterbegin - NA POCZATKU tylko w SRODKU ELEMENTU div 
+// afterend - NA KONCU ELEMENTU tylko w SRODKU ELEMNTU div
