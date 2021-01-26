@@ -56,7 +56,7 @@ document.write(answers);
 
 //---------------------------------------------------------------------------------------------------
 
-//Lessons 8 - Interpolacja
+//Lesson 8 - Interpolacja
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/template_strings
 const category = 'tojs';
 
@@ -460,10 +460,10 @@ const calcFour = (a, b) => {
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String
 
 const str = "test";
-console.log(str.leght); // dlugosc string
+console.log(str.length); // dlugosc string
 
 const arr = [1, 2, 4]
-console.log(arr.leght); // dlugosc array
+console.log(arr.length); // dlugosc array
 
 const strTwo = "test";
 console.log(strTwo[2]); // wynik literk S. 
@@ -617,7 +617,7 @@ function second() {  //здесь нет задержки
 
 first();
 second();
-//Запомнить правило, еесли функции идут одно за другой это не значит что выводяться одна за другой
+//Запомнить правило, если функции идут одно за другой это не значит что выводяться одна за другой
 //иногда большая функцция выполняеться дольше чем маленькая что может привести к не очивидному результату
 //это плохо когда мы должны получить снача даные с большой функции, чтобы передать результат в мальнукую.
 //если вторая выполниться быстрее первой функции то может вывести не тот результат что нам нужною
@@ -1248,6 +1248,10 @@ console.log(oneHeart);
 const oneDiv = document.querySelector('div');
 console.log(oneDiv);
 
+//--------------------------------------------------------------------------------------------------
+
+
+//Lesson 29 - Действия с элементами на странице
 //Can I use - https://caniuse.com/
 
 //Pobieramy elementy ze strony z którymi będziemy pracować i zapisujemy do zmiennych
@@ -1298,7 +1302,7 @@ box.style.cssText = 'background-color: blue; width:500px;';
 //     hearts[i].style.backgroundColor = 'blue';
 // }
 
-//Metoda forEach dla przejscia po tablicy i zmianie stylu dla wybranych elemntów
+//Metoda forEach dla przejscia po tablicy i zmianie stylu dla wybranych elementów
 //w srodek forEach(wstawiemy zawsze callback funkcje)
 hearts.forEach(item =>{
         item.style.backgroundColor = 'blue';
@@ -1347,7 +1351,7 @@ document.body.append(div); //element pojawi sie na koncu w tegu body
 
 //5
 // circles[0].remove(); //usuwamy konkretny element z tablicy circles
-//wrapper.removeChild(hearts[1]);
+// wrapper.removeChild(hearts[1]);
 
 //6
 // hearts[0].replaceWith(circles[0]);  //zamieniamy konkretny element na inny konkretny element z naszych tablic gdzie sa zaciagniete elementy ze strony
@@ -1359,7 +1363,7 @@ document.body.append(div); //element pojawi sie na koncu w tegu body
         // w jeden mozna wstawic kod a w drugi tylko tekst, 
         // i wszystko zalezy od zadania co np. chcemy dostac od uzytkownika
         // innerHTML pozwala dodawac w srodek i tekst i tagi html
-div.innerHTML = "<h1>Hello world</h2>";
+div.innerHTML = "<h1>Hello world</h1>";
 
         //textContent pozwala dowac tylko tekst
 // div.textContent = "Hello";
@@ -1372,3 +1376,257 @@ div.insertAdjacentHTML('afterbegin', '<h2 style="background-color: #cfcfcf;">Hel
 // beforeend - z zewnatrz tylko PO ZAKONCZENIU ELEMENTU tiv
 // afterbegin - NA POCZATKU tylko w SRODKU ELEMENTU div 
 // afterend - NA KONCU ELEMENTU tylko w SRODKU ELEMNTU div
+
+
+//--------------------------------------------------------------------------------------------------
+
+
+// Lesson 30 - Zadanie ver1 
+// patrz plik project (w pliku juz beda nowe modyfikowane wersje, dlatego mozna skopjowac ponizszy kod i wstawic
+// zeby zobaczyc jak bylo na poczatku)
+
+/* Задания на урок:
+
+1) Удалить все рекламные блоки со страницы (правая часть сайта)
+
+2) Изменить жанр фильма, поменять "комедия" на "драма"
+
+3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
+Реализовать только при помощи JS
+
+4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+Отсортировать их по алфавиту 
+
+5) Добавить нумерацию выведенных фильмов */
+
+
+const movieDB = {
+    movies: [
+        "Логан",
+        "Лига справедливости",
+        "Ла-ла лэнд",
+        "Одержимость",
+        "Скотт Пилигрим против..."
+    ]
+};
+
+const ads = document.querySelectorAll('.promo__adv img'),
+      promoBg = document.getElementsByClassName('promo__bg'),
+      genres = document.getElementsByClassName('promo__genre'),
+      filmList = document.querySelectorAll('.promo__interactive-item');
+      
+//console.log(filmList);
+
+//1 Usunincie banerow reklamowych ze strony
+ads.forEach(item => {
+    item.remove();
+});
+
+
+// Inny zapis takiej samej funkcji:
+// ads.forEach(function (item) {
+//     item.remove();
+// });
+
+
+//2  zmiana napisu komedia na drama
+genres[0].textContent = 'Drama';
+
+//3 zamiana baneru na inny
+//ver 1
+//promoBg[0].style.cssText = 'background-image:url(../project/img/bg.jpg)';
+
+//ver 2
+promoBg[0].style.backgroundImage = 'url("../project/img/bg.jpg")';
+
+//5 sortujemy nazwy filmow,
+movieDB.movies.sort();
+
+//4 usuwamy listy filmow statycznych dodanych przez html z bloku
+//wersja nauczyciela
+filmList.innerHtml = ""; //zamienia to co jest w zmiennej na pustey element
+
+//dodajemy filmy dynamicznie z powyzszej tablicy oraz dodajemy numeracje
+movieDB.movies.forEach((film, i) => {
+    filmList.innerHtml += `
+    <li class="promo__interactive-item">${i + 1}. ${film}
+        <div class="delete"></div>
+    </li>
+    `;
+});
+
+//moja wersja, tez dziala
+// for(let i = 0; i < movieDB.movies.length; i++){
+//     filmList[i].insertAdjacentHTML('beforebegin', `<li class="promo__interactive-item">${i+1}. ${movieDB.movies[i]}<div class="delete"></div></li>`);
+//     filmList[i].remove();
+// }
+
+
+
+//--------------------------------------------------------------------------------------------------
+// patrz folder: preview -> file js
+// Lesson 31 - События и их обработчики
+// Простой список событий - https://oddler.ru/blog/i63
+// Справочник по событиям - https://developer.mozilla.org/ru/docs/Web/Events
+// addEventListener() - https://developer.mozilla.org/ru/docs/Web/API/EventTarget/addEventListener
+// Обьект собития - https://developer.mozilla.org/ru/docs/Web/API/Event
+// removeEventListener() - https://developer.mozilla.org/ru/docs/Web/API/EventTarget/removeEventListener
+
+// События - это сигнал от браузера что чтото у нас призешлоб это:
+// клик, двойной клик, прокрутка колесека миши, нажатие клавиши и тд.
+// Шаблон такой:
+// Собития по стороне пользьвотеля (кли на что-то) -> запускается функция котороя обрабатывает собитие, например отправляет даные в базу
+// Собития в джаваскрипте выполняютьсяв порядке очереди
+
+const btn = document.querySelector('button'), 
+      btns = document.querySelectorAll('button'),      
+      overlay = document.querySelector('.overlay');
+
+// В джаваскрипте всего 3 способа назначить обработчика событий
+// 
+// 1.(Почти никогда не используеться)
+// Использовать html атрибут кторый записуеться в верстке html 
+// <button onclick="alert('Click')" id="btn" >Нажми меня</button>
+//
+// 2. (Почти никогда не используеться)
+// Использовать свойство DOM дерева для использование события
+
+ //birzemy selector button z html
+// btn.onclick = function() {  //dodajemy zdarzenie onclick i funkcje która wykona się dokładnie po kliku elemntu
+//     alert('Click');
+// };
+// malo bezpieczny bo po wykonaniu zawsze istnieje, 
+// jesli dublowac kod i wyswietlic Second klik, to zadziala tylko ostatni zdubluwoany kod, co moze uszkodzic funkcjonalnosc projektu
+
+// 3. Metoda (Najbardzie wykorzystywana)
+
+// .addEventListener('nazwa zdarzenia wybrac z istaniajacych', callback funkcja ktora bedzie obrabiac zdarzenie); - sledzi za elmentami
+// btn.addEventListener('click', () =>{
+//     alert('Click');
+// });
+// bedzie dzialac i pierszy Click i Second Clik
+// btn.addEventListener('click', () =>{
+//     alert('Second Click');
+// });
+
+// dodajemy zdarzenie mouseenter - nakierowanie stralki na przycisk
+// event lub skrocona e - argument dla callback funkcji jako pierwszy argument(nazwa moze byc dowolna)
+// jesli potrzebujemy jeszcze jakis argument do funkcji który naprzyklad bedzie pobieral tekxst od uzytkownika, to zapisujemy na drugim miejscu, a pierwszym zawsze bedzie objekt zdazenia
+// btn.addEventListener('mouseenter', (e) =>{
+//     console.log(e.target); //wyswietli w konsoli element w calosci z ktorym mozna dalej pracowac
+//     e.target.remove(); //np usunac ze strony
+// });
+// jesli skopjowac i wstawic takie same zdarzenie jak wyzej to beda to dwa roznych zdazenia
+// dlatego zeby USUNAC potrzebne nam zdarzenie, musimy jego najpierw zapisac do zmiennej 
+// const deleteElement = (e) => {
+//     e.target.remove();
+// };
+
+
+// USUWANIE ZDAZEN
+// .removeEventListener('nazwa zdarzenia z istniajacych', nazwa zmiennej gdzie jest funkcja ktora usuwa element);
+// btn.removeEventListener('mouseenter', deleteElement); //deleteElement bez () na koncu, bo tedy my tylko linkujemy do niej a nie wylolamy.
+
+// Usuwamy zdazenie z przycisku po tym jak zostanie raz wylowane zdazenie
+// let i = 0;
+// const deleteElement = (e) => {
+//     console.log(e.target);
+//     i++;
+//     if (i == 1) {
+//         btn.removeEventListener('mouseenter');
+//     }};
+
+
+// СПЛЫТИЕ СОБЫТИЙ, не путать со сплитием переменных
+// это когда срабатывает событие сначала на вложеном елементе, потм на родителе если он у него есть, а потом выше по иерархии в дереве DOM 
+// <div class="overlay">  - здесь присутвуствует событие 
+//        <button id="btn" >Нажми меня</button> - и здесь
+//  </div>
+// сначала сработает событие то что в середине(кнопка) а дальше вверх по иерархии DOM сработает следуещее тоесть клас оверлай.
+const deleteElement = (e) => {
+    //посмотрим в консоли работу события
+    console.log(e.target); //выводит события, часто используюется
+    //console.log(e.currentTarget); //выводит события всплывающие попорядку, редко используеться
+    console.log(e.type); //выводит назву сработающего событияб тоесть mouseenter - наведения мыши
+};
+// btn.addEventListener('click', deleteElement);
+// overlay.addEventListener('click', deleteElement);
+
+// САМЫЙ ПРАВИЛЬНЫЙ СПОСОБ назначать обработчик событий когда нужно поставить его сразу на несколько елементов в коде
+btns.forEach(item => {
+    item.addEventListener('click', deleteElement, {once: true}); //{once: true} на конце - это алтернатива методе removeEventListener(); 
+    // чтобы не писать конструкции как выше, а только передать как опции и отменить сразу действие по его использовании
+    // иногда в коде можна встетить как третий аргуммент - false (в вверхнем методе), что значит что мы не передаем опции 
+});
+// Отмена стандартных событий в браузере
+// например: клик на сылку, выдиление текста и так далее
+// .preventDefault(); - metoda do odmiany zdazen w przegliadarce
+const link = document.querySelector('a'); //pobieramy link z ktorym bedziemy dalej dzialac
+// usuwamy standardowe zdazenie w przegliadarce co do linku, czyli nie bedziemy po nim przechodzic jak w niego klikniemy
+// czesto wykorzystywane kiedy programisci buduja aplikacje i nie chca za kazdym razem gdzies przechodzic dalej, atylko sprawdzaja funkcjonalnosc produktu
+link.addEventListener('click', function(event){
+    event.preventDefault(); //zawsze na poczatku w kodzie
+
+    console.log(event.target); //zobaczy w kosoli co sie wydazy
+});
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 32 - Навигация по DOM - элементам, data-атрибуты, преимущество for/of
+// Использование data-* атрибутов - https://developer.mozilla.org/ru/docs/Web/Guide/HTML/Using_data_attributes
+
+// jest pomocne przy implementacji kodu js w html
+
+// dostaniemy body albo head
+// console.log(document.body);
+// console.log(document.head);
+
+// dostajemy caly html
+// console.log(document.documentElement);
+
+
+//.childNodes - metoda pozwala dostac wszystkie nody(wezle) które znajduja sie w wybranym elemntu(rodzicu)
+console.log(document.body.childNodes); // wyswietli wszystkie elementy dom i dom-nody tekstowe w htmlu
+// czyli idzie DOM element <body> potem перенос строки text (это и есть тестовый дом узел(нода)), потом идет дом елемент, и тд.
+
+// разница между дом елементом, и дом узлом - все на странице это нода(узел) но не каждая нода есть елементом
+// если разбирать глубже то: <ul><li>1</li></ul> - то ul - есть дом лементом - потом перенос строки текстова дом-нода, 
+// потом дом елемент <li>, потом текстова дом-нода 1.
+
+
+// Własciwości: 
+// Dostać Pierwsze lub Ostatni child w srodku rodzica
+// zwroc uwage ze tutaj zawsze bierzemy od rodzica body
+console.log(document.body.firstChild);  // tekstowa noda
+console.log(document.body.firstElementChild);  // analog do gornej metody, tylko ze dostaje sie zawszesze element, pomija tekstowe nody
+console.log(document.body.lastChild);  // element noda
+console.log(document.body.lastElementChild); // analog do gornej metody, tylko ze dostaje sie zawszesze element, pomija tekstowe nody
+
+// komendy pozwalajacy brac elementy od roznych rodzicow
+// KOMENDY żeby dostać rodzica, sąsiadów, dzieci elementa w html
+console.log(document.querySelector('#current').parentNode); //.parentNode - pozwoli dostac rodzica dla elementa który w niego jest zapisany #current
+console.log(document.querySelector('#current').parentElement); // .parentElement - tutaj juz na 100% dostaniemy element node z html a nie tekstowa node
+console.log(document.querySelector('#current').parentNode.parentNode); // .parentNode.parentNode - pozwoli od elementa pojsc w gore i dostac rodzica na 2 poziomie
+
+// DATA-ATRYBUTY w kodzie html
+// syntaksys: data-+nazwa ktora wymeslamy, np. co bedzie robil albo co zawiera
+// np. data-current jest wlozony w tegu html
+// data-current="3" - moze zawierac jakies znaczenie
+// data-current - jesli bez znaczenia, bedzie prosto boolengowe znaczenia true
+
+//zeby dostac atrybut html, musimy podac w [w kwadratowych nawiasach]
+console.log(document.querySelector('[data-current="3"').nextSibling); // .nextSibling - dostac nastepna node, dostaniemy tekstowa node
+console.log(document.querySelector('[data-current="3"').previousSibling); // .previousSibling - dostac poprzednia node, tez bedzie tekstowa noda
+console.log(document.querySelector('[data-current="3"').nextElementSibling); // .nextElementSibling - dostac nastepny element noda, ten metod juz nie zwroci tekstowej nody, bo zoriontowany na elementy 
+
+// Wszystkie elemnty nody ze strony bez tekstowych node
+// konstrukcja for of pomoze przejsc po drzewu DOM i zebrac tylko elementy nody, be text node
+for (let node of document.body.childNodes){
+    if (node.nodeName == '#text'){  //#text - jest to nazwa tekstowej nody, nie wymyslona, tylko podana w wlasciwosciac: nodeName: "#text" - mozna zobaczyc otwierajac tekstowa node w konsoli przegliadarki
+        continue;
+    }
+    console.log(node);
+}
+
+
+//--------------------------------------------------------------------------------------------------
