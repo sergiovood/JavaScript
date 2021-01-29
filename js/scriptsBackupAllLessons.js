@@ -1630,3 +1630,282 @@ for (let node of document.body.childNodes){
 
 
 //--------------------------------------------------------------------------------------------------
+// Lesson - 33
+/* 
+Задания на урок:
+
+1) Реализовать функционал, что после заполнения формы и нажатия кнопки "Подтвердить" - 
+новый фильм добавляется в список. Страница не должна перезагружаться.
+Новый фильм должен добавляться в movieDB.movies.
+Для получения доступа к значению input - обращаемся к нему как input.value;
+P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
+
+2) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
+
+3) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
+
+4) Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: 
+"Добавляем любимый фильм"
+
+5) Фильмы должны быть отсортированы по алфавиту
+ */
+
+'use strict';
+
+// DOMContentLoaded + callback funkcja -  свойство отвечает за запуск всех скриптов 
+// после того как построилась ДОМ структура
+// остальные картинки, скрипты, стили будут подгружатся потом в фоновом режиме, но для нашого скрипта главное чтоб ДОМ 
+// елементы уже были загружены перед тем как он начнет выполнятся браузером
+// Помещаем наш весь джаваскрипт в ето событие 
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига справедливости",
+            "Ла-ла лэнд",
+            "Одержимость",
+            "Скотт Пилигрим против..."
+        ]
+    };
+    
+    const ads = document.querySelectorAll('.promo__adv img'),
+          promoBg = document.querySelector('.promo__bg'),
+          genres = document.querySelector('.promo__genre'),
+          filmList = document.querySelector('.promo__interactive-list'),
+          addForm = document.querySelector('form.add'),
+          addingInput = addForm.querySelector('.adding__input'),
+          checkbox = addForm.querySelector('[type="checkbox"]');
+
+    
+        //   console.log(filmList, addForm, addingInput);
+    // submit - sledzi czy przycisk zostal wcisnienty
+    addForm.addEventListener('submit', (event) => {
+        // usuwa domyslne zachowanie dla przeglidarki, 
+        // czyli po wcisnienciu przycisku strona nie bedzie sie ponownie ladowac
+        event.preventDefault(); 
+
+        let newFilm = addingInput.value;
+        // sprawdamy czy czekbox zostal zaznaczony przez uzytkownika 
+        // za pomoca metody .checked
+        const favorite = checkbox.checked;
+
+        // Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: "Добавляем любимый фильм"
+        // wykonasie tylko jesli zmienna favorite ma cos tam zapisane znaczy ze ma true
+        if (favorite){
+            console.log("Добавляем любимый фильм");
+        }
+
+        //sprawdzamy czy newFilm zawiera jakis film true or false
+        if (newFilm) {
+
+             // jesli nazwa dluzsza niz 21 sy,bol to usuwamy ogon i dodajemy ...
+            if (newFilm.length > 21) {
+               
+                //Sposob 1
+                //newFilm = newFilm.slice(0, 21) + '...';
+                
+                //Sposob bardziej perspektywny z wykorzystaniem interpolacji `${}`
+                newFilm = `${newFilm.slice(0, 21)}...`;
+            }
+
+            // dodajemy film do tablicy po wprowadzeniu przez uzytkownika
+            movieDB.movies.push(newFilm);
+            //sortujemy filmy wyzywajac funkcje
+            sortArr(movieDB.movies);
+            // tworzymy nowa tablice z filmami wyzywajc funkcje
+            createMovieList(movieDB.movies, filmList);
+        }
+
+        event.target.reset();
+    });
+          
+    
+    //1 Usuniecie banerow reklamowych ze strony
+    // zeby funcka byla bardziej niezalezna
+    // bedziemy przyjmowac argument arr
+    // dzialac w srodku z argumentem,
+    // nizeli przyjmowac odrazu jakis element ze strony bezposrednio
+    // dlatego wyzywamy funkcje na koncu i przekazujemy ergument ktory chcemy 
+    const deleteAds = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
+
+    const makeChanges = () => {
+    
+        //2  zmiana napisu komedia na drama
+        genres.textContent = 'Drama';
+        
+        //3 zamiana baneru na inny
+        //ver 1
+        //promoBg[0].style.cssText = 'background-image:url(../project/img/bg.jpg)';
+        
+        //ver 2
+        promoBg.style.backgroundImage = 'url("../project/img/bg.jpg")';
+        
+    };
+
+    const sortArr = (arr) => {
+        arr.sort();
+    };
+  
+    //dodajemy filmy dynamicznie z powyzszej tablicy oraz dodajemy numeracje 
+    // ta funkcje bedziemy wykorzystywac w addForm na pocztku kodu
+    function createMovieList(films, parent) {
+        //wyciscimy blok przed dodaniem filmow
+        parent.innerHTML = "";
+        //sortujemy filmy ktore dostalismy
+        sortArr(films);
+        // dodaje filmy po kolei
+        films.forEach((film, i) => {
+            // dodajemy filmy po kolei
+            parent.innerHTML += `
+                <li class="promo__interactive-item">${i + 1} ${film}
+                    <div class="delete"></div>
+                </li>
+            `;
+        });
+
+        // usuwamy film z listy po kliknieciu przycisku delete
+        // zbieramy wszystkie przyciski do tablicy i liczymy pod jakim numerem        
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            // sledzimy moment wciskania na przycisk
+            btn.addEventListener('click', () => {
+                // usuwamy rodzica przycisku, czyli element <li> z html
+                btn.parentElement.remove();
+                // usuwamy z tablicy 1 konkretny element pod liczba przycisku ktora wyliczywa powyzsza funkcja
+                movieDB.movies.splice(i, 1);
+                // korzystamy z powyzszej funkcji zeby ponownie sortowac po kolei filmy po usunieciu
+                createMovieList(movieDB.movies, filmList);  // РЕКУРСИЯ - когда функция вызывает сама себя в середине           
+            });
+            
+        });
+    }
+
+
+    // deleteFilms(movieDB.movies, filmList);
+    deleteAds(ads);
+    makeChanges();
+    // передаем актульный список фильмов с таблицы и второй аргумент это помещаем список на страницу
+    createMovieList(movieDB.movies, filmList);
+    
+});
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 34 - События на мобильных устройствах
+
+// Touch события на javascript, мультитач - реализация -  http://youon.ru/%D0%90%D0%BD%D0%B4%D1%80%D0%BE%D0%B8%D0%B4/%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0/touch-sobytiya-na-javascript-multitach-realizatsiya
+// Заставьте сайт работать на сенсорных устройствах - https://habr.com/ru/company/sibirix/blog/227175/
+// HammerJS - https://hammerjs.github.io/  - gotowe roziwazania dla tworzenia dotykowych elementow na stronie pod dotykowe urzadzenia
+
+// TABY - znajduja sie w mobilnych przegliadarkach na dotykowych urzadzeniach. 
+// Sa ta wlasciwosci ktore monitoruja ekran i sprawdzaja kiedy, gdzie i jak uzytkownik dotyka palcem ekran oraz ile palcow wykorzystuje (multituch).
+
+
+// Zdarzenia (event)
+// touchstart  - zaczyna dzialac w momencie dotyku do elementa
+// touchmove - licze staly dotyk palca od elementa, jesli prowadzic palcem po lemencie.
+// touchend - w momencie kiedy zabieramy palec od elemntu, idzie rejestracja tego zdarzenia
+// touchenter - kiedy prowadzimy palcem po ekranu, i naskoczymy na element ktory jest na ekranie i ma podlaczone to zdarzenia. Wtedy mozna zarejestrowac ze palec byl w granicach danego elementu.
+// touchleave - kiedy palec prowadzony po lemencie nie odrywajac wyszedl za jego granicy, wtedy nastepuje rejestracja zdarzenia
+// touchcancel - zdarze sie wtedy kiedy punkt dotyku palca juz wicej nie jest widoczny, nie jest rejestrowany. Np. mozemy prowadzic palcem i on wyjdzie za przedzial przegliadarki wtedy zadziala touchcancel
+
+// Wlasciwosci - glowne pod czas pracy z dotykowymi urzedzeniami
+// touches - ile palcow zostalo w interakcji z EKRANEM
+// targetTouches - ile palcow w iterakcji z KONKRETNYM ELEMENTEM
+// changedTouches - lista palcow ktora uczestniczy w danym zdarzeniu, nawet jesli jakis palec zabierzemy to lista wyswietli dalej wszystkie palcy ktory byly w dotyku z lementem
+
+// dodajemy DOMContentLoaded który będzie sledzil zeby uruchomic skrypt jak juz beda sformowane wszystkie html nody
+window.addEventListener('DOMContentLoaded', () =>{
+    // dostajemy elment z html ktorym bedziemy pracowac
+    const box = document.querySelector('.box');
+
+    // dodajemy zdazenie do elementu
+    box.addEventListener('touchstart', (e) => {
+        // dodatkowo, rekomendowane jest usuwac standardowe dzialania przegliadark na element 
+        // przed ropoczenciem dzialania z naszym elmentem
+        e.preventDefault();
+
+        // wyswietlimy start w momecie jak bedzie klik na elmenent
+        // dzialac bedzie tylko w trybie przegliadaki mobile view, bo myszke ono nie bedzie sledzic tylko dotyk 
+        console.log('Start');
+        
+        // wyswietli liczbe - ile palcow zostalo dotknietych do danego elemnta
+        console.log(e.touches);
+        // tak jak wyzej tylko ba inna strukture, takze sledzi ile palcow zostalo wykorzystano przez uzytkownika
+        // w stosunku do elementa
+        console.log(e.targetTouches);
+        
+    });
+
+    // trzeba zacisnac myszke w trybie mobile view i prowadzic po elemencie, wtedy zaczen dzialac zdarzenie
+    box.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+
+        console.log('Move');
+    });
+
+    // zdarzenie touchmove w polaczeniu z wlasciowoscia .targetTouches[0] i pageX
+    // bedzie sledzic pierwszy palec i kiedy jego koordynaty na ekranie kiedy 
+    // bedzie on sie zacisnienty ruchac sie w przedziale elementu box
+    // koordynaty takie mozna wykorzystac do tego ze jesli zajde uzytkownik za jakies koordynaty to trzeba np. zmienic slader
+    box.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+
+        console.log(e.targetTouches[0].pageX);
+    });
+
+    // zadziala jak zabierzemy palec z elementu
+    box.addEventListener('touchend', (e) => {
+        e.preventDefault();
+
+        console.log('End');
+    });
+});
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 35. Async, defer, динамические скрипты
+
+// dodanie w html do scryptu atrybut
+// async - kazdy skript z ta wlasciwoscia bedzie wykonywany nie zaleznie od kolei podlaczenia w html,
+//         laduje sie jednoczesnie z html i wykonuje sie odrazu jak zostal zaladowany
+//         takze nie czeka dopoki zaladuje sie DOM elementy 
+//         Musimy byc pewni nadajac atrybut async, ze taki scrypt nie powiazany z DOM elementami, bo inaczej beda bledy przy ladowaniu
+//         takze nie powinien byc powiazany z innymi skryptami, bo moze sie zalodowac szybciej niz te z ktorych korzysta
+//         <script async src="script.js"></script>
+
+// defer - kazdy script z ta wlasciwoscia bedzie wykonywany po kolei,
+//         takze bedzie ladowany niewidocznie ale jednoczesnie z html, a nie po kolei 
+//         i wykonany w momencie jak sam sie zaladuje i wtedy poczeka na DOM elementy i tylko potem wykonan sie.
+//         <script defer src="script.js"></script>
+
+const p = document.querySelectorAll('p');
+console.log(p);
+
+
+
+function loadScript(src){
+    // Sposob dodania dynamicznego skryptu na stronie 
+    // tworzymy nowy tag z nazwa script
+    const tag = document.createElement('script');
+    // atrybut src = 'sciezka do podlaczenia scryptu', tutaj dostajemy ja dynamiczne pod czas wywolania funkcji nizej
+    tag.src = src;
+    // dynamiczne dodane scrypty zachowuja sie standardowo jak przy dodaniu atrybuta async, czyli
+    // zaladowali sie po kolei i odrazu wykonuja sie kto szybcie zaladow sie nie czekaja na nikogo
+    // w zadkich przypadkach musimy zmienic to zachowanie, dlatego musimy ustawic:
+    tag.async = false; // co spowoduje wykonanie skrytpuw jeden po drugim
+    // zamieszczamy nowy scrypt w body metoda append, ktora dodaje na koniec elemntu, czyli na koniec body dodaje nasz script
+    document.body.append(tag); // dodawany scrypt zancznie sie ladowac tylko wtedy jak zostanie dodany do dokumentu na koncu body, czyli DOM elemnty juz beda zbudowane
+}
+
+loadScript('test.js');
+loadScript('some.js');
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 36 - Nowy modul, opis
+
+//--------------------------------------------------------------------------------------------------

@@ -136,11 +136,19 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
-        document.querySelector('.delete').forEach((btn, i) => {
+        // usuwamy film z listy po kliknieciu przycisku delete
+        // zbieramy wszystkie przyciski do tablicy i liczymy pod jakim numerem        
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            // sledzimy moment wciskania na przycisk
             btn.addEventListener('click', () => {
+                // usuwamy rodzica przycisku, czyli element <li> z html
                 btn.parentElement.remove();
+                // usuwamy z tablicy 1 konkretny element pod liczba przycisku ktora wyliczywa powyzsza funkcja
                 movieDB.movies.splice(i, 1);
+                // korzystamy z powyzszej funkcji zeby ponownie sortowac po kolei filmy po usunieciu
+                createMovieList(movieDB.movies, filmList);  // РЕКУРСИЯ - когда функция вызывает сама себя в середине           
             });
+            
         });
     }
 
@@ -148,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // deleteFilms(movieDB.movies, filmList);
     deleteAds(ads);
     makeChanges();
-    sortArr(movieDB.movies);
     // передаем актульный список фильмов с таблицы и второй аргумент это помещаем список на страницу
     createMovieList(movieDB.movies, filmList);
     
