@@ -2022,3 +2022,236 @@ wrapper.append(btn);
 
 
 //--------------------------------------------------------------------------------------------------
+// Lesson 38 - Projekt Food - Czesc 1
+// Tworzenia funkcjalnosci strony
+
+// Owiniemy wszytko w event DOMContentLoaded zeby script poczekal na zalodanie sie elementow DOM 
+window.addEventListener('DOMContentLoaded', () => {
+    //pobieramy wszystkie potrzebne elementy z ktorymi bedziemy pracowac
+    const tabsParent = document.querySelector('.tabheader__items'), // pobieramy konter gdzie sa wszystkie taby
+          tabs = tabsParent.querySelectorAll('.tabheader__item'), // pobieramy wszystkie taby slidera
+          tabsContent = document.querySelectorAll('.tabcontent'); // pobieramy wszystkie opisy dla tabow
+          
+    // funkcja ktora bedzie chowac chowac taby
+    function hideTabContent() {
+        // callback funkcja forEach bedzie sprawdzac po kolei pobrany tabe i usuwac jesli znajdzie ponizsze klasy z tabow
+        tabsContent.forEach(item => {
+             // item.style.display = 'none';
+             item.classList.add('hide'); // dodajemy klas zdefiniowany w css ktory ma ustawienia display:none;
+             item.classList.remove('show', 'fade'); // usuwamy klas show ktory pokazuje tab i fade ktory dodaje animacje pod czas pokazywania
+        });
+        // usuwa z tabow klas css ktory podwswietla aktywny tab 
+        tabs.forEach(item => {
+            item.classList.remove('tabheader__item_active');
+        });
+    }
+    
+    // funkcja pokaze taby
+    // i = 0 znaczy ze przyjmuje znaczenie poczatkowe 0
+    function showTabContent(i = 0) {
+        //tabsContent[i].style.display = 'block';
+        tabsContent[i].classList.add('show', 'fade'); // doda potrzebne klasy do tabu zeby jego wyswietlic
+        tabsContent[i].classList.remove('hide'); // usunie klas ktory blokuje wyswietlanie
+        tabs[i].classList.add('tabheader__item_active'); // doda klas css ktory odpowiada za podswietlenia aktywnego tabu
+    }
+
+    // wywolujemy powyzsze funkcje
+    hideTabContent();
+    showTabContent();
+
+    // dodajemy sledzenia klikniecia dla bloku tabheader__items gdzie znajduja sie  wszystkie taby
+    tabsParent.addEventListener('click', (event) => {
+        // zapisujemy do zmiennej target dla elemntu w ktory kliknelismy
+        // przyda sie dla sprawdzenia czy uzytkownik kliknow dokladnie w ten element w przestrzeni tabheader__items z ktorymi skrypt powinien dzialac
+        const target = event.target; 
+        
+        // sprawdzamy czy ten elemnt co nam trzeba zostal zapisany target
+        if (target && target.classList.contains('tabheader__item')) { //sprawdzamy zeby zawieral klas tabheader__item
+            tabs.forEach((item, i) => {  // przechodzimy po kazdym elemncie, a takze zapisujemy liczbe dla i po kolei
+                if (target == item) { // szykamy element target ktory bedzie rownac sie z naszej tablicy ktore przeliterujemy, jak bedzie true
+                    hideTabContent(); // to uruchamiamy nasze powyzsze funkcje, schowac tab
+                    showTabContent(i); // wyswietlic tab z numerem i ktory przekazujemy do funkcji showTabContent
+                }
+            });
+        }
+    });
+
+});
+
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 39 - Скрипты и время их выполнения. 
+// setTimeout - ile czasu poczekac zeby wykonac kod
+// setInterval - co jaki czas wykonywac kod
+// clearInterval - przerwac i wycziscic wykonanie dla setInterval lub setTimeout
+// JavaScript-анимации -  https://learn.javascript.ru/js-animation
+
+// dostajemy przycisk z html
+const btn = document.querySelector('.btn');
+let timeIdThree, // oglaszamy nowe globalne zmienne gtore bedziemy wykorzystywac w srodku funkcji
+    i = 0;
+
+// setTimeout(1argument, 2argument) - 1 argument to co trzeba zrobic, 2 argument za ile czasu, jesli nie podac to bedzie natychmiast wykonane 
+const timeIdOne = setTimeout(function() { // w srodku jako argument callback funkcja ktora zwroci slowo hello one
+    console.log('Hello One'); 
+}, 2000); // wyswietlic to co wykona funkcja po 2 sekundach w konsoli
+
+// setTimeout(1 argument, 2 argument, 3 argument) 
+const timeIdTwo = setTimeout(function(text) { // 1 argument funkcja ktora pobiera znaczenia z 3 argumentu w setTimeout
+    console.log(text);
+}, 3000, 'Hello Two'); // 2 argument 3000 - wykonac po 3 sekundach funkcje. 
+// 3 argument to znaczenie ktore bedzie przeslane do 1 argumentu i wykonane w funkcji.
+
+
+// do przycisku podlaczamy sledzenie zdazenia click
+// btn.addEventListener('click', () => {
+//     // const timeIdTree = setTimeout(logger, 2000);
+//  // w zmiennej timeIdThree bedziemy zapisywac unikalny indentyfikator 
+//  //ktory tworzy  setTimeout lub setInterval, zeby potem mozna bylo do niego odlowac sie i przerwac dzialanie funkcji
+//     timeIdThree = setInterval(logger, 500); // po wcisnienciu przycisku na stronie, setInterval bedzie wykonywac funkcje logger co pol sekundy
+// });
+
+// tworzymy funkcje logger ktora bedzie wlaczana sie co pol sekundy przez powyzszy setInterval, jesli zostanie klikniety przycisk na stronie
+// function logger () {
+       // ustawiamy licznik zeby przerwac wykonanie interwalu w pewnym momencie, zeby nie bylo w nieskonczonosc
+//     if (i === 3){ 
+//         clearInterval(timeIdThree); // w srodek przekazujemy zmienna ktora posiada unikalny indentyfukator setInterval ktory musimy przerwac w dzialaniu
+//     }
+//     console.log('text'); // wyswietlamy 4 razy text, potem zadziala powyzszy warunek i wyczysci setInterval
+//     i++; // powiekszamy licznik 
+// }
+
+// funkcja ktora moze dzialac w nieskonczonosc bo sama siebie przyjmuje i wykonuje
+// ten zapis zawsze wykona funkcje w calosci, potem dokladnie ODCZEKA pol sekundy i znowu zacznie wykonanie
+// jest to rozwiazanie lepsze od setInterval przy duzym skrypcie ktory ma sie wykonac w srodku niego, 
+// bo jesli w setInterval znajdujesie ciezka funkcja ktora bedzie wykonywac sie dluzej niz setinterval ma odczekac
+// zeby ponownie ja uruchomic, to on juz nie bedzie czekal pol sekundy tylko wlicze ich do czasu wykonania funkcji i zacznie uruchamiac ja odrazu bez odczekania
+// UWAZAC NA TO
+
+// po wykonaniu sie po odczekaniu pol sekundy funkcja log() i wyswietli w konsoli log
+// potem nizej w zmienna id przekaze znowu funkcje log() i wykonanie za pol sekundy, po czym wyswietli hello i znowy przekaze siebie
+// i tak bedzie czaly czas
+// let id = setTimeout(function log(){ 
+//     console.log('hello');
+//     id = setTimeout(log, 500);
+// }, 500);
+
+// Tworzymy animacje niebieskiego kwadracika w bloku na stronie
+// od momentu powstania css3 wszystkie animacje tworzone w css a nie w js bo jest latwiej,
+// ten przyklad pokazuje ze jednak mozna tez tworzyc w js jak dawniej, ale sa tu takze duzo nie dorobien do idealnej animacji
+function myAnimation() {
+    // niebieski blok wyciagamy z html za pomoca jego klasy
+    const elem = document.querySelector('.box');
+    let pos = 0;  // lokalna zmienna ktora bedzie sie zmieniac dla uzyskania animacji, start od 0
+
+    const id = setInterval(frame, 10);  // przekazujemy funkcje ktora ma byc wykonana po 0,1 sekundy po tym jak zostanie przycisk wcisnienty
+    function frame() {
+        if (pos == 300){  // warunek w ktorym moncie bedzie wyczyszczony proces wykonania setInterval
+            clearInterval(id); // w id zapisany jest setInterval wlasnie tam mamy na niego wplyl, czyli stop wykonaniu
+        } else { 
+            pos++;  // zwiekszamy o 1
+            // wykorzystujemy o 1 wieksza liczbe w dynamicznie zmianie stylow na stronie dla elemnta box
+            // tutaj zaczyna sie ruch elemnta
+            // bedzie sie powtazac 300 razy, az poki nie zostanie wyczyszczony setInterval przez powyzszy warunek
+            elem.style.top = pos + 'px'; // odbicie elementa od swojego rodzica od gory o 1 px
+            elem.style.left = pos + 'px'; // odbicie elementa od swojego rodzica z lewej strony o 1 px
+        }
+    }
+}
+
+btn.addEventListener('click', myAnimation); // podlaczamy do przycsiku sledzenie za klikiem na stronie i od odrazu wlaczamy funkcje animacji.
+
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 40 - DATE - дата
+//
+// Дата - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date
+// Дата и время -  https://learn.javascript.ru/date
+
+// Date() - jest objektem ktory ma w sobie rozne metody 
+// mozna sprawdzac ile czasu pracuje jakas funkcja i na przyklad sprawdzic z inna funkcja
+// mozemy wyliczac przedzial czasowy
+// takze mozna wyswietlic jakas date lub tajmer zrobic na stronie, godzine 
+
+// mozna wykorzystac do przechowywania np. godziny i daty zmiany jakiegos dokumentu (ten elemnt juz bardziej sie odnosi do node.js bo jest backendem, sam js nie umie pracowac z plikami)
+
+// kazda data w javascript jest chroniona w milisekund nazywana timestemp
+// milisekundy odliczaja sie z poczatku 1970 roku
+// kazda date mozna transformowac w milisekundy a milisekundy w daty
+
+// tworzymy nowa date i zapisujemy ja do zmiennej
+const now = new Date('');
+console.log(now);  // wynik: 2021-01-31T17:24:39.314Z - rok-miesiac-dzien (T это роздилитель как пробел) godzina:minuty:sekundy.milisekundy
+
+const nowTwo = new Date('2021-01-31');  // mozemy przekazac odrazu argument do daty, np datu ze strony
+console.log(nowTwo);  // 2021-01-31T00:00:00.000Z  - nasza data zapisala sie a godziny 0 bo nie byly ustawione
+
+const nowThree = new Date(2021, 1, 31, 20, 55); // przekazujemy argumenty daty i godziny (dwa ostatnie)
+console.log(nowThree);  // 2021-03-03T19:55:00.000Z -- wynik konsoli VIsualStudio
+// Wed Mar 03 2021 20:55:00 GMT+0100 (czas środkowoeuropejski standardowy) - wynik przegliadarki Chrome
+// trzeba pamietac ze VisualStudio korzysta z grinwicza, a przegliadarka z strefy czasowej środkowoeuropejski standardowy
+// dlatego trzeba brac pod uwage strefy czasowe dla tego zeby uzyskac potrzebny nam czas
+
+const nowFour = new Date(0); // 0 milisekund, czyli wyswietli poczatek daty z ktorego zaczyna sie liczba w javascript
+console.log(nowFour);  // 1970-01-01T00:00:00.000Z
+
+const nowFive = new Date(-7777777777); // jesli czhcemy dostac date ponizej 1970 roku, przekazujemy milisekundy z minusem
+console.log(nowFive);  // 1969-10-02T23:30:22.223Z
+
+
+// METODY DOSTAWANIA KOMPONENTOW DATY
+// tylko popularny, ale ich jest wiecej
+
+// 1.1 - GET-tery 
+// pozwala na pobrania daty
+const nowSix = new Date();
+console.log(nowSix.getFullYear());  // 2021
+console.log(nowSix.getMonth()); // wynik 0 - styczen 0 miesiac w programowaniu, liczany od 0
+console.log(nowSix.getDate());  // 31 - dzien miesica
+console.log(nowSix.getDay());  // 0 - niedziela, dni zaczynaja sie od niedzieli ktora ma zanczenia 0, i koncza sie na sobocie ze znaczeniem 6
+console.log(nowSix.getHours()); //  18 - godzina brana z naszego lokalnego czasu
+console.log(nowSix.getUTCHours()); // 17 - godzina po UTC, czyli +0, czasami moze byc potrzebna w projektach. Takze getUTC ma wszystkie inne znaczenia co prosty get
+console.log(nowSix.getTimezoneOffset()); // -60 - roznica pomiedzy lokalna strefa czasowa i UTC, roznica z glowną strefą czasowa bedzie w minutach
+console.log(nowSix.getTime());  // 1612115054379 - roznica w milisekundach ktora minela od 1970-01-01T00:00:00.000Z do momentu uruchomienia kodu.
+
+const nowSeven = new Date(1612115054379); // liczba wzieta z powyzszego wyniku getTime()
+console.log(nowSeven); // 2021-01-31T17:44:14.379Z - jesli powyzsza liczbe pomiescic w Date() to ono zwroci date konkretna od momentu 1970 
+
+
+// 1.2 - SET-tery
+// pozwala na ustawienia daty ktora potrzebujemy 
+// wszystkie takie same metody jak wyzej tylko get zamieniamy na set
+const nowEight = new Date(); 
+console.log(nowEight.setHours(18)); // ustawiamy godziene na 18, a dodatkowo Date() jest pusta a znaczy ze ono pobierze nasza lokalna date, a godzie juz ustawi ktora my podajemy
+console.log(nowEight); // console w visualcode zwrozi 17 godzine po standardowo patrzy na UTC czas, a w przegliadarce konsol zwroci 18 godzine bo patczy na czas lokalny
+
+// 1.3 - PARSE - zadko spotykany
+// metod Daty ktory przeksztawci na date to co my podalismy w nawisach 
+
+// sposob bez metody parse()
+const nowNine = new Date('2021-01-31'); // wynik bedzie z podana data
+// sposob z metodą parse()
+// new Date.parse('2021-01-31'); // taki sam wynik jak na gorze, zadziej spotykany
+
+
+// Benchmark-i
+// Wyliczamy przedzial czasowy dzialnia skryptu z jednego momentu do drugiego
+// najpierw tworzymy jedna terazniejsza date 
+let start = new Date(); 
+
+// potem wstawiamy fukcje lub cykl lub inny kod ktory chcemy przetestowac
+for (let i = 0; i < 100000; i++){  // cykl bedzie wyswietlaw 100 000 tys znaczen
+    let some = i ** 3; // ** operator podnoszenia, podnoszimy kazde znaczenie do 3 
+    // i zapisujemy poprostu do miennej ktora nigdzie nie jest wykorzystywana dalej, potrebne tylko dla dla wykonania dzialnia na liczbach
+}
+// tworzymy druga date 
+let end = new Date ();
+// roznica miedzy pierwsza stworzona data i druga bedzie czas czas wykonania powyzszego skryptu.. kompilacja kodu idzie po kolei, dlatego jak stworzy pierwsza date, to dojdzie do kodu nizej i bedzie czekac az kod sie skompiluje i wtedy idzie dalej i tworzy druga date z nowa czasem.
+alert(`Cykl skonczyl dzialanie za ${end - start} mm`);  // wynik: Cykl skonczyl dzialanie za 20 mm
+
+
+
+
+//--------------------------------------------------------------------------------------------------
