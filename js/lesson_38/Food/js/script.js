@@ -140,9 +140,50 @@ window.addEventListener('DOMContentLoaded', () => {
     // wywolanie funkcji ktora uruchamia caly licznik
     // przekazujemy klase bloku z licznikiem i date koncowa jak argumenty do wykorzystania w funkcji
     setClock('.timer', deadline);
-});
-
 
 
 //--------------------------------------------------------------------------------------------------
-// Lesson 
+// Lesson 43
+// Создаем модальное окно
+// Kod klawiautury - https://keycode.info/
+
+// przy pomocy data atrybutow w html, вщвфоуьн ich do przyciskow zeby poznaczyc przyciski odpowiadajace za modelne okno 
+// a takze wyciagnac te przyciski tutaj 
+// nazwimy data atrybut ktory dodamy do html: 
+// data-modal - bedzie otwierac sie okno modalne po nacisniecie na przycisk ktory ma ten selektor
+// data-close - bedzie zamykac sie okno modalne  
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          modal = document.querySelector ('.modal'),
+          modalCloseBtn = document.querySelector('[data-close]');
+    
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            // modal.classList.toggle('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModal () {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        // modal.classList.toggle('show');
+        document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === "Escape" && modal.classList.contains('show')){
+            closeModal();
+        }
+    });
+});
