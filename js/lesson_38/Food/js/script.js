@@ -153,37 +153,38 @@ window.addEventListener('DOMContentLoaded', () => {
 // data-modal - bedzie otwierac sie okno modalne po nacisniecie na przycisk ktory ma ten selektor
 // data-close - bedzie zamykac sie okno modalne  
 
-    const modalTrigger = document.querySelectorAll('[data-modal]'),
-          modal = document.querySelector ('.modal'),
-          modalCloseBtn = document.querySelector('[data-close]');
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'), // dostajem przyciski z selktorom ktory dodalismy do przyciskow na stronie
+          modal = document.querySelector ('.modal'), // dostajemy glownego rodzica ktory odpowiada za modalne okno i ma wszystkich dzieci
+          modalCloseBtn = document.querySelector('[data-close]'); // dostajemy przycisk ktory bedzie odpowiadac za zamkniecie
     
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', () => {
-            modal.classList.add('show');
-            modal.classList.remove('hide');
-            // modal.classList.toggle('show');
-            document.body.style.overflow = 'hidden';
+    modalTrigger.forEach(btn => {  // przechodzimy po objekcie z przyciskiem zeby dodac do kazdego funkcje 
+        btn.addEventListener('click', () => {  //sledzenie klikniecia na stronie w przycisk
+            modal.classList.add('show'); // jesli klas show nie istnieje w przycisku to dodajemy zeby pokazac modalne okno
+            modal.classList.remove('hide'); // takze musimy sprawdzic czy klas hide istnieje i usnac jesli chcemy zeby okno sie wyswietliwo 
+            // modal.classList.toggle('show'); // metoda toogle - czyli PRZELACZNIK - dziala tak samo jak powyzsze 2 linijki kodu: jesli wskazany klas istnieje to jeko usunie, a jesli nie istnieje to doda 
+            document.body.style.overflow = 'hidden'; // dodaje do body styl:  style="overflow:hidden"; -- co pozwala usunac przeiwjania(scrolowanie) strony pod czas wyswietlenia modalnego okna
         });
     });
 
-    function closeModal () {
-        modal.classList.add('hide');
-        modal.classList.remove('show');
-        // modal.classList.toggle('show');
-        document.body.style.overflow = '';
+    function closeModal () { // funkcja zamykania okna, wzielismy w funkcje poniewaz, kiedy kod sie powtarza to lepiej wziac w funkcje, zeby wszedzie potem z niej korzystac
+        modal.classList.add('hide'); // dodajemy klas ktory odpowiada za ukrycie funkcji
+        modal.classList.remove('show'); // usuwa klas ktory odpowiada za pokaznaie funkcji
+        // modal.classList.toggle('show'); // tez tak mozna zrobic zamias dwoch powyzszych linijek kodu, za pomoca przelacznika toggle()
+        document.body.style.overflow = ''; // usuwamy z body styl ktory byl dodany podczas otwierania modalnego okna, zeby umowzliwic przewiajania strony poo zamknienciu modalnego okna
     }
 
-    modalCloseBtn.addEventListener('click', closeModal);
+    modalCloseBtn.addEventListener('click', closeModal); // ustawiamy sledzenie dla przycisku krzyrzyka ktory odpowiada za zamykania modalnego okna i przykierujemy do funkcji
 
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            closeModal();
+    modal.addEventListener("click", (e) => { // zamykanie modalnego okna po kliknieciu za przedzialem modalnego okna
+        if (e.target === modal) { // korzystamy z event target - sledzenie gdzie klikna uzytkownik na stronie. Potem porownujemy czy klikna w klasie ktora odpowiada za background modalnego okna. Czyli jesli kliknie w same okno to bedzie to juz klas modal__dialog, a jesli po za modalnym oknem to bedzie to klas wyzej: modal
+            closeModal();  // wylowania funkcji zamykania okna w srodku naszej funkcji
         }
     });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.code === "Escape" && modal.classList.contains('show')){
-            closeModal();
+    document.addEventListener('keydown', (e) => {  // zamykania okna za pomoca przzycisku na klawiaturze Esc
+        if (e.code === "Escape" && modal.classList.contains('show')){  // ustawiamy e.code dla przycisku ktory musimy najpierw sprawdzic w internecie, a takze sprawdzamy czy modalne okno jest otwarte czyli dodany klas show do modalnego okna tylko wtedy Esc bedzie dzialal, zeby nie wylowyac funkcji wciskajac Esc kiedy modalne okno jest zamkniete
+            closeModal(); // wylowania funkcji zamkniecia modalnego okna
         }
     });
 });
