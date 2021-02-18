@@ -143,7 +143,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 //--------------------------------------------------------------------------------------------------
-// Lesson 43
+// Lesson 43 - Czesc 3
 // Создаем модальное окно
 // Kod klawiautury - https://keycode.info/
 
@@ -158,16 +158,19 @@ window.addEventListener('DOMContentLoaded', () => {
           modal = document.querySelector ('.modal'), // dostajemy glownego rodzica ktory odpowiada za modalne okno i ma wszystkich dzieci
           modalCloseBtn = document.querySelector('[data-close]'); // dostajemy przycisk ktory bedzie odpowiadac za zamkniecie
     
+    function openModal() {
+        modal.classList.add('show'); // jesli klas show nie istnieje w przycisku to dodajemy zeby pokazac modalne okno
+        modal.classList.remove('hide'); // takze musimy sprawdzic czy klas hide istnieje i usnac jesli chcemy zeby okno sie wyswietliwo 
+        // modal.classList.toggle('show'); // metoda toogle - czyli PRZELACZNIK - dziala tak samo jak powyzsze 2 linijki kodu: jesli wskazany klas istnieje to jeko usunie, a jesli nie istnieje to doda 
+        document.body.style.overflow = 'hidden'; // dodaje do body styl:  style="overflow:hidden"; -- co pozwala usunac przeiwjania(scrolowanie) strony pod czas wyswietlenia modalnego okna
+        clearInterval(modalTimerId); // czysciemy interwal po ktorym zostanie otwarte okno z lesson 43(kod nizej), po pierwszym otwarciu okna. Zeby odlowac ponowne otwarcia okna jesli np. uzytkownik sam kliknie w przycisk otwarcia okna przed czasem ktory ustawilismy w setTimeout
+    }
+
     modalTrigger.forEach(btn => {  // przechodzimy po objekcie z przyciskiem zeby dodac do kazdego funkcje 
-        btn.addEventListener('click', () => {  //sledzenie klikniecia na stronie w przycisk
-            modal.classList.add('show'); // jesli klas show nie istnieje w przycisku to dodajemy zeby pokazac modalne okno
-            modal.classList.remove('hide'); // takze musimy sprawdzic czy klas hide istnieje i usnac jesli chcemy zeby okno sie wyswietliwo 
-            // modal.classList.toggle('show'); // metoda toogle - czyli PRZELACZNIK - dziala tak samo jak powyzsze 2 linijki kodu: jesli wskazany klas istnieje to jeko usunie, a jesli nie istnieje to doda 
-            document.body.style.overflow = 'hidden'; // dodaje do body styl:  style="overflow:hidden"; -- co pozwala usunac przeiwjania(scrolowanie) strony pod czas wyswietlenia modalnego okna
-        });
+        btn.addEventListener('click', openModal); // jesli przycisk zostal klikniety to wysywalamy do funkcji otwarcia modalnego okna
     });
 
-    function closeModal () { // funkcja zamykania okna, wzielismy w funkcje poniewaz, kiedy kod sie powtarza to lepiej wziac w funkcje, zeby wszedzie potem z niej korzystac
+    function closeModal() { // funkcja zamykania okna, wzielismy w funkcje poniewaz, kiedy kod sie powtarza to lepiej wziac w funkcje, zeby wszedzie potem z niej korzystac
         modal.classList.add('hide'); // dodajemy klas ktory odpowiada za ukrycie funkcji
         modal.classList.remove('show'); // usuwa klas ktory odpowiada za pokaznaie funkcji
         // modal.classList.toggle('show'); // tez tak mozna zrobic zamias dwoch powyzszych linijek kodu, za pomoca przelacznika toggle()
@@ -187,4 +190,39 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal(); // wylowania funkcji zamkniecia modalnego okna
         }
     });
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson 43 - Czesc 4
+// Модификации модального окна
+
+// ustawiamy zeby modalne okno wyskakiwalo:
+
+    // po tym jak minie jakis ustawiony czas przebywania na stronie uzytkownika
+    const modalTimerId = setTimeout(openModal, 3000); // uzytkownik wszedl na strone, skrypt sie zalodal i teraz czeka 3 sekundy na to zeby uruchomic funkcje ktora odpowiada za otwarcie modalnego okna 
+    
+
+    // jak uzytkownik dojdzie do konca strony wylowania modalnego okna
+    function showModalByScroll() {
+        // Tworzymy formule dla porownania gdzie jest uzytkownik
+        // sprawdzamy parametr okna uzytkownika pageYOffset ktore odpowiada za sledzenie ile px przewinal uzytkownik na stronie od gory okna
+        // dodajemy parametr ktory sprawdza wysokosc widocznego okna dla uzytkownika na stronie
+        // Dalej poruwnamy do calej wysokosci strony
+        // Jesli jest wieksze lub rowna sie to wyswietlamy madalne okno
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll); // po tym jak skrypt zadzial pierwszy raz to usuwamy sledzenia scrola dla uzytkownika, zeby nie powtarzac kolejny raz wyswietlania okna jak uzytkownik po zamknieciu okna znow dojdzie do konca strony
+        }
+    }
+
+ 
+    window.addEventListener('scroll', showModalByScroll); // sledzimy parametr scroll dla uzytkownika, jesli on chodziby przewianie strone na 1 px, uruchomisie sledzienie parametra scroll. Dalej odsylamy do funkcji ktura juz mowi co trzeba zrobic dalej
+
+
+
+
+
+
+
+
 });
