@@ -163,7 +163,8 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('hide'); // takze musimy sprawdzic czy klas hide istnieje i usnac jesli chcemy zeby okno sie wyswietliwo 
         // modal.classList.toggle('show'); // metoda toogle - czyli PRZELACZNIK - dziala tak samo jak powyzsze 2 linijki kodu: jesli wskazany klas istnieje to jeko usunie, a jesli nie istnieje to doda 
         document.body.style.overflow = 'hidden'; // dodaje do body styl:  style="overflow:hidden"; -- co pozwala usunac przeiwjania(scrolowanie) strony pod czas wyswietlenia modalnego okna
-        clearInterval(modalTimerId); // czysciemy interwal po ktorym zostanie otwarte okno z lesson 43(kod nizej), po pierwszym otwarciu okna. Zeby odlowac ponowne otwarcia okna jesli np. uzytkownik sam kliknie w przycisk otwarcia okna przed czasem ktory ustawilismy w setTimeout
+        
+        // clearInterval(modalTimerId); // czysciemy interwal po ktorym zostanie otwarte okno z lesson 43(kod nizej), po pierwszym otwarciu okna. Zeby odlowac ponowne otwarcia okna jesli np. uzytkownik sam kliknie w przycisk otwarcia okna przed czasem ktory ustawilismy w setTimeout
     }
 
     modalTrigger.forEach(btn => {  // przechodzimy po objekcie z przyciskiem zeby dodac do kazdego funkcje 
@@ -185,7 +186,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.addEventListener('keydown', (e) => {  // zamykania okna za pomoca przzycisku na klawiaturze Esc
+    document.addEventListener('keydown', (e) => {  // zamykania okna za pomoca przycisku na klawiaturze Esc
         if (e.code === "Escape" && modal.classList.contains('show')){  // ustawiamy e.code dla przycisku ktory musimy najpierw sprawdzic w internecie, a takze sprawdzamy czy modalne okno jest otwarte czyli dodany klas show do modalnego okna tylko wtedy Esc bedzie dzialal, zeby nie wylowyac funkcji wciskajac Esc kiedy modalne okno jest zamkniete
             closeModal(); // wylowania funkcji zamkniecia modalnego okna
         }
@@ -199,7 +200,10 @@ window.addEventListener('DOMContentLoaded', () => {
 // ustawiamy zeby modalne okno wyskakiwalo:
 
     // po tym jak minie jakis ustawiony czas przebywania na stronie uzytkownika
-    const modalTimerId = setTimeout(openModal, 3000); // uzytkownik wszedl na strone, skrypt sie zalodal i teraz czeka 3 sekundy na to zeby uruchomic funkcje ktora odpowiada za otwarcie modalnego okna 
+    
+    // Nizej kod zakomentowany zeby okno nie wyskakiwalo co 3 sekundy kidy pracujemy nad strona i przeladowujemy ja.
+    
+    // const modalTimerId = setTimeout(openModal, 3000); // uzytkownik wszedl na strone, skrypt sie zalodal i teraz czeka 3 sekundy na to zeby uruchomic funkcje ktora odpowiada za otwarcie modalnego okna. 
     
 
     // jak uzytkownik dojdzie do konca strony wylowania modalnego okna
@@ -219,8 +223,73 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', showModalByScroll); // sledzimy parametr scroll dla uzytkownika, jesli on chodziby przewianie strone na 1 px, uruchomisie sledzienie parametra scroll. Dalej odsylamy do funkcji ktura juz mowi co trzeba zrobic dalej
 
 
+//--------------------------------------------------------------------------------------------------
+// Lesson 48 - Используем классы в реальной работе
+// Generujemy dynamiczne kartki menu na stronie za pomoca Klas, konstrukotra i metody 
+      class MenuCard {
+        constructor(src, alt, title, descr, price, parentSelector) { // sprawdzamy w html jakie dane bedziemy potrzebowac zmieniac i podstawiac w kartce menu, wlasnie takie argumenty bedziemy przyjmowac.
+            this.src = src; // przekazujemy otrzymane dane z argumentow do objektu, link zdjecia
+            this.alt = alt; // opis zdjecia
+            this.title = title; // naglowek
+            this.descr = descr; // krotki opis produktu, uslugi
+            this.price = price; // cena produktu, ktora bedzie zalezec od ustawionej ceny dolara. Przekazana cena z argumentu konstruktora najpierw trafi do metody changeToUAH zeby zostac przekonwertowana na aktualna cene pod wzgledem ustawienia dolara i tylko wtedy zostanie zapisana do objektu
+            this.parent = document.querySelector(parentSelector); // przekazemy w parentSelector DOM elemenet, który pobierze ze strony przez querySelector i tam bedziemy wstawiac nasz szablon renderowany nizej szablon
+            this.transfer = 27; //cena dolara w UAH po ktorej bedziemy konwertowac cene uslugi ktora domyslnie bedzie ustawiona w dolarach, a na stronie musimy wyswietlac w UAH 
+            this.changeToUAH(); // wylowujumy metode ktora opisana nizej, zeby przed tym jak trafi na strone, zostala zmieniona na aktualna.
+        }
 
+        changeToUAH() { // metoda konwertacja ceny uslugi ktora jest zalezna od kursu dolara, ktorego my ustawiemy w konstruktorze
+            this.price = this.price * this.transfer;
+        }
 
+        render() { // tworzymy metode ktora bedzie renderowac kafelki menu z potrzebna nam informacja. Czyli stworzylismy szablon
+            const element = document.createElement('div'); // tworzymy element w ktorego bedziemy wstawiac ponizszy html kod na stronie
+            // przekazujac znaczenia ${} usuwamy z html "", bo bedziemy przekazywac znaczenia juz z nawiasami(przyklad new MenuCard - zapis nizej tej metody) i zeby oni sie nie dublowali, bo bedzie blad i nie poprawny zapis.  
+            element.innerHTML = `
+                <div class="menu__item">
+                    <img src=${this.src} alt=${this.alt}>
+                    <h3 class="menu__item-subtitle">${this.title}</h3>
+                    <div class="menu__item-descr">${this.descr}</div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                    </div>
+                </div>
+            `;
+            this.parent.append(element); // wstawiamy na koniec stworzony element, jeden po drugim w srodku klasy container ktora jest zapisana w zmienniej parrent. 
+        }        
+      }
+
+    //   const div = new MenuCard ();
+    //   div.render();
+
+    new MenuCard( // przekazujemy argumenty do construktora w kolejnosci ustawionych zmiennych
+        "img/tabs/vegy.jpg", // link do menu, przekazywac w "", to jest poprawny zapis, tak jak bedzie zapisany w html 
+        "vegy", // opis zdjecia
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        9, // cena uslugi w dolarach ktora bedzie na strone trafiac przekonwertowana na UAH za pomoca metody
+        '.menu .container' // przekazujemy klase ktora bedzie pobrana w construktorze ze strony -> dalej zapisana do parent -> potem w ten container bedzie wstawiany szablon karty menu generowany wyzej przez metode render
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg" ,
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        14,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        21,
+        '.menu .container'
+    ).render();
 
 
 

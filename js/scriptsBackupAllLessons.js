@@ -451,6 +451,19 @@ const calcFour = (a, b) => {
     return(a + b);
 };  // tutaj tez pamietac zeby zamknac na koncu ;
 
+// Jesli jest taki krotki zapis wykorzystujac strzalkowa funkcje to mozemy jego jescze bardzie skrocic jak ponizej i wszystko bedzie dzialac tak samo
+const doubleTwo = (a) => {
+    return a * 2; // bedzie zwracac liczbe pomnorzona na 2
+};
+console.log(doubleTwo(4)); // wynik: 8
+
+// 1. Jesli jest tylko jeden argument w strzalkowej funkcji to nie musimy dawac nawiasy()
+// 2. Nie musimy dawać nawiasy klamrowe {}, jesli cialo funkcji zmieszczasie w jednej linijce.
+// 3. Mozemy zapisac wszystko w jednej linii, jesli sprawdzasie 2 punkt
+// 4. Mozemy usunac return, teraz on podstawiany automatycznie.
+const doubleThree = a => a * 2;
+console.log(doubleThree(4)); // wynik: 8
+
 //---------------------------------------------------------------------------------------------------
 //Lesson - 17 - Методы и свойстава строк и чисел
 //Dodatkowe materialy
@@ -2596,3 +2609,237 @@ alex.hello();
 
 
 //--------------------------------------------------------------------------------------------------
+// Lesson 46 - Контекст вызова. This (folder lesson_46)
+// О ключевом слове «this» языка JavaScript: особенности использования с пояснениями - https://tproger.ru/translations/javascript-this-keyword/
+
+
+// Kontekst wyłowania funkcji - po prostemu znaczy to co otacza funkcję oraz w jakich warunkach ona jest wyłowana. 
+
+// Przyklad: wyobraz sobie osobe ktora nie ma gdzie mieszka. W tym przypadku oznacza to ze ta osoba funkcjonuje w przedziale calego swiata, on nie jest przywiazany do konkretnego miejsca. No jesli my zapchamy jego w specjalny budynek gdzie on bedzie mogl mieszkac, zajac sie czyms to wtedy on dostanie tak zwany Kontekst wyłowania. Teraz on ma swoje miejsce do funkcjonowania. 
+
+// Funkcji w JS zachowują się tak samo jak wyżej w przykladzie. Wystarczy wyobrazic sobie przyklad.
+
+// zahowanie konteksty wylowania this - bedzie roznic sie od tego czy ustawiony "use strict" czy nie 
+
+
+// Funkcja może być wyłowana na 4 sposoby:
+
+// 1) Poprostu wyłowanie naszej funkcji z kontekstem
+// wynik w konsoli dla kontekstu this, bedzie globalny objekt Window, a jesli ustawiony tryb "use strict" to wynik w konsoli - undefined
+function showThis() {
+    // 1. this = Window. Wylowujac sam kontekst wylowania this, bedzie sie odnosziw do globalnego objekt Window, ktory zostanie wyswietlony w konsoli (regula dziala wywacznie kiedy nie ustawiony "use strict")
+    // 2. this = undefined. W przypadku ustawionego "use strict" - wyswietli sie w konsoli undefined i jshint bedzie podkreslaw this w kodzie. 
+    console.log(this); 
+}
+showThis(); 
+
+// przykladowe zadanie zeby zobaczy dzialanie this, pamientac wszystko zaleczy od trybu dokumentu JS czy jest ustawiony "use strict" czy nie. W naszym przypadku tak, dlatego mamy dostac wynik undefined
+// Jaki bedzie kontekst wylowania this w funkcji sum() ktora znajduje w inej funkcji
+function showThisTwo(a, b){
+    console.log(this); // wyswietli undefined
+
+    function sum(){
+        console.log(this); // Odpowiedz: kontekst wylowania nie zmienny. Tez wyswietli undefined, poniewaz nie jest wazne gdzie ona jest wylowana, ona dalej ma tylko dwie mozliwosci wyswietlenia undefined (tryb "use strict") albo Window (bez trybu "use strict")
+        
+        // Co wyswietli wynik, bez bledu? Dlaczego?
+        // 1) Ten zapis bedzie poprawny. Wykorzystujac zamykanie funkcji, co znaczy ze funkcja sum bedzie sprawdzac czy ona ma w sobie dwa argumenty a i b, jesli nie to pojdzie do rodzica wyzej i tam sprawdzi, tam juz znalazla i wynik bedzie 9
+        return a + b;
+        
+        // 2) trzeba usnac this i ustawic tak jak na gorze zeby unikac bledu i stworzyc zamykanie funkcji
+        // return this.a + this.b;
+    }
+
+    console.log(sum()); // wyswietli 9
+}
+
+showThisTwo(4, 5); //wylowanie funkcji oraz przekazywanie dwoch argumentow
+
+
+// 2) Wylowania kontekstu w srodku metody objekta
+// Wynik: kontekst wylowania w metodzie objekta bedzie zwracany sam objekt
+
+const obj = {
+    a: 20,
+    b: 15,
+    sum: function() {  // metod objekta - czyli tez jest funkcja 
+        // Pytanie: jaki kontekst bedzie u metody objekta?
+        console.log(this); // kontekst wylowania w metodzie objekta bedzie zwracany sam objekt, wynik: {a: 20, b: 15, sum: ƒ}
+
+        function shout() { // jesli dodamy funkcje w srodku metody objekta, to wylowanie kontekstu this dla funkcji shout bedzie juz undefined, a nie zwracany objekt jak to bylo wyzej. Poniewaz 1 rodzicem funkcji shout jest inna funkcja a nie objekt. Czyli kontekst wylowania zostal stracony, jak w przykladzie pod numerem 1).
+            console.log(this);
+        }
+        shout(); // wylowania funckji w srodku metody objektu
+    }
+};
+obj.sum(); // wylowanie metody w objekcie, zeby zobaczyc jak on bedzie dzialal
+
+
+// 3) wykorzystania funkcji-konstruktora przez operator - new
+// WAZNE: this w kontruktorach i klasach - jest nowym prototypem objektu (czyli kopia objektu ze swoimi wlasciwosciami przekazanami pod czas wylowania konstryktora) 
+
+function User(name, id) { 
+    // kiedy zostanie wylowana ta funkcja-konstruktor, to zostanie stworzy nowy objekt, poniewaz jest wylowana nizej za pomoca operatora - new
+    // kontekst this w srodku objekta bedzie TWORZYL nowy objekt (regula numer 2 wyzej). Dlatego przez kropke mozemy odczytac przekazany name objekta ivan i zapisac imie do wlasciwosci nowego objektu czyli do name: ivan. 
+    // to samo z id 
+    // human jest dodawana dla objektu automatycznie
+    // tworzona takze metoda this.hello dla objektu, dodatkowo przekazujemy do metody imie objektu poprostu odczytujac z objekta przez this.name
+    this.name = name;
+    this.id = id;
+    this.human = true;
+    this.hello = function() {
+        console.log("Hello" + this.name);
+    };
+}
+
+let ivan = new User('Ivan', 23); // tworzymy ekzemplarz nowego usera z jego danymi 
+console.log(ivan);
+
+
+// 4) Ręczne powiązanie this z kazdą funkcją 
+// metody: 
+// call(), apply() - dodają kontekst do funkcji ktory chcemy  wyswietlac 
+// double(tutaj przekazujemy znaczenie) - najpierw tworzy nowa funkcje kopijujac poprzednia do ktorej przewiazalismy. Dodatkowo ustawiamy dlaniej kontekst w this np. jakos liczbe i no wszystko zapisujemy do zmiennej. A dalej majac nowa funkcje mozna jej wykorzystywac w kodzie.
+
+
+function sayName(surname) { // przekazujemy argument, jesli potrzebujemy przyjmowac dodatkowy  z zewnatrz, moze takze byc pusta bez argumenta
+    console.log(this); // w celu testowym sprawdzamy jaki kontekst wylowania bedzie dla funkcji, kiedy jeszcze nie podlaczylismy this do objektu przez przedstawione metody wyzej, to ma byc wyswietlany undefined lub globalny objket Window (zalezy czy jest tryb "use stricte" czy nie) A jesli juz jestesmy podlaczeniu pod objekt to on powinien zostac wyswietlony w konsoli
+    console.log(this.nameTwo + surname); // Zadanie pokazac jakies imie w konsoli. Zeby to zadzialalo trzeba skorzystac z metody call() lub apply(), zeby mozna bylo dostac sie wlasciwosci nameTwo w swodku objektu user. 
+}
+
+const user = { // tworzymy objekt ktory bedzie zawieral wlasciwosc nameTwo
+    nameTwo: 'John'
+};
+
+// Metody call() i apply() podobne do siebie, wyswietla takie same dane, tylko roznica polega w zapisaniu argumentow w srodku. 
+sayName.call(user, 'Smith'); // do srodka przekazujemy kontekst wylowania ktory my chcemy przekazac do funkcji czyli: user. Jesli chcemy przekazac funkcji dodatkowe argumenty, to rowniez mozna dodac, w tym przepdaku dodatkowo dodajemy nazwisko.
+sayName.apply(user, ['Smith']); // tutaj robimy to samo co w call(), tylko argument przekazujemy przez tablice ['argument'].
+
+
+// Metoda bind() - czesto spotykany 
+function count(num) { // przyjmuje jakis argument z zewnatrz
+    return this*num; // bedzie mnozyl przejmowany argument num na ten co bedzie w kotekscie wylowania this 
+}
+
+// stworzymy funkcje ktora bedzie zawsze podlajac liczby ktore my przekazemy
+const double = count.bind(2); // do zmiennej bedzie wlozona nowa funkcja ktora bedzie zawierac w kontekscie wylowania this juz znaczenie 2. Czyli bedzie to kopia funkcji count, a w this przekazane zostane na zawsze 2.
+
+console.log(double(3)); // teraz wylowamy nowa stworzona funkcje w ktorej jest zapisane ze this = 2, a takze przekazujemy argument dla funkcji 3, a znaczy ze 2 * 3 = wynik 6. 
+console.log(double(13)); // wynik 26
+
+
+// --- Przyklad kontekst wykowania na elemncie ze strony ---
+
+
+const btn = document.querySelector('button'); // dostajemy przycisk ze strony
+
+// 1) Kontekst wylowania dla stardowego zapisu funkcji function() w srodku EventListener
+btn.addEventListener('click', function(){ // dodajemy sledzienie dla przycisku w momencie klikniecia. 
+    // Zauwaz: jesli funkcja zapisana w standardowy sposub (czyli function() {}, a nie =>(){}) to kontekst wylowania this dla tej funkcji bedzie sam element, czyli w konsoli wyswietli sie przycisk na ktory klikamy i sledzimy. Prosto mowiac prawie zawsze this rowna sie to samo co evenTarget - czyli wtedy kiedy odwolowujemy sie do elementa na stronie na ktorym zostalo podjente dzialanie.
+// W praktyce zazwyczaj korzysta sie z even target ale rowniez sa przypadki kiedy korzystaja z kontekstu wylowania
+// Jesli function() zamienic na strzalkowa () => to bedzie błąd, bo ona nie posiada swojego kontekstu wylowania, a korzysta z kontekstu rodzica. Tutaj rodzica nie ma. 
+    console.log(this);
+    this.style.backgroundColor = 'red'; // dodajemy przy kliknieciu nowy kolor do przycisku
+});
+
+// ten sam zapis co wyzej tylko z sledzeniem even target
+btn.addEventListener('mouseover', (e) => {
+   e.target.style.backgroundColor = 'green'; 
+});
+
+
+// 2) kontekst wylowania dla strzalkowej funkcji: () => {}
+// Strzalkowa funkcja w odroznieniu od zapisu standardowej funkcji function(), bedzie kopjowac kontekst wylowania od swojego rodzica, bo swojego nie posiada. Sprawdzi jaki jest kontekst wylowania dla rodzica, w naszym przypadku funkcja say() zapisana w srodku innej funkcji (metody). Metoda ktora jest zapisana w objekcie, kontekstem wylowania bedzie sam objekt (patrz num. 1 na samym poczatku tego zajecia). Dlatego strzalkowa funkcja wezme to sobie i this wyswietli objekt, a takze bedzie mial dostep do wyswietlania wlasciwosci objektu, czyli num.  
+const objTwo = {
+    num: 5,
+    sayNumber: function() {
+        const say = () => {
+            console.log(this); // zwrocony zostanie objekt. Jesli byla by podana standardowa funkcja function(), to dostalibysmy undefined, bo kontekst wylowania w funkcji ktora jest w srodku innej funkcji jest stracony, ale my tutaj podajemy strzalkowa funkcje () => {}, a ona juz idzie wyzej i sprawdza rodzica, czyli bedzie to metoda ktora w swojej kolei ma kontekst wylowania objekt, dlatego this bedzie kierowac teraz na objekt skopjowany z metody wyzej. 
+            console.log(this.num); // wynik: 5
+        };
+
+        say();
+    }
+};
+
+objTwo.sayNumber(); // wylowania metody w srodku objektu, zeby wszystko dzialalo. 
+
+// Strzalkowa funkcja zazwyczaj jest wykorzystywana dla modyfikacji elementow odrazu i bezposrednio na miejscu 
+
+// Jesli jest taki krotki zapis wykorzystujac strzalkowa funkcje to mozemy jego jescze bardzie skrocic jak ponizej i wszystko bedzie dzialac tak samo
+const doubleTwo = (a) => {
+    return a * 2; // bedzie zwracac liczbe pomnorzona na 2
+};
+console.log(doubleTwo(4)); // wynik: 8
+
+// 1. Jesli jest tylko jeden argument w strzalkowej funkcji to nie musimy dawac nawiasy()
+// 2. Nie musimy dawać nawiasy klamrowe {}, jesli cialo funkcji zmieszczasie w jednej linijce.
+// 3. Mozemy zapisac wszystko w jednej linii, jesli sprawdzasie 2 punkt
+// 4. Mozemy usunac return, teraz on podstawiany automatycznie.
+const doubleThree = a => a * 2;
+console.log(doubleThree(4)); // wynik: 8
+
+
+//--------------------------------------------------------------------------------------------------
+"use_strict";
+
+// Lesson 47 - Классы (ES6)
+// Klasy (dokumentacja) - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Classes
+// Artykol o klasach - http://jsraccoon.ru/es6-classes
+
+// Klasy - zostaly wprowadzone w standarcie ES6, so to opakowanaia w ktorych znajduja sie funkcje-konstruktory (robierane w poprzednich lekcjach). czyli klasy są funkcjami. Zeby nie pisac caly czas konstruktora, w ES6 korzystaja z gotowych.
+
+// Tworzac jeden konstruktor, mozna tworzyc duzo elemntow na stronie z roznymi wlasciwosciami. Np. galeria z roznymi ustaiweniami wyswietlania. Bedzie glowny konstruktor ktory tworze domyslny widok, a dalej korzystajac z dziedziczenia mozna skopjowac z glownego konstruktora wszystkie wlasciwosci i metody i dodac dodatkowe w nowym kostruktorzy tym samy na bazie jednego stworzyc inny element. 
+
+// Programowanie objektowe - zasady (przypominamy sobie):
+// 1. Abstrakcja - kiedy odzielamy koncepje dzialania od ekzeplarza ementa. Czyli szablon powstania nowych elemtow.
+// 2. Tworzenie ekzemplarza - kod ktory odpowiada za stworzenia nowego elemnta, przekazania odpowiednich danych do szablonu, zeby ten mogl stworzyc element zgodznie z szablonem
+// 3. Sposobność dziedziczenia ustawienz jednego objektu do drugiego lub z jednego klasu do drugiego w celach rozszerzenia funkcjonalnosci nie zmieniajac przy tym glownego szablonu Abstrakcji. Czyli stworzenie nowego szablonu na podstawie rodzica.
+
+// 1. Abstrakcja (opis wyzej)
+class Rectangle { // tworzymy klas z duzej litery o dowolnej nazwie. W tym przykladzie my tworzymy prostokat.
+    constructor(height, width) { // podczas tworzenia Ekzemplarza klasa, bedziemy z zewnatrz przyjmowac 2 argumenty. Za pomoca tego bedziemy mogli stworzyc duzo roznych kastomizowanych prostokatow.
+        this.height = height; // zapisujemy przekazane dane z zewnatrz do nowego objektu gdzie wskazuje this w dany moment.
+        this.width = width;
+    }
+
+    calcArea() { // tworzymy metode dla klasy. Bez napisu function(), tylko nazwa funkcji i () na koncu. Ten metod bedzie liczyl powierczhnie prostokatu
+        return this.height * this.width; // odczytujemy juz z objektu nasze zapisane dane wyzej i mnorzymy ich. 
+    }
+}
+
+// 3. Dziedziczenie (opis na poczatku)
+// Dziedzieczenie - extends - z jednego konstruktora do drugiego + swoje dodatkowe wlasciwosci
+
+class ColoredRectangleWithText extends Rectangle{ // nowy klas ktory odziedziczy wlasciwosci z wskazanej klasy Rectangle. 
+    constructor(height, width, text, bgColor) { // ten konstruktor bedzie przyjmowac swoje argumenty, przekazaywane pod czas tworzenia ekzemplarza nizej
+        // Metod super() - Wylowuje super konstruktor rodzica. A rodzicem dla tej klasy jest klasa Rectangle. Zeby nie kopjowac dane reczjnie metoda super sama wszystko przekopjuje z rodzica, wystarczy podac potrzebne nam zmienne
+        super(height, width); // WAZNA ZASADA: metoda super() zawsze powinna znajdowac sie na pierwszym miejscu w konstruktorze
+        this.text = text; // dodajemy do objektu inne wlasciwosci do stworzenia objketu
+        this.bgColor = bgColor;
+    }
+
+    showMyProps() { // metoda tego konstruktora bedzie wyswietlac informacje w konsoli
+        console.log(`Tekst: ${this.text}, kolor: ${this.bgColor}`);
+    }
+
+}
+
+// 2. Tworzenia ekzemplarzy (opis na poczatku)
+const div = new ColoredRectangleWithText(25, 10, 'Hello world', 'red'); // zapisujemy stworzony objekt do zmiennej div wykorzystujac klase ColoredRectangleWithText
+
+div.showMyProps(); // dzialamy nad objektem za pomoca metody showMyProps() w klasie przez ktora objekt zostal stworzony, czyli ColoredRectangleWithText
+console.log(div.calcArea()); // sprawdzamy takze czy objekt bedzie mogl wykorzystac metode calcArea() z klasy rodzica Rectangle, ktora miala zostac oddziedziczona do klasy ColoredRectangleWithText
+
+
+// Przekazujemy do konstruktora Rectangle dane dla stworzenia nowego objektu za pomoca new.
+const square = new Rectangle(10, 10); // Teraz w zmiennej będzie zapisany objekt ktory bedzie mial dwie wlasciwosci z danymi: height: 10, width: 10;
+const long = new Rectangle(20, 100); // Tworzymy jeszcze jeden ekzemplarz objektu dla obliczenia juz innych danych, korzystajac z tej samej klasy w ktorej jest zapisany konstruktor.
+
+// Wyswietlamy w konsoli wyniki dla stworzonych wyzej objektow. Korzystamy z metody zapisanej w klasie Rectangle zeby wyliczywa nam zawarte dane w objektach i wyswietliwa w konsoli. Takze metoda calcArea() bedzie rowniez dostepna dla clasy ktora dziedziczy swoje wlasciwosci od Rectangle. 
+console.log(square.calcArea());
+console.log(long.calcArea());
+
+
+//--------------------------------------------------------------------------------------------------
+
+
