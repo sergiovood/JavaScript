@@ -225,14 +225,36 @@ window.addEventListener('DOMContentLoaded', () => {
 
 //--------------------------------------------------------------------------------------------------
 // Lesson 48 - Используем классы в реальной работе
+// Lesson 49 - Rest оператор. А также задаем параметры аргументов в функции по умолчанию
+// Rest operator - ...nazwaOperatora - bierze oddzielne elementy i sklada ich razem w jedna tablice. Jest przeciwenstwem operatora ...spread - ktory rozklada tablice na oddzielne elementy.  
+
+// Funkcja z rest operatorem - ktory przyjmuje wszystkie inne przekazane argumenty ktorych nie oczekujemy w funkcji domyslnie
+// przyklady wykorzystania: np. zakladamy ze do jakies elemntu bedzie przekazano dodatkowe style ale nie wiemy ilosc.
+const log = function(a, b, ...rest) { 
+  console.log(a, b, rest);  // wynik: basic rest [ 'operator', 'usage' ]. Argumenty ktore zostaly zapisuje sie przez rest operator do tablicy
+};
+
+log('basic', 'rest', 'operator', 'usage'); // przekazujemy argumenty
+
+// Czasami chcemy, zeby niektore argumenty funkcji mieli domyslnie ustawione znaczenia
+// wykorzystywane dla: np. ustawiamy w aplikacji domyslne kolory, wysokosc i szerokosc dla popup, standardowe fonty oraz inne ustawienia dla pokazania dzialania aplikacji.
+function calcOrDouble(number, basis = 3){ // ustawiany domyslna wartosc dla basis, jesli wartosc nie zostala przekazana podczas wylowania funkcji. Trzeba pamietac ze nie zawsze mozna tak ustawic. Zalezy od tworzonej funkcji. 
+    // basis = basis || 2; // jesli nie mozna przekazac dla argumentu domyslna wartosc (jak teraz jest ustawione wyzej basis = 3) to korzystamy z tej metody. Gdzie operator ||lub, zwroci pierwsza prawde ktora zapisze sie do zmiennej basis. Jesli basis jako argument nie dostanie zadnej wartosci to do basis bedzie zapisana 2, bo pusta wartosc jest false, dlatego skrypt pozdzie dalej gdzie bedzie 2 co jest prawda. Tak zostanie ustawiona domyslna wartosc do argumentu, ktory ma byc wykorzystywany dalej. Czasami tego nie mozna wykorzystac, zalezy od skryptu.
+    console.log(number * basis);
+}
+
+calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekazemy to zostanie ustaiony nasz domyslny. 
+
 // Generujemy dynamiczne kartki menu na stronie za pomoca Klas, konstrukotra i metody 
       class MenuCard {
-        constructor(src, alt, title, descr, price, parentSelector) { // sprawdzamy w html jakie dane bedziemy potrzebowac zmieniac i podstawiac w kartce menu, wlasnie takie argumenty bedziemy przyjmowac.
+        constructor(src, alt, title, descr, price, parentSelector, ...classes) { // sprawdzamy w html jakie dane bedziemy potrzebowac zmieniac i podstawiac w kartce menu, wlasnie takie argumenty bedziemy przyjmowac, a takze rest operator jesli argumentow zeby zabezpiczyc jesli wlasciwosci przekywac bedziemy wiecej niz argumentow to zapiszemy do objektu.
             this.src = src; // przekazujemy otrzymane dane z argumentow do objektu, link zdjecia
             this.alt = alt; // opis zdjecia
             this.title = title; // naglowek
             this.descr = descr; // krotki opis produktu, uslugi
             this.price = price; // cena produktu, ktora bedzie zalezec od ustawionej ceny dolara. Przekazana cena z argumentu konstruktora najpierw trafi do metody changeToUAH zeby zostac przekonwertowana na aktualna cene pod wzgledem ustawienia dolara i tylko wtedy zostanie zapisana do objektu
+            // this.classes = classes || '.menu__item' // ustawienia domyslnej wartosci tekstowej i przypisania jego do this.classes nie mozliwy w taki sposob, bo pomiescimy tam string. A sam string nie mozna bedzie przeliterowac za pomoca forEach() nizej w  metodzie render() - zeby wyciagnac potrzebni nam klasy z tablicy. Dlatego musimy ustawienie domyslne musimy logicznie stworzyc sami w metodzie render() za pomoca if()else
+            this.classes = classes; // nasz rest operator bedzie objektem, wazno pamietac dla pracy 
             this.parent = document.querySelector(parentSelector); // przekazemy w parentSelector DOM elemenet, który pobierze ze strony przez querySelector i tam bedziemy wstawiac nasz szablon renderowany nizej szablon
             this.transfer = 27; //cena dolara w UAH po ktorej bedziemy konwertowac cene uslugi ktora domyslnie bedzie ustawiona w dolarach, a na stronie musimy wyswietlac w UAH 
             this.changeToUAH(); // wylowujumy metode ktora opisana nizej, zeby przed tym jak trafi na strone, zostala zmieniona na aktualna.
@@ -244,17 +266,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
         render() { // tworzymy metode ktora bedzie renderowac kafelki menu z potrzebna nam informacja. Czyli stworzylismy szablon
             const element = document.createElement('div'); // tworzymy element w ktorego bedziemy wstawiac ponizszy html kod na stronie
-            // przekazujac znaczenia ${} usuwamy z html "", bo bedziemy przekazywac znaczenia juz z nawiasami(przyklad new MenuCard - zapis nizej tej metody) i zeby oni sie nie dublowali, bo bedzie blad i nie poprawny zapis.  
+            // przekazujac znaczenia ${} usuwamy z html "", bo bedziemy przekazywac znaczenia juz z nawiasami(przyklad new MenuCard - zapis nizej tej metody) i zeby oni sie nie dublowali, bo bedzie blad i nie poprawny zapis.
+            
+            // Tworymy logiszny warunek dla ustawienia domyslnego znaczenia w razie jesli w argument rest operator ...classes w funkcji nic nie przyszlo z zewnatrz i on zapisaw w this.classes pusta tablice, jesli tak sie dzieje to ustawiamy jemu sami nasz klas css. Jesli okaze sie ze klasa zostala przekazana w rest operator to odrazu dodajemy ja do elemntu html pomiajac ustawienia domyslnej klasy. 
+            if (this.classes.length === 0) { // sprawdzamy dwugosc tablicy
+                this.element = 'menu__item'; // zapisujemy najpierw nasz klas w this.element zeby ustawic domyslna wartosc zamiast pustej. pamietajmy zeby przekazac klas bez kropki, poniewaz bedzie dodawany automatycznie wykorzystujac metode classList.add()
+                element.classList.add(this.element); // przekazujemy zapisany klad do html 
+            } else {
+                this.classes.forEach(className => element.classList.add(className)); // za pomoca forEach przechodzimy po tablicy i wydobywamy wszystkie przekazane elemnty ktore dodajemy za kazdem razem do naszego elemnta nizej. Czyli najpierw dodamy potrzebny nam klas, czy to domyslny czy przekazany i w sworek pomiescimy ponizszy html szablon elemnta (karta menu na stronie)
+            }
+              
             element.innerHTML = `
-                <div class="menu__item">
-                    <img src=${this.src} alt=${this.alt}>
-                    <h3 class="menu__item-subtitle">${this.title}</h3>
-                    <div class="menu__item-descr">${this.descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                    </div>
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
                 </div>
             `;
             this.parent.append(element); // wstawiamy na koniec stworzony element, jeden po drugim w srodku klasy container ktora jest zapisana w zmienniej parrent. 
@@ -270,7 +299,7 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню "Фитнес"',
         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
         9, // cena uslugi w dolarach ktora bedzie na strone trafiac przekonwertowana na UAH za pomoca metody
-        '.menu .container' // przekazujemy klase ktora bedzie pobrana w construktorze ze strony -> dalej zapisana do parent -> potem w ten container bedzie wstawiany szablon karty menu generowany wyzej przez metode render
+        '.menu .container',// przekazujemy klase ktora bedzie pobrana w construktorze ze strony -> dalej zapisana do parent -> potem w ten container bedzie wstawiany szablon karty menu generowany wyzej przez metode render
     ).render();
 
     new MenuCard(
@@ -279,7 +308,8 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню “Премиум”',
         'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
         14,
-        '.menu .container'
+        '.menu .container',
+        'menu__item'
     ).render();
 
     new MenuCard(
@@ -288,9 +318,11 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню "Постное"',
         'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
         21,
-        '.menu .container'
+        '.menu .container',
+        'menu__item'
     ).render();
 
+    
 
 
 
