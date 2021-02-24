@@ -3038,7 +3038,6 @@ console.log(clone);
 //--------------------------------------------------------------------------------------------------
 
 // Lesson 52 - AJAX и общение с сервером 
-// (pliki czwiczenia umieszczone w Open Server, katalog domains -> kurs_JS -> lesson_52 )
 // Rozbieramy wszystkie informacje od starej metody do nowoczesnych zeby umiec pracowac z kazda.
 
 // XMLHttpRequest - https://developer.mozilla.org/ru/docs/Web/API/XMLHttpRequest
@@ -3058,7 +3057,7 @@ console.log(clone);
 // PLUSY: Aplikacje wykorzystujace AJAX dzialaja szybciej, mniejsze obciazenie serwera, wieksza uzytecznosc od zwyklych stron.
 // MINUSY: u uzytkownika powinien byc wlaczony JS, kiedy Internet bedzie wolny to morz wystepowac dziwne dzialanie, elemnty moga sie nie zaladowac, mulic itd.
 
-// Żeby nasz front-end umiał komunikować się z serwerem my potrzebujęmy umieć wyslac żądanie httpRequest - ktore juz jest przestazale, ale trzeba wiedziec jak dziala bo mozna spotkac w starych projektach
+// Żeby nasz front-end umiał komunikować się z serwerem my potrzebujęmy umieć wyslac żądanie XMLHttpRequest() - ktore juz jest przestazale, ale trzeba wiedziec jak dziala bo mozna spotkac w starych projektach
 
 // TWORZYMY KONWERTOR WALUTOWY
 
