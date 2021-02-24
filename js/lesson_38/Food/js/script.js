@@ -322,8 +322,12 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
         'menu__item'
     ).render();
 
-    
 
+    //--------------------------------------------------------------------------------------------------
+
+    // Lesson - 53 - Реализация скрипта отправки данных на сервер - metoda POST
+    // Zeby dzialal method POST - trzeba uruchomic jego na lokalnym serwerze OPEN SERVER ktory umie obslugiwac ta metode. Plagin serwera live Serwer w VSCode umie tylko obslurzyc methode GET
+    
 
 
 });

@@ -1,7 +1,6 @@
 "use_strict";
 
 // Lesson 52 - AJAX и общение с сервером 
-// (pliki czwiczenia umieszczone w Open Server, katalog domains -> kurs_JS -> lesson_52 )
 // Rozbieramy wszystkie informacje od starej metody do nowoczesnych zeby umiec pracowac z kazda.
 
 // XMLHttpRequest - https://developer.mozilla.org/ru/docs/Web/API/XMLHttpRequest

@@ -3037,7 +3037,7 @@ console.log(clone);
 
 //--------------------------------------------------------------------------------------------------
 
-// Lesson 52 - AJAX и общение с сервером 
+// Lesson 52 - AJAX и общение с сервером - metoda GET
 // Rozbieramy wszystkie informacje od starej metody do nowoczesnych zeby umiec pracowac z kazda.
 
 // XMLHttpRequest - https://developer.mozilla.org/ru/docs/Web/API/XMLHttpRequest
