@@ -155,8 +155,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     const modalTrigger = document.querySelectorAll('[data-modal]'), // dostajem przyciski z selktorom ktory dodalismy do przyciskow na stronie
-          modal = document.querySelector ('.modal'), // dostajemy glownego rodzica ktory odpowiada za modalne okno i ma wszystkich dzieci
-          modalCloseBtn = document.querySelector('[data-close]'); // dostajemy przycisk ktory bedzie odpowiadac za zamkniecie
+          modal = document.querySelector ('.modal'); // dostajemy glownego rodzica ktory odpowiada za modalne okno i ma wszystkich dzieci
+          // modalCloseBtn = document.querySelector('[data-close]'); // dostajemy przycisk ktory bedzie odpowiadac za zamkniecie (spoczotku tak tworzylismy ale z rozwojem projektu poprawilismy funkcje i nie potrzebujemy juz tego)
     
     function openModal() {
         modal.classList.add('show'); // jesli klas show nie istnieje w przycisku to dodajemy zeby pokazac modalne okno
@@ -164,7 +164,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // modal.classList.toggle('show'); // metoda toogle - czyli PRZELACZNIK - dziala tak samo jak powyzsze 2 linijki kodu: jesli wskazany klas istnieje to jeko usunie, a jesli nie istnieje to doda 
         document.body.style.overflow = 'hidden'; // dodaje do body styl:  style="overflow:hidden"; -- co pozwala usunac przeiwjania(scrolowanie) strony pod czas wyswietlenia modalnego okna
         
-        // clearInterval(modalTimerId); // czysciemy interwal po ktorym zostanie otwarte okno z lesson 43(kod nizej), po pierwszym otwarciu okna. Zeby odlowac ponowne otwarcia okna jesli np. uzytkownik sam kliknie w przycisk otwarcia okna przed czasem ktory ustawilismy w setTimeout
+        clearInterval(modalTimerId); // czysciemy interwal po ktorym zostanie otwarte okno z lesson 43(kod nizej), po pierwszym otwarciu okna. Zeby odlowac ponowne otwarcia okna jesli np. uzytkownik sam kliknie w przycisk otwarcia okna przed czasem ktory ustawilismy w setTimeout
     }
 
     modalTrigger.forEach(btn => {  // przechodzimy po objekcie z przyciskiem zeby dodac do kazdego funkcje 
@@ -178,10 +178,10 @@ window.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = ''; // usuwamy z body styl ktory byl dodany podczas otwierania modalnego okna, zeby umowzliwic przewiajania strony poo zamknienciu modalnego okna
     }
 
-    modalCloseBtn.addEventListener('click', closeModal); // ustawiamy sledzenie dla przycisku krzyrzyka ktory odpowiada za zamykania modalnego okna i przykierujemy do funkcji
+    // modalCloseBtn.addEventListener('click', closeModal); // ustawiamy sledzenie dla przycisku krzyrzyka ktory odpowiada za zamykania modalnego okna i przykierujemy do funkcji (z rozwojem funkcjonalnosci juz nie potrzbujemy tego kodu, bo przenieslismy jego nizej do if)
 
     modal.addEventListener("click", (e) => { // zamykanie modalnego okna po kliknieciu za przedzialem modalnego okna
-        if (e.target === modal) { // korzystamy z event target - sledzenie gdzie klikna uzytkownik na stronie. Potem porownujemy czy klikna w klasie ktora odpowiada za background modalnego okna. Czyli jesli kliknie w same okno to bedzie to juz klas modal__dialog, a jesli po za modalnym oknem to bedzie to klas wyzej: modal
+        if (e.target === modal || e.target.getAttribute('data-close') == '') { // korzystamy z event target - sledzenie gdzie klikna uzytkownik na stronie. Potem porownujemy czy klikna w klasie ktora odpowiada za background modalnego okna. Czyli jesli kliknie w same okno to bedzie to juz klas modal__dialog, a jesli po za modalnym oknem to bedzie to klas wyzej: modal
             closeModal();  // wylowania funkcji zamykania okna w srodku naszej funkcji
         }
     });
@@ -203,7 +203,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // Nizej kod zakomentowany zeby okno nie wyskakiwalo co 3 sekundy kidy pracujemy nad strona i przeladowujemy ja.
     
-    // const modalTimerId = setTimeout(openModal, 3000); // uzytkownik wszedl na strone, skrypt sie zalodal i teraz czeka 3 sekundy na to zeby uruchomic funkcje ktora odpowiada za otwarcie modalnego okna. 
+    const modalTimerId = setTimeout(openModal, 50000); // uzytkownik wszedl na strone, skrypt sie zalodal i teraz czeka 50 sekundy na to zeby uruchomic funkcje ktora odpowiada za otwarcie modalnego okna. 
     
 
     // jak uzytkownik dojdzie do konca strony wylowania modalnego okna
@@ -288,7 +288,7 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
             `;
             this.parent.append(element); // wstawiamy na koniec stworzony element, jeden po drugim w srodku klasy container ktora jest zapisana w zmienniej parrent. 
         }        
-      }
+    }
 
     //   const div = new MenuCard ();
     //   div.render();
@@ -322,12 +322,231 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
         'menu__item'
     ).render();
 
-
+    
     //--------------------------------------------------------------------------------------------------
 
-    // Lesson - 53 - Реализация скрипта отправки данных на сервер - metoda POST
+    // Lesson - 53, 54 (czesc projektu Food) - Реализация скрипта отправки данных на сервер - metody POST - Realizacja dzialania form na stronie
+   
     // Zeby dzialal method POST - trzeba uruchomic jego na lokalnym serwerze OPEN SERVER ktory umie obslugiwac ta metode. Plagin serwera live Serwer w VSCode umie tylko obslurzyc methode GET
+    // WAZNE: zeby my mogli zobaczyc ze nasz backend normalnie przujmuje nasze dane z formy przekazywane metoda POST, my musimy dodac dodadtkowy plik backendu .php (dodalismy server.php) i tam dodac dodac kilka linijek kodu php. 
+    // Standardowo php nie umie dzialac z formatem JSON, ale jesli dodac do pliku php decoder dla super globalnej tablicy &_POST ktora przyjmuje dane od klienta to dzilac bedzie.. (Patrz kod w pliku server.php)
     
+    // formaty przekazywania danych do serwera:
+    // wszystko zalezy jaka forme wybiera backendowiec z ktorym bedziemy wspolpracowac, on ma nam powiedziec w jakim formacie mamy ustawic wyslanie danych na backend
+    // my wykorzystamy dwie formy dla przykladu
+    // FormData() - prosty format danych. Pozwala zebrac wszystkie dany z formy ktore podal uzytkownik. Sformuje objekt format -> klucz: znaczenie. WAZNA ZASADA: zeby FormData() zadzialal i pobral wszyskie value z inputow ktore nam potrzebne, muszka w kazdym input (w html) byc podany selektor name="uniklan_nawa". Wtedy bedzie sformowany poprawny objekt danych.
+    // JSON - jest to specjalny format danych
+    // 
+    // WSKAZOWKI do czwiczenia:
+    // shift+F5 - korzystac, zeby wyczyscic na stronie cache i przeladowac ponownie, trzeba tak robic zeby usuwac podane dane zeby sprawdzac poprawnosc formy i zapsania danych na serwerze
+    // Korzystac z wkladki Network obok Console w CHROME, zeby zobaczyc nasz plik server.php ktory przejmuje dane z formy. Musimy sprawdzic jego status oraz co on bedzie zawieral. 
+    // Metoda wyslania danych FormDate. Jesli jest problem z zwracanym pustym array{} w konsoli pod czas wyslania danych z formy, to znaczy ze nie morzemy wykorzystywac razem rzadanie XMLHttpRequest i naglowek przekazania formatu dla serwera - setRequestHeader(); - mysimy usunac poprostu naglowek, bo on ustawia sie automatycznie, kiedy korzystamy z metody wyslania danych FormDate(); A jesli bedzie to JSON to juz bedzie potrzebny.
+    
+    // 
+    // Na stronie mamy 2 formy, jedna na glownej stronie i jedna jako wyskakujace okienko. 
+    // Realizacja bedzie dotyczyla odrazu sledzienia dwoch form jednoczesnie za pomoca funkcji ktora bedzie ich przyjmowac, bo oni przyjmuja takie same informacje
+    const forms = document.querySelectorAll('form'); // dostajemy wszystkie formy z html
+    // console.log(forms); // sprawdzamy czy dostalismy dwie formy
+    
+    const message = { // tworzymy objekt wiadomosci ktore bedza wyswietlac sie na stronie dla uzytkowniak w zaleznosci od etapu wyslania formy na serwer
+        // loading: 'Chwila. Ładujemy dane',
+        loading: 'img/form/spinner.svg',
+        success: 'Dziekuje! Skontajume sie z Toba w najblizszym czasie',
+        failure: 'Cos poszlo nie tak'
+    }
+
+    // Powiazania pobranych form ze strony pod funkcje postData()
+    forms.forEach(item => { // przechodzmy po objektu za pomoca callback funkcji i w item zapisujemy forme ktora przekazemy do funkcji postDate()
+        postData(item); // klucze przekazujemy do funkcji jako zmieniajacy sie argument
+    });
+
+    // --- BLOK REALIZACJI FUNKCJALNOSCI W PROJEKCIE ---
+    // Tworzymy funkcje ktora bedzie zbierac dane z formy i wysywac na serwere metoda POST
+    function postData(form) { // przejmujemy argument z powyzszej callback funkcji 
+        
+        // --- blok kodu odpowiadajacy za zbieranie danych z formy---
+        form.addEventListener('submit', (e) => { // ustawiamy sledzenia formy ktura przekazalismy jako argument do funkcji, Wlasciwosc: submit - bedzie wylowana w momencie klikniecia na przycisk wyslania formy
+            e.preventDefault(); // usuwamy domyslne zachowanie po wcisnieciu przeciska formy (czyli przeladowanie strony).
+
+            const statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+           
+            statusMessage.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
+           
+            form.insertAdjacentElement('afterend', statusMessage);
+
+            // --- BLOK OBJASNIENIA DZIALANIA XMLHttpRequest ---
+            /*
+            // Na ten moment korzystamy ze starej wersji do wysywania rzadania - XMLHttpRequest, dalej w innych lekcjach nauczymie sie dzialac z nowa wersje rzadania
+            const request = new XMLHttpRequest(); // tworzymy rzadanie do serwera
+            request.open('POST', 'server.php'); // przekazujemy dane o formie rzadanie, czyli POST i link do rzadania
+
+            // Przyklad 1 - wykorzystamy FormDate() do wyslania danychna serwer, metoda POST
+    
+            // request.setRequestHeader('Content-type', 'multipart/form-data');
+            request.setRequestHeader('Content-type', 'multipart/form-data'); // Ustawiamy naglowek rzadania dla serwera zeby ten wiedzial co przejmuje w siebie
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktprych chcemy pozyskac dane mialy poustawiane selektor name="unikalna_nazwa"
+
+            request.send(formData); // wysylalismy na serwer na poczatku specjalny format ktory generuje FormData, potem przerobilismy na JSON
 
 
-});
+            // Przyklad - wykorzystamy JSON do wyslania danychna serwer, metoda POST
+
+            request.setRequestHeader('Content-type', 'application/json'); // Ustawiamy naglowek rzadania dla serwera zeby ten wiedzial co przejmuje w siebie dla formatu JSON. Jesli bylby to FormDate() i w tym samym momencie korzystalibysmy z rzadania XMLHTttpRequest - wtedy on dodawany bylby automatycznie jak w przykladzie 1(wyzej) gdzie jego nie podajemy.
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy. 
+
+            // Dalej Objekt FormDate musimy przeksztawcis w JSON
+            const object = {}; // tworzymy pusty objekt ktory bedzie przyjmowal znaczenia z FormData
+            formData.forEach(function(value, key){ // przechodzimy po objektu FormData metodo forEach i formujemy swoj objekt wyciagajac z niego klucz i wartosc
+                object[key] = value; // zapis do objektu - klucz: wartość
+            });
+
+            //teraz jak juz mamy standardowy objekt, a nie FormDate() to morzemy zaczac konwertowac w JSON
+            const json = JSON.stringify(object); // tworzymy z naszego objektu format JSON
+            request.send(json); // wysyłamy na serwer
+
+            // request.send(formData); // wysylalismy na serwer na poczatku specjalny format ktory generuje FormData, potem przerobilismy na JSON
+
+            <--- BLOK KODU ODPOWIADAJACY ZA SPRAWDZENIA WYSLANIA WIADOMOSCI NA SERWER I DALSZA MANIPAULACJA ---> (teraz przerobiony na Promisy, ale mozna zakomentowac prmisy na koncu funkcji i rozkomentowac ten kawalek ktory bedzie dzialal z wyslaniem danych przez XMLHttpRequest)
+            request.addEventListener('load', () => { // sledzimy wlasciwoscia: load zeby objekt z naszymi danymi zostal do konca sformowany na serwerze 
+                if (request.status === 200) { // sprawdzamy czy kod serwera zwrocil 200, czyli wszystko przebiega dobrze z rzadaniem
+                    console.log(request.response); // wyswietlamy status dla sprawdzeniaw konsoli
+                    // statusMessage.textContent = message.success; // wyswietlamy wiadomosc pod forma, ze wszystko zostalo wyslane (przerobilismy na ponizszy kod z rozwojem projektu)
+                    showThannksModal(message.success); 
+                    form.reset(); // wyczyszczamy forme z wprowadzonych danym przez uzytkownika
+                    // setTimeout(() => { // zadajemy interwal
+                    //     statusMessage.remove(); // po 2 sekundach forma usuniemy informacje wiadomosci o wyslanej formie
+                    // }, 2000); // juz nie jest potrzebne bo przeniesione nizej do funkcji showThannksModal
+                    statusMessage.remove();
+                } else { 
+                    // statusMessage.textContent = message.failure; // jesli bedzie na jakims etapie blad to tez poinformujemy uzytkownika o problemie z wylaniem. // teraz poniszy kod zamiast tego 
+                    showThannksModal(message.failure); 
+                }
+            });
+            // --- Koniec BLOK OBJASNIENIA DZIALANIA XMLHttpRequest ---
+            */
+
+            //--------------------------------------------------------------------------------------------------
+            // Lesson 56 - Fetch API (projekt Food) - lokal
+            // Modalne okno ktore wysywa dane na serwer, przepiszemy wykorzystujac Fetch API
+            // Takze wykorzystamy dla przykladu dwie formy wyslania danych na serwer: FormDate i JSON. 
+
+            // Использование Fetch -https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch
+            // {JSON} Placeholder - cos naksztalw bazy danych dla testow - https://jsonplaceholder.typicode.com/
+
+            // API - aplication programing interface
+            // API - nabor danych i mozliwosci ktore przedstawia nam jakies gotowe rozwiazanie
+            // Najprostyszy API ktore my znamy jest - DOM API - czyli sa to rozne metody ktore pozwalaja nam pracowac z elemntami na stronie.
+
+            // Znane API np. api map google, api zarzadzania metodami w telefonie jak np, wibracja, wszystkie te api - przedstawiaja metody ktore my morzemy wykorzystac i modyfikowac dla swojego projektu zeby uzyskac rzadany cel.
+
+            // --- BLOK OBJASNIENIA FUNKCJALNOSCI FETCH API ktory dziala na Promisach (promisy - lesson 55) ---
+            // Przyklad z wykorzystanie Fake API JSON Plasecholder (jsonplaceholder.typicode.com)
+            /*     fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: "POST",
+                body: JSON.stringify({name: 'Sergiusz'}),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(json => console.log(json)); 
+            */
+            // --- KONIEC BLOKU OBJASNIENIA FUNKCJALNOSCI FETCH API  ---
+
+
+            // --- BLOK KODU FETCH API dla formy na stronie ---
+                    
+            /*     
+            // --- BLOK WYSLANIA DANYCH przez FormData() ---
+            // Przyklad 1: wyslania danych z z formy na stronie za pomoca Fetch API i FormDate()
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy.        
+            
+            // Fetch Api zamiast starej wersji rzadania XMLHttpRequest
+                    fetch('server.php', {
+                    method: "POST",
+                    body: formData
+                    })
+                    // koniec wyslania danych prosta metoda FormData()
+
+            // --- KONIEC BLOK WYSLANIA DANYCH przez FormData() ---
+            */
+
+            
+            // --- BLOK PRZEKSZTAWCENIE z formData() W JSON ---
+            // Przyklad 2: wyslania danych za pomoca Fetch API wykorzystujac format JSON()
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy.        
+
+            // Dalej Objekt FormDate musimy przeksztawcis w JSON
+            const object = {}; // tworzymy pusty objekt ktory bedzie przyjmowal znaczenia z FormData
+            formData.forEach(function(value, key){ // przechodzimy po objektu FormData metodo forEach i formujemy swoj objekt wyciagajac z niego klucz i wartosc
+                object[key] = value; // zapis do objektu - klucz: wartość
+            });
+
+            // Fetch Api zamiast starej wersji rzadania XMLHttpRequest
+            fetch('server.php', {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(object)
+            })
+            // --- KONIEC przekstawcania danych w JSON
+
+            // --- BLOK LANCUCHA PROMISE ---
+            // Dalej Budujemy lancuch. co robimy z danymi kiedy dostalismy pozytywna odpowiedz z serwera. dzila i dla FormData() i dla JSON
+            .then(data => data.text())
+            .then(data => {
+                    console.log(data); // wyswietlamy status dla sprawdzeniaw konsoli
+                    showThannksModal(message.success); // 
+                    form.reset(); // 
+                    statusMessage.remove();
+            }).catch(() => {
+                showThannksModal(message.failure); 
+            }).finally(() => {
+                form.reset();
+            });
+            // --- Koniec BLOK LANCUCHA PROMISE ---
+
+            // --- KONIEC BLOKU FETCH API dla formy na stronie ---
+
+        }); // koniec sledzenie 'submit'
+ 
+
+    } // koniec funkcji postData()
+
+
+    // Funkcjonal dodatkowy(lesson 54): Funkcja odpowiadajaca za Wyswietlania wiadomosci 
+   function showThannksModal(message) { // funkcja pokazania powiadomien dla uzytkownika po wyslaniu formy na stronie
+    // Po wyslaniu bedziemy zamieniac zawartosc formy na wyswielenia zawartosci wiadomosci w tym samym modalnym oknie
+    const prevModalDialog = document.querySelector('.modal__dialog'); // pobieramy klas w krorym jest zawarty content modalnego okna
+
+    // Tworzymy przelacznik ktory bedzie, zamienial kontent formy na wiadomosc dla uzytkownika
+    // 
+    prevModalDialog.classList.add('hide'); // dodajemy do contentu formy, klase hide, ktory ma: display:none;
+    openModal(); // dodajemy funkcje ktora odpowiada za otwierania okna, zeby jesli okno zostanie ponownie otwarte przez uzytkownika, nasze okienko modalne moglo znow pojawic sie z forma i korzystac z tej funkcji ponownie. 
+
+    const thanksModal = document.createElement('div'); // tworzymy div w ktory bedziemy wstawiac wiadomosc z tekstem dla Uzytkownika strony, tp wszystko istnieje narazie w JS
+    thanksModal.classList.add('modal__dialog'); // dodajemy klas odpowiadajacy za kontent w modalnym oknie i pomieszczemy w niego ponizszy html z wiadomoscia
+    thanksModal.innerHTML = `
+        <div class="modal__content">
+            <div class="modal__close" data-close>×</div>
+            <div class="modal__title">${message}</div>
+        </div>
+    `;
+
+    document.querySelector('.modal').append(thanksModal); // pobieramy klas i wstawiamy w niego sformuwany szablon wiadomosci wyzej.  
+    setTimeout(() => { // ustawiamy czas na 4 sek
+        thanksModal.remove(); // po 4 sekundach usuwamy kontent z wiadomoscia dla Klienta
+        prevModalDialog.classList.add('show'); // ponownie ustawiamy dla kontentu z forma klas na wyswietlania formy
+        prevModalDialog.classList.remove('hide'); // i jednoczesnie usuwamy klas odpowiadajacy za schowania elementow na stronie  
+        closeModal(); // dodajemy mozliwosc Klientowi samemu zamknac modalen okno
+    }, 4000);
+
+    } // zamykanie funkcji showThannksModal()
+
+
+}); // zamykania DOMContentLoaded()

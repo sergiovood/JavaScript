@@ -1,7 +1,7 @@
-"use strict";
 //Wszystkie lekcje
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lessons 6 - Object 
 let number = 4.6;
 
@@ -30,7 +30,8 @@ let arr = ['plum.png', 'orange.jpg', 6, 'apple.bmp', {}, []]; // klasyczny masyw
 console.log(arr[1]); // dostajemy z masywa elementy, indeks zaczyna sie od 0 zera. 
 //Indeksy to są klucze nie zmienny w masywie w przeciwienstwie do objektów.
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 7 - Okna wyskakujace, typy danych
 // alert('Hello');  // modalne okno z informacja
 
@@ -54,7 +55,8 @@ const answers = [];
 
 document.write(answers);
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 
 //Lesson 8 - Interpolacja
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/template_strings
@@ -66,7 +68,8 @@ const user = "Ivan";
 
 alert(`Czesc, ${user}`);
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 9 - operation
 //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table
 
@@ -135,7 +138,8 @@ console.log(5 != 9); //true ponieważ 5 nie równa sie 9
 
 console.log(3 !== '3'); // true ponieważ typ danych numer nie równa się string
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 10,11 - GIT
 /*
 Uczyc sie gita  - https://githowto.com/ru
@@ -179,7 +183,8 @@ dodawac do kazdego projektu, czasami projekt moze wazyc duzo MB, a ten plik pomo
 GitKraken - program do vizualnego zarządzania gitem. 
 */
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 12 - Zadanie
 /* Задание на урок:
 
@@ -227,7 +232,8 @@ personalMovieDB.movies[c] = d;
 console.log(personalMovieDB);
 
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 13 - Warunki
 
 // if (4 == 9) {
@@ -285,7 +291,8 @@ switch (num2) {
         break;
 }
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 14 - Cyckle 
 //https://learn.javascript.ru/while-for
 
@@ -321,7 +328,8 @@ for (let i = 1; i < 10; i++) {
     console.log(i);
 }
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 15 - Zadanie czesc 2
 /*1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
 
@@ -389,7 +397,8 @@ if (personalMovieDB.count <= 10) {
 //wyswietlamy w konsoli wynik dla sprawdzenia poprawnosci zapisanych danych
 console.log(personalMovieDB);
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 16 - Function
 //Dodatkowe materialy
 // https://medium.com/nuances-of-programming/%D1%8F-%D0%BD%D0%B8%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0-%D0%BD%D0%B5-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB-%D0%B7%D0%B0%D0%BC%D1%8B%D0%BA%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B2-javascript-%D1%87%D0%B0%D1%81%D1%82%D1%8C-%D0%BF%D0%B5%D1%80%D0%B2%D0%B0%D1%8F-3c3f02041970
@@ -464,7 +473,8 @@ console.log(doubleTwo(4)); // wynik: 8
 const doubleThree = a => a * 2;
 console.log(doubleThree(4)); // wynik: 8
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson - 17 - Методы и свойстава строк и чисел
 //Dodatkowe materialy
 //https://learn.javascript.ru/string
@@ -521,7 +531,8 @@ console.log(parseFloat(test)); //wynik 12.2 - liczba
 
 console.dir(Number); //sprawdzić w przegliądarce -> console. Wszystkie metody i właściwości dla Number. 
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson - 18 - zadanie function
 
 /* Задание на урок:
@@ -613,7 +624,8 @@ function showMyDB(hidden){
  }
  writeYourGenres();
 
- //---------------------------------------------------------------------------------------------------
+ //--------------------------------------------------------------------------------------------------
+"use_strict";
 //lesson 19 - Callback - function
 // https://learn.javascript.ru/callbacks
 
@@ -656,7 +668,8 @@ learnJs('JavaScript', done);  //WAZNE: done zapisujemy bez (), bo my ja nie вы
 //Функция Done передаеться в место аргумента callback і только 
 //внутри уже вызиваеться callback(); - что запускает вторую функциию и выводить результат один за другим
 
- //---------------------------------------------------------------------------------------------------
+ //--------------------------------------------------------------------------------------------------
+"use_strict";
 
  //Lesson - 20 Объекты, Деструктуризация объекта
 
@@ -703,6 +716,7 @@ learnJs('JavaScript', done);  //WAZNE: done zapisujemy bez (), bo my ja nie вы
  }
 
  //--------------------------------------------------------------------------------------------------
+"use_strict";
  //Lesson - 21 - Array - tablica - масив и псевдомасивы
 
 //  Быстрая сортировка http://algolist.ru/sort/quick_sort.php
@@ -753,6 +767,7 @@ arr.forEach(function(item, i, arr){  //forEach - перебирает табли
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 22 - Rozne metody kopiowania objektow/tablicy do nowych zmiennych
 // Копирование объектов в JavaScript - https://medium.com/@stasonmars/%D0%BA%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2-%D0%B2-javascript-d25c261a7aff
 // Метод Object.assign() - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
@@ -895,6 +910,7 @@ console.log(newObj);
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 23 - ООП обектно ориентированое програмирование
 // а также один из стилей ООП - Прототипно-оринтированое наследие 
 
@@ -945,6 +961,7 @@ jonh.sayHello(); // testujemy jonj umie umiec Hello dziedziczony z swojego proto
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson 24 - refaktoring koda 
 /* Задание на урок:
 
@@ -1052,6 +1069,7 @@ const personalMovieDB = {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 //Lesson - 26 - Динамическая типизация в JS - 
 // Jest to mozliwosc jednego typu danych zamieniac sie w inny
 // czyli string moze stac sie number, i na odwrot, object moze stac sie typem boolean 
@@ -1118,6 +1136,7 @@ console.log(!!"44444"); //wynik true
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 
 //Lesson - 27 - Задачи с собеседований на понимание основ
 //Zadania -  https://drive.google.com/file/d/1xXLFKnhETnMqI444sm4Jq1fpEcLQlnyb/view
@@ -1219,6 +1238,7 @@ console.log(0 || "" || 2 || undefined || true || falsе);
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 
 // Lesson - 28 - Получение элементов со страницы
 // Знаете ли вы селекторы? - https://learn.javascript.ru/css-selectors
@@ -1262,6 +1282,7 @@ const oneDiv = document.querySelector('div');
 console.log(oneDiv);
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 
 
 //Lesson 29 - Действия с элементами на странице
@@ -1392,6 +1413,7 @@ div.insertAdjacentHTML('afterbegin', '<h2 style="background-color: #cfcfcf;">Hel
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 
 
 // Lesson 30 - Zadanie ver1 
@@ -1477,6 +1499,7 @@ movieDB.movies.forEach((film, i) => {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // patrz folder: preview -> file js
 // Lesson 31 - События и их обработчики
 // Простой список событий - https://oddler.ru/blog/i63
@@ -1585,6 +1608,7 @@ link.addEventListener('click', function(event){
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 32 - Навигация по DOM - элементам, data-атрибуты, преимущество for/of
 // Использование data-* атрибутов - https://developer.mozilla.org/ru/docs/Web/Guide/HTML/Using_data_attributes
 
@@ -1643,6 +1667,7 @@ for (let node of document.body.childNodes){
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson - 33
 /* 
 Задания на урок:
@@ -1808,6 +1833,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 34 - События на мобильных устройствах
 
 // Touch события на javascript, мультитач - реализация -  http://youon.ru/%D0%90%D0%BD%D0%B4%D1%80%D0%BE%D0%B8%D0%B4/%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0/touch-sobytiya-na-javascript-multitach-realizatsiya
@@ -1881,6 +1907,7 @@ window.addEventListener('DOMContentLoaded', () =>{
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 35. Async, defer, динамические скрипты
 
 // dodanie w html do scryptu atrybut
@@ -1919,9 +1946,11 @@ loadScript('test.js');
 loadScript('some.js');
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 36 - Nowy modul, opis
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 37 - ClassList и делегирование событий
 //
 // classList - https://developer.mozilla.org/ru/docs/Web/API/Element/classList
@@ -2035,6 +2064,7 @@ wrapper.append(btn);
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 38 - Projekt Food - Czesc 1
 // Tworzenia funkcjalnosci strony
 
@@ -2094,6 +2124,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 39 - Скрипты и время их выполнения. 
 // setTimeout - ile czasu poczekac zeby wykonac kod
 // setInterval - co jaki czas wykonywac kod
@@ -2178,6 +2209,7 @@ btn.addEventListener('click', myAnimation); // podlaczamy do przycsiku sledzenie
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 40 - DATE - дата
 //
 // Дата - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date
@@ -2270,6 +2302,7 @@ alert(`Cykl skonczyl dzialanie za ${end - start} mm`);  // wynik: Cykl skonczyl 
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 41 - Projekt Food - CZESC 2 
 // Создаем таймер обратного отсчета на сайте
 //
@@ -2356,6 +2389,7 @@ alert(`Cykl skonczyl dzialanie za ${end - start} mm`);  // wynik: Cykl skonczyl 
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 42 - Параметры документа, окна и работа с ними 
 // FOTO tlumaczenie dzilania parametrow  - https://drive.google.com/file/d/1eTxWzmaDfN0CXHC7Dv_AE39A1GlNO1nI/view
 
@@ -2475,6 +2509,7 @@ window.scrollTo(0, 400); // przeskroluje w gore na 400px
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 43 - Czesc 3
 // Создаем модальное окно
 // Kod klawiautury - https://keycode.info/
@@ -2525,6 +2560,7 @@ if (e.code === "Escape" && modal.classList.contains('show')){  // ustawiamy e.co
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 43 - Czesc 4
 // Модификации модального окна
 
@@ -2552,6 +2588,7 @@ window.addEventListener('scroll', showModalByScroll); // sledzimy parametr scrol
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 45 
 // Функции-конструкторы 
 // Конструкторы, создание объектов через "new" - https://learn.javascript.ru/constructor-new
@@ -2609,6 +2646,7 @@ alex.hello();
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 46 - Контекст вызова. This (folder lesson_46)
 // О ключевом слове «this» языка JavaScript: особенности использования с пояснениями - https://tproger.ru/translations/javascript-this-keyword/
 
@@ -2781,6 +2819,7 @@ console.log(doubleThree(4)); // wynik: 8
 
 //--------------------------------------------------------------------------------------------------
 "use_strict";
+"use_strict";
 
 // Lesson 47 - Классы (ES6)
 // Klasy (dokumentacja) - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Classes
@@ -2841,6 +2880,7 @@ console.log(long.calcArea());
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 48 - Используем классы в реальной работе
 // Lesson 49 - Rest оператор. А также задаем параметры аргументов в функции по умолчанию
 // Rest operator - ...nazwaOperatora - bierze oddzielne elementy i sklada ich razem w jedna tablice. Jest przeciwenstwem operatora ...spread - ktory rozklada tablice na oddzielne elementy.  
@@ -2941,6 +2981,7 @@ const log = function(a, b, ...rest) {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 50 - Lokalny serwer
 
 // MAMP - dla MACos i Windows - https://www.mamp.info/
@@ -2955,6 +2996,7 @@ const log = function(a, b, ...rest) {
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 // Lesson 51 - JSON формат передачи данных, глубокое клонирование объектов
 // Копирование объектов в JavaScript - https://medium.com/@stasonmars/%D0%BA%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2-%D0%B2-javascript-d25c261a7aff
 // HTTP - https://ru.wikipedia.org/wiki/HTTP
@@ -3036,6 +3078,7 @@ console.log(clone);
 
 
 //--------------------------------------------------------------------------------------------------
+"use_strict";
 
 // Lesson 52 - AJAX и общение с сервером - metoda GET
 // Rozbieramy wszystkie informacje od starej metody do nowoczesnych zeby umiec pracowac z kazda.
@@ -3055,7 +3098,7 @@ console.log(clone);
 // Technologia AJAX - asynchronne wykonywane zadan na stronie i komunikacja z serwerem bez przeladowania strony.
 // Roznego rodzaju filtry w sklepie, wyslania formy z uzyskaniam wyniku dzialania wyslania, dodanie, usuwania do koszyka itd.
 // PLUSY: Aplikacje wykorzystujace AJAX dzialaja szybciej, mniejsze obciazenie serwera, wieksza uzytecznosc od zwyklych stron.
-// MINUSY: u uzytkownika powinien byc wlaczony JS, kiedy Internet bedzie wolny to morz wystepowac dziwne dzialanie, elemnty moga sie nie zaladowac, mulic itd.
+// MINUSY: u uzytkownika powinien byc wlaczony JS, kiedy Internet bedzie wolny to moga wystepowac dziwne dzialanie, elemnty moga sie nie zaladowac, mulic itd.
 
 // Żeby nasz front-end umiał komunikować się z serwerem my potrzebujęmy umieć wyslac żądanie XMLHttpRequest() - ktore juz jest przestazale, ale trzeba wiedziec jak dziala bo mozna spotkac w starych projektach
 
@@ -3128,11 +3171,336 @@ inputRub.addEventListener('input', () => {
             }
     });
 
-
-    // 
 });
 
 
+
+//--------------------------------------------------------------------------------------------------
+   // Lesson - 53, 54 (czesc projektu Food) - Реализация скрипта отправки данных на сервер - metody POST - Realizacja dzialania form na stronie
+   
+    // Zeby dzialal method POST - trzeba uruchomic jego na lokalnym serwerze OPEN SERVER ktory umie obslugiwac ta metode. Plagin serwera live Serwer w VSCode umie tylko obslurzyc methode GET
+    // WAZNE: zeby my mogli zobaczyc ze nasz backend normalnie przujmuje nasze dane z formy przekazywane metoda POST, my musimy dodac dodadtkowy plik backendu .php (dodalismy server.php) i tam dodac dodac kilka linijek kodu php. 
+    // Standardowo php nie umie dzialac z formatem JSON, ale jesli dodac do pliku php decoder dla super globalnej tablicy &_POST ktora przyjmuje dane od klienta to dzilac bedzie.. (Patrz kod w pliku server.php)
+    
+    // formaty przekazywania danych do serwera:
+    // wszystko zalezy jaka forme wybiera backendowiec z ktorym bedziemy wspolpracowac, on ma nam powiedziec w jakim formacie mamy ustawic wyslanie danych na backend
+    // my wykorzystamy dwie formy dla przykladu
+    // FormData() - prosty format danych. Pozwala zebrac wszystkie dany z formy ktore podal uzytkownik. Sformuje objekt format -> klucz: znaczenie. WAZNA ZASADA: zeby FormData() zadzialal i pobral wszyskie value z inputow ktore nam potrzebne, muszka w kazdym input (w html) byc podany selektor name="uniklan_nawa". Wtedy bedzie sformowany poprawny objekt danych.
+    // JSON - jest to specjalny format danych
+    // 
+    // WSKAZOWKI do czwiczenia:
+    // shift+F5 - korzystac, zeby wyczyscic na stronie cache i przeladowac ponownie, trzeba tak robic zeby usuwac podane dane zeby sprawdzac poprawnosc formy i zapsania danych na serwerze
+    // Korzystac z wkladki Network obok Console w CHROME, zeby zobaczyc nasz plik server.php ktory przejmuje dane z formy. Musimy sprawdzic jego status oraz co on bedzie zawieral. 
+    // Metoda wyslania danych FormDate. Jesli jest problem z zwracanym pustym array{} w konsoli pod czas wyslania danych z formy, to znaczy ze nie morzemy wykorzystywac razem rzadanie XMLHttpRequest i naglowek przekazania formatu dla serwera - setRequestHeader(); - mysimy usunac poprostu naglowek, bo on ustawia sie automatycznie, kiedy korzystamy z metody wyslania danych FormDate(); A jesli bedzie to JSON to juz bedzie potrzebny.
+    
+    // 
+    // Na stronie mamy 2 formy, jedna na glownej stronie i jedna jako wyskakujace okienko. 
+    // Realizacja bedzie dotyczyla odrazu sledzienia dwoch form jednoczesnie za pomoca funkcji ktora bedzie ich przyjmowac, bo oni przyjmuja takie same informacje
+    const forms = document.querySelectorAll('form'); // dostajemy wszystkie formy z html
+    // console.log(forms); // sprawdzamy czy dostalismy dwie formy
+    
+    const message = { // tworzymy objekt wiadomosci ktore bedza wyswietlac sie na stronie dla uzytkowniak w zaleznosci od etapu wyslania formy na serwer
+        // loading: 'Chwila. Ładujemy dane',
+        loading: 'img/form/spinner.svg',
+        success: 'Dziekuje! Skontajume sie z Toba w najblizszym czasie',
+        failure: 'Cos poszlo nie tak'
+    }
+
+    // Powiazania pobranych form ze strony pod funkcje postData()
+    forms.forEach(item => { // przechodzmy po objektu za pomoca callback funkcji i w item zapisujemy forme ktora przekazemy do funkcji postDate()
+        postData(item); // klucze przekazujemy do funkcji jako zmieniajacy sie argument
+    });
+
+    // --- BLOK REALIZACJI FUNKCJALNOSCI W PROJEKCIE ---
+    // Tworzymy funkcje ktora bedzie zbierac dane z formy i wysywac na serwere metoda POST
+    function postData(form) { // przejmujemy argument z powyzszej callback funkcji 
+        
+        // --- blok kodu odpowiadajacy za zbieranie danych z formy---
+        form.addEventListener('submit', (e) => { // ustawiamy sledzenia formy ktura przekazalismy jako argument do funkcji, Wlasciwosc: submit - bedzie wylowana w momencie klikniecia na przycisk wyslania formy
+            e.preventDefault(); // usuwamy domyslne zachowanie po wcisnieciu przeciska formy (czyli przeladowanie strony).
+
+            const statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+           
+            statusMessage.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
+           
+            form.insertAdjacentElement('afterend', statusMessage);
+
+            // --- BLOK OBJASNIENIA DZIALANIA XMLHttpRequest ---
+            /*
+            // Na ten moment korzystamy ze starej wersji do wysywania rzadania - XMLHttpRequest, dalej w innych lekcjach nauczymie sie dzialac z nowa wersje rzadania
+            const request = new XMLHttpRequest(); // tworzymy rzadanie do serwera
+            request.open('POST', 'server.php'); // przekazujemy dane o formie rzadanie, czyli POST i link do rzadania
+
+            // Przyklad 1 - wykorzystamy FormDate() do wyslania danychna serwer, metoda POST
+    
+            // request.setRequestHeader('Content-type', 'multipart/form-data');
+            request.setRequestHeader('Content-type', 'multipart/form-data'); // Ustawiamy naglowek rzadania dla serwera zeby ten wiedzial co przejmuje w siebie
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktprych chcemy pozyskac dane mialy poustawiane selektor name="unikalna_nazwa"
+
+            request.send(formData); // wysylalismy na serwer na poczatku specjalny format ktory generuje FormData, potem przerobilismy na JSON
+
+
+            // Przyklad - wykorzystamy JSON do wyslania danychna serwer, metoda POST
+
+            request.setRequestHeader('Content-type', 'application/json'); // Ustawiamy naglowek rzadania dla serwera zeby ten wiedzial co przejmuje w siebie dla formatu JSON. Jesli bylby to FormDate() i w tym samym momencie korzystalibysmy z rzadania XMLHTttpRequest - wtedy on dodawany bylby automatycznie jak w przykladzie 1(wyzej) gdzie jego nie podajemy.
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy. 
+
+            // Dalej Objekt FormDate musimy przeksztawcis w JSON
+            const object = {}; // tworzymy pusty objekt ktory bedzie przyjmowal znaczenia z FormData
+            formData.forEach(function(value, key){ // przechodzimy po objektu FormData metodo forEach i formujemy swoj objekt wyciagajac z niego klucz i wartosc
+                object[key] = value; // zapis do objektu - klucz: wartość
+            });
+
+            //teraz jak juz mamy standardowy objekt, a nie FormDate() to morzemy zaczac konwertowac w JSON
+            const json = JSON.stringify(object); // tworzymy z naszego objektu format JSON
+            request.send(json); // wysyłamy na serwer
+
+            // request.send(formData); // wysylalismy na serwer na poczatku specjalny format ktory generuje FormData, potem przerobilismy na JSON
+
+            <--- BLOK KODU ODPOWIADAJACY ZA SPRAWDZENIA WYSLANIA WIADOMOSCI NA SERWER I DALSZA MANIPAULACJA ---> (teraz przerobiony na Promisy, ale mozna zakomentowac prmisy na koncu funkcji i rozkomentowac ten kawalek ktory bedzie dzialal z wyslaniem danych przez XMLHttpRequest)
+            request.addEventListener('load', () => { // sledzimy wlasciwoscia: load zeby objekt z naszymi danymi zostal do konca sformowany na serwerze 
+                if (request.status === 200) { // sprawdzamy czy kod serwera zwrocil 200, czyli wszystko przebiega dobrze z rzadaniem
+                    console.log(request.response); // wyswietlamy status dla sprawdzeniaw konsoli
+                    // statusMessage.textContent = message.success; // wyswietlamy wiadomosc pod forma, ze wszystko zostalo wyslane (przerobilismy na ponizszy kod z rozwojem projektu)
+                    showThannksModal(message.success); 
+                    form.reset(); // wyczyszczamy forme z wprowadzonych danym przez uzytkownika
+                    // setTimeout(() => { // zadajemy interwal
+                    //     statusMessage.remove(); // po 2 sekundach forma usuniemy informacje wiadomosci o wyslanej formie
+                    // }, 2000); // juz nie jest potrzebne bo przeniesione nizej do funkcji showThannksModal
+                    statusMessage.remove();
+                } else { 
+                    // statusMessage.textContent = message.failure; // jesli bedzie na jakims etapie blad to tez poinformujemy uzytkownika o problemie z wylaniem. // teraz poniszy kod zamiast tego 
+                    showThannksModal(message.failure); 
+                }
+            });
+            // --- Koniec BLOK OBJASNIENIA DZIALANIA XMLHttpRequest ---
+            */
+
+            //--------------------------------------------------------------------------------------------------
+            // Lesson 56 - Fetch API (projekt Food) - lokal
+            // Modalne okno ktore wysywa dane na serwer, przepiszemy wykorzystujac Fetch API
+            // Takze wykorzystamy dla przykladu dwie formy wyslania danych na serwer: FormDate i JSON. 
+
+            // Использование Fetch -https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch
+            // {JSON} Placeholder - cos naksztalw bazy danych dla testow - https://jsonplaceholder.typicode.com/
+
+            // API - aplication programing interface
+            // API - nabor danych i mozliwosci ktore przedstawia nam jakies gotowe rozwiazanie
+            // Najprostyszy API ktore my znamy jest - DOM API - czyli sa to rozne metody ktore pozwalaja nam pracowac z elemntami na stronie.
+
+            // Znane API np. api map google, api zarzadzania metodami w telefonie jak np, wibracja, wszystkie te api - przedstawiaja metody ktore my morzemy wykorzystac i modyfikowac dla swojego projektu zeby uzyskac rzadany cel.
+
+            // --- BLOK OBJASNIENIA FUNKCJALNOSCI FETCH API ktory dziala na Promisach (promisy - lesson 55) ---
+            // Przyklad z wykorzystanie Fake API JSON Plasecholder (jsonplaceholder.typicode.com)
+            /*     fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: "POST",
+                body: JSON.stringify({name: 'Sergiusz'}),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(json => console.log(json)); 
+            */
+            // --- KONIEC BLOKU OBJASNIENIA FUNKCJALNOSCI FETCH API  ---
+
+
+            // --- BLOK KODU FETCH API dla formy na stronie ---
+                    
+            /*     
+            // --- BLOK WYSLANIA DANYCH przez FormData() ---
+            // Przyklad 1: wyslania danych z z formy na stronie za pomoca Fetch API i FormDate()
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy.        
+            
+            // Fetch Api zamiast starej wersji rzadania XMLHttpRequest
+                    fetch('server.php', {
+                    method: "POST",
+                    body: formData
+                    })
+                    // koniec wyslania danych prosta metoda FormData()
+
+            // --- KONIEC BLOK WYSLANIA DANYCH przez FormData() ---
+            */
+
+            
+            // --- BLOK PRZEKSZTAWCENIE z formData() W JSON ---
+            // Przyklad 2: wyslania danych za pomoca Fetch API wykorzystujac format JSON()
+            const formData = new FormData(form); // tworzymy konstruktor zbierajac wszystkie sledzone dane z formy do objektu za pomoca new i specjalnego objektu zbieracza danych FormData(). Wazne zeby inputy na stronie z ktorych chcemy pozyskac dane, mialy poustawiane selektor name="unikalna_nazwa", bo inaczej beda bledy.        
+
+            // Dalej Objekt FormDate musimy przeksztawcis w JSON
+            const object = {}; // tworzymy pusty objekt ktory bedzie przyjmowal znaczenia z FormData
+            formData.forEach(function(value, key){ // przechodzimy po objektu FormData metodo forEach i formujemy swoj objekt wyciagajac z niego klucz i wartosc
+                object[key] = value; // zapis do objektu - klucz: wartość
+            });
+
+            // Fetch Api zamiast starej wersji rzadania XMLHttpRequest
+            fetch('server.php', {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(object)
+            })
+            // --- KONIEC przekstawcania danych w JSON
+
+            // --- BLOK LANCUCHA PROMISE ---
+            // Dalej Budujemy lancuch. co robimy z danymi kiedy dostalismy pozytywna odpowiedz z serwera. dzila i dla FormData() i dla JSON
+            .then(data => data.text())
+            .then(data => {
+                    console.log(data); // wyswietlamy status dla sprawdzeniaw konsoli
+                    showThannksModal(message.success); // 
+                    form.reset(); // 
+                    statusMessage.remove();
+            }).catch(() => {
+                showThannksModal(message.failure); 
+            }).finally(() => {
+                form.reset();
+            });
+            // --- Koniec BLOK LANCUCHA PROMISE ---
+
+            // --- KONIEC BLOKU FETCH API dla formy na stronie ---
+
+        }); // koniec sledzenie 'submit'
+ 
+
+    } // koniec funkcji postData()
+
+
+    // Funkcjonal dodatkowy(lesson 54): Funkcja odpowiadajaca za Wyswietlania wiadomosci 
+   function showThannksModal(message) { // funkcja pokazania powiadomien dla uzytkownika po wyslaniu formy na stronie
+    // Po wyslaniu bedziemy zamieniac zawartosc formy na wyswielenia zawartosci wiadomosci w tym samym modalnym oknie
+    const prevModalDialog = document.querySelector('.modal__dialog'); // pobieramy klas w krorym jest zawarty content modalnego okna
+
+    // Tworzymy przelacznik ktory bedzie, zamienial kontent formy na wiadomosc dla uzytkownika
+    // 
+    prevModalDialog.classList.add('hide'); // dodajemy do contentu formy, klase hide, ktory ma: display:none;
+    openModal(); // dodajemy funkcje ktora odpowiada za otwierania okna, zeby jesli okno zostanie ponownie otwarte przez uzytkownika, nasze okienko modalne moglo znow pojawic sie z forma i korzystac z tej funkcji ponownie. 
+
+    const thanksModal = document.createElement('div'); // tworzymy div w ktory bedziemy wstawiac wiadomosc z tekstem dla Uzytkownika strony, tp wszystko istnieje narazie w JS
+    thanksModal.classList.add('modal__dialog'); // dodajemy klas odpowiadajacy za kontent w modalnym oknie i pomieszczemy w niego ponizszy html z wiadomoscia
+    thanksModal.innerHTML = `
+        <div class="modal__content">
+            <div class="modal__close" data-close>×</div>
+            <div class="modal__title">${message}</div>
+        </div>
+    `;
+
+    document.querySelector('.modal').append(thanksModal); // pobieramy klas i wstawiamy w niego sformuwany szablon wiadomosci wyzej.  
+    setTimeout(() => { // ustawiamy czas na 4 sek
+        thanksModal.remove(); // po 4 sekundach usuwamy kontent z wiadomoscia dla Klienta
+        prevModalDialog.classList.add('show'); // ponownie ustawiamy dla kontentu z forma klas na wyswietlania formy
+        prevModalDialog.classList.remove('hide'); // i jednoczesnie usuwamy klas odpowiadajacy za schowania elementow na stronie  
+        closeModal(); // dodajemy mozliwosc Klientowi samemu zamknac modalen okno
+    }, 4000);
+
+    } // zamykanie funkcji showThannksModal()
+
+//--------------------------------------------------------------------------------------------------
+"use_strict";
+
+// Lesson 55 - Promise (standart ES6) -- Обещания, Obietnice - ze kod bedzie dzialal po kolei zgodnie z planem inaczej zwroci blad.
+// Промисы - https://learn.javascript.ru/promise-basics
+// Promise - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+// Promisy pozwalaja na frontendzie pracowac z roznymi asynchronnymi operacjami. Asynchronny kod jest np. w timeOut ktory ma zadzialac za kilka sekund. Czyli kiedy my nie wiemy za ile czasu operacja zadziala, np. wyslalismy kogos do sklepu i my nie wiemy za ile on przyjdzie, ale dalej robimy swoje sprawy.
+
+
+// Za pomoca Promise mozna stworzyc lancuch zaplanowanych dzialan, ktore beda zalezne jeden od drugiego i zaczna dzialac tylko w momencie pozytywnego zakonczenia poprzedniego dzialania. 
+// Celem promisow jest mozliwosc stworzyc potrzebny nam lancuch dzialan w srodku ktorego juz nie bedzie wazno, czy kod dziala synchronnie czy asynchronnie.
+
+// Np. wysywalamy jakies dane na serwer -> czekamy pozytywnej odpowiedzi, jesli dostajemy do zmieniamy dane i znowu wysywalmy na serwer itd. A jesli zwroci nam na blad to wtedy wyswietlimy tez w naszym wancuszu dzialan taki komunikat ktory odpowiada za bledy. Cos jak w If... else.. 
+
+// Promise ( w srodku umieszczamy callback funkcje) - globalny objekt stworzenia promisu
+// przyjmuje DWA ARGUMENTY, ktore zazwyczaj nazywane przez programistow:
+
+// resolve - znaczy pozytywne zakonczenie dzialania. 
+// reject - blad dzialania w Promisie. Czasami ten argument mozna opuscic(przyklad jest nizej) ale bardzo rzadko tak sie dzieje.
+
+// WBUDOWANE FUNKCJE w promisie
+// Takie same nazwy wbudowanych funkcji (jak argumenty opisane wyzej) zwracaja informacje w Promisie, cos zamiast return, umieszczane na koncu w promisie:
+// resolve(pomieszczamy tutaj nazwe zmiennej, co chcemy zwrocic po pozytywnym wykonaniu kodu w Promisie) - przy pozytywnym zakonczenia funkcji zwroci rezultat do wykorzystania w innych zewnetrznych funkcjach
+// reject(morze byc pusta) - blad dzialania kodu. Np. serwer przestal dzialac, link ustawiony na nieistaniajacy plik, nieistaniajace serwer itd. Jesli bedzie blad w srodku wykoania w Promisie, to reject umiesczany na koncu wymusi blad, ktory przyjmie metoda catch() w lancuchu Obietnic wyswietlania kodu.   
+
+
+// METODY dostepne
+// .then() - jesli promise zostal wykonany poprawnie z pozytywnym wynikiem to pozwoli wykonac kolejny kod ktory zamieszczamy w then. czyli tworzy lancuch dzialan w przypadku otrzymania potrzebnych nam danych od Promise.
+// .catch() - jesli cos poszlo nie tak z dzialaniem lancucha to catch wyswietli zawartosc w tym bloku kodu, informujacy o bledzie
+// .finally() - umieszczany na samym koncu łancucha (nie zawsze wykorzsytywany) ktory pozwala wykonac jakies dzialania, nie zależnie od tego czy kod wykonaw sie poprawnie i przeszedl caly lancuch po kolei, czy byl blad.  
+
+// DODATKOWE mometody (przyklady kodu nizej)
+// .all([przyjmuje w siebie tablice z promisami: przyklad1, przyklad2, przyklad3, idt. ]).then(() => {co wykonac jak zostanie zwrucony promise z all}) - ta metoda czeka na moment kiedy wszystkie przekazane promise w formie argumentow, zostana wykonane i tylko potem zwroci wartosc.
+// .race([wszystko jak dla .all]).then(() => {co ma wykonac jak zostanie zwrocony promise z .race}) - w przicwienstwie do metody .all(), nie bedzie czekal jak zostanowa wykonane wszystkie argumenty podane w srodku .race(), tylko uruchomie wykonanie metody then odrazu po tym jak zostanie zwrucony chociazby jeden wykonany promise przekazany w argumencie. 
+console.log('Zapytanie o dane...'); // Synchronny kod ktory bedzie dzialal odrazu
+
+// zapisujemy promise w nowa zmienna. Tworzymy konstruktor Promise z callback funkcja ktora bedzie zwracac rezultat dzialania promise
+const req = new Promise((resolve, reject) => { // argument resolve - czyli cos sie wykonalo poprawnie. reject - przyjmie zanczenie jesli cos poslo zle.
+    // uruchamia sie setTimeout i jesli on zakonczy prace poprawnie to kod pojdzie nizej a jesli nie to blad
+    setTimeout(() => { // asynchronny kod, ktory zadziala kiedy minie jakis czas
+        console.log('Przygotowania danych ...');
+    
+        const product = { // stworzymy objekt produktu do wyswietlania w konsoli w lancuchu ktory stworzymy dalej
+            name: 'TV',
+            price: 2000
+        };
+        // ten kod wykona sie jesli poprawnie bedzie wykonany setTimeout()
+        resolve(product); // przekazujemy dane ktorze powinni byc zwrocone dla wykorzystania w zewnetrznych funkcja.
+    }, 2000);
+});
+
+// Dalej my musimy opracowac nasz promise na pozytywny i niegatywny rezultat zwrotu wykorzystujac metody: 
+// then(przyjmuje pozytywny argument z funkcji ktora jest w Promise) i 
+// catch(pryjmuje niegatywny argument z funkcji ktora jest w Promise).
+// Na promisie tworzymy nasz lancuch dzialan po kolei
+req.then((product) => { // dostajemy argument zwrocony przez resolve()
+   return new Promise((resolve, reject) => { // jesli mamy zamiar tworzyc dodatkowe zmiany na kodzie na rezultacie ktory uzyskamy z ponizszego kodu, to musimy wszystko znowu owinąc w promise, zeby zrocic jego z rezultame dzialania kodu dla wykorzystania w kolejnej zewnetrzenej funkcji w naszym lancuchu. Zauwaz ze nie zapisujemy Promise do zmiennej tylko zwracamy jego w calosci co pozwoli na podleczenia metody then() odrazu do naszej zmiennej req. 
+        setTimeout(() => { 
+            product.status = 'order'; // dodajemy do objektu produkt nowy klucz: wlasciwosc. Ustawimy status dla naszego produktu na zamowiony 
+            resolve(product); // zwracamy za pomoca wbudowanej funkcji nasz przeronbiony objekt produkt
+            // reject();
+        }, 2000); // czas ustawiamy tylko dla odzorcowania rzeczywistosci, chcemy pokazac jak by to wygliadalo jesli by wysylalismy na prawdzily serwer, a tak naprawdze nigdy nie wiemy ile nam czasu zajmie odpowiedz serwera.
+    });
+}).then(data => { // przyjmujemy w argument data znaczenie z poprzedniego promisu
+    data.modify = true; // modyfikacja obektu produktu. Dodajemy nowa linijke klucz: wartosc. Czyli modify: true. Produkt zostal zmodyfikowany.
+    return data; // zwracamy zmodyfikowany produkt dla dalszego wykorzystania w lancuhu
+}).then(data => {  // przyjmujemy zmodfikowane znaczenia w argument z poprzedniej funkcji. Nazwa argumentu morze byc jaka kolwiek
+    console.log(data); // czas wyswietlic  zmodyfikowany produkt
+}).catch(() => { // jesli na jakims z etapow zostanie kod zadziala nie poprawnie, ta metoda umieszczona na koncu bedzie mogla poinformowac o tym.
+    console.error('Błąd działania.');
+}).finally(() => { 
+    console.log('Finally');
+});
+
+
+// Dodatkowe metody w Promisach
+// Stworzymy funkcje ktora bedzie przejmowac w formie argumenta time,jakis przekazany czas. W srodku w funkcji bedzie tworzony i zwracany Promise, po tym jak skonczy robote setTimeout z ustawionym czasem przekazanym przez argument funkcji. Promise zawsze bedzie zwracal true, dlatego podalismy tylko jeden argument resolve bez reject.  
+const test = time => { 
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), time); // umieszczone cialo Promise tylko sam pusty resolve() zanczy zawsze prawde.
+    });
+};
+
+// test(1000).then(() => console.log('1000ms')); // wyswietli najpierw ten wynik 
+// test(2000).then(() => console.log('2000ms')); // potem ten wynik po jest dluzszy czas dla setTimeout
+
+Promise.all([test(1000), test(2000)]).then(() => {
+    console.log('Metoda .all'); // uruchomisie po tym, jak zostana zwrocone i wykonane wszystkie promisy podane jako argumenty w .all(), czyli w momencie jak zostanie zwrucone ostatni ktory zajmuje najwiecej czasu na wykonanie. W tym przypadku wyswietlenie w konsoli odbiedzie sie po 2 sekundach.
+});
+
+Promise.race([test(1000), test(2000)]).then(() => {
+    console.log('Metoda .race'); //  tutaj uruchominie odbedziesie jak zwroci sie pierwszy najszybciej wykonany promise, czyli w konsoli pojawisie napis juz po 1 sekundzie. Ta metoda nie czeka na wykonania innych promisow, tylko kto pierwszy ten wykonuje, potem kto drugi znowu wykonuje. 
+});
+
+
+//--------------------------------------------------------------------------------------------------
+
+// Lesson 56 - Fetch API - znajdujesie w srodku lesson 53, 54 w dolnej sekcji kodu, gdzie sa realizowane wyslania danych z formy na serwer za pomoca Fetch API.
+
+
+//--------------------------------------------------------------------------------------------------
 
 
 
