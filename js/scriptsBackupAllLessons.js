@@ -3502,6 +3502,98 @@ Promise.race([test(1000), test(2000)]).then(() => {
 
 //--------------------------------------------------------------------------------------------------
 
+// Lesson - 57. Методы перебора массивов (Metody iteracji po tablicy)
+
+// .forEach((argument_jesli_trzeba) => {}) - metod przejscia(iteracji) po kazdym elmencie w tablicy []. (Lesson 21). PAMIĘTAC: ten metod nigdy nie zwraca nowej tablicy, poprostu przechodzi po elementam w tablicy i wyswietla ich np. w konsoli na stronie, zalezy od callback funkcji w srodku
+// .map() - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+// .filter() - // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+// .reduce() - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+// every/some - dwie metody ktore zwracaja boolingowe znaczenie true or false (przyklady nizej)
+
+// Object.entries() - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
 
 
+// te metody przydatne kiedy my od serwera dostajemy jakies dane i mamy po nich sie przejsc zeby odebrac potrzebne nam elementy z tablicy. 
+
+// --- .filter() - bedzie filtorowac elementy w srodku tablicy i zwraca nowa tablice po wykoraniu
+const names = ['Ivan', 'Ann', 'Ksenia', 'Voldemart'];
+
+const shortNames = names.filter(function(name) {
+    return name.length < 5;
+});
+
+console.log(shortNames); // Wynik: [ 'Ivan', 'Ann' ]
+// ---
+
+
+// --- .map() - pozwala transformowac kazdy element tablicyw srodku i zwraca nowa tablice po wykoraniu. czesto wykorzystywana w bibliotece React zeby transformowac dane ktore dostalismy z serwera. 
+let answers = ['IvAn', 'AnnA', 'Hello']; // zeby nie tworzyc caly czas nowa zmienne, zamieniamy const na let zeby moc przepisac znaczenia zmiennej po wykonaniu metody nad tablica. 
+// WAZNE: najlepiej takiego nie robic, zeby zachowac tak zwanna Niezmienność (иммутабельность, immutability) Poniewaz domyslne dane nie powinne sie przepisywac na nowe w jednej zmiennej, dlatego lepiej tworzyc nowa zmienna w ktora bedziemy pomieszczac nowe zmienione dane. Jak wyzej z metoda .filter(). Ten przyklad tylko dla pokazania ze jest taka mozliwosc w JS.
+
+// zapis w wersji skroconej z callback funkcja
+answers = answers.map(item => item.toLowerCase()); // przepisujemy znaczenie zmiennej  answers i pomieszczmay tam nowe otrzymane znaczenie z dzialania. Czyli przeksztawcilismy nazwy w maly register.  
+
+// ten sam zapis co wyzej tylko w wersji domyslnej funkcji 
+// answers = answers.map(item => {
+//     return item.toLowerCase();
+// });
+
+console.log(result);
+// ---
+
+
+// --- every/some - dwie metody ktore zwracaja boolingowe znaczenie true or false
+// .some((argument_jesli_trzeba) => {}) - zwraca true jesli chociazby jeden element ma to czego oczekujemy
+// .every((argument_jesli_trzeba) => {}) - zwraca true jesli kazdy z elemntow ma to czego oczekujemy
+
+const some = [4, 'qwq', 'kdsjfsdf']; 
+console.log(some.some(item => typeof(item) === 'number')); // sprawdamy czy jest chociazby jedna liczba w tablicy. Wynik: true
+console.log(some.every(item => typeof(item) === 'number')); // sprawdzamy czy wszystkie elemnty w tablicy sa liczbami. Wynik: false
+// ---
+
+
+// --- .reduce((argument_jesli_trzeba) => {}) - metoda sluzy do skladania tablicy w jedna calosc. W duzej mierze stosowany jest dla danych liczbowych. Przechodzi po kazdemu elemntowi w tablicy. Jak inne metody nad tablicamy rowniez zwraca nowa tablice z wynik po wykonaniu. 
+
+const arrNum = [4, 5, 1, 3, 2, 6];
+
+const res = arrNum.reduce((sum, current) => sum + current, 3); // Callback funkcja przyjmuje dwa argumenty. sum - bedzie zaczynac sie od 0 - jesli nie zadany drugi argument w reduce, jesli jest zadany jak w naszym przypdku to zaczynac sie bedzie od 3 - argument sum bedzie sie przepisywac za kazdym razem po wykonaniu callback funkcji. Argument current - bedzie to kazdy osobny element ktory przychodzi z tablicy. Czyli funkcja sie wykona tyle razy ile jest elemntow w tablicy. A znaczy start od 3(w tym przypadku) potem w current trafia 4, dalej funkcja zsumuje te argumenty i zwracajac 7 przepisze argument sum na wynik dzialania funkcji, czyli z 3 na 7. Za drugim razem dzilania reduce w current trwafia drugi element z tablicy  ze znaczeniem 5, funkcja doda to do 7 i zwroci juz 14 ktora przepisze w sum z 7 na 14 itd az do wyniku. 
+console.log(res); // Wynik: 24,  jesli usunac drugi argumentu w reduce - 3, wynik bedzie 21
+
+
+const arrStr = ['apple', 'pear', 'plum'];
+
+const resTwo = arrStr.reduce((sum, current) => `${sum}, ${current}`); // zlozymy tablice z formatem string. Dzialania bedzie tak jak wyzej opisane. Kazdy string bedzie dodawany do poprzedniego wyniku. 
+console.log(resTwo); // Wynik: apple, pear, plum
+// ---
+
+
+// PRZYKLAD DZIALANIA Z DANYMI KTORE SA W OBJEKCIE ktore naprzyklad dostalismy od serwera
+// zadanie przeksztawcic objekt {} w tablice []. Dostac tylko 'persone', a potem ich imiona.
+const obj = {
+    ivan: 'persone',
+    ann: 'persone',
+    dog: 'animal',
+    cat: 'animal'
+};
+
+// dzilanie z objektem
+// Object.entries(nazwa_zmiennej_w_ktorej_pomieszczony_objekt) - metoda pozwalajaca przeksztawcic objekt w tablice
+const newArr = Object.entries(obj) // przeksztawcony objekt w tablice zapisujemy do nowej zmiennej
+// Wyglid po przeksztawceniu:
+/* [
+    [ 'ivan', 'persone' ],
+    [ 'ann', 'persone' ],
+    [ 'dog', 'animal' ],
+    [ 'cat', 'animal' ]
+] */
+// dalej korzystamy z tak zwanego channing - czyli zapisanie nastepnych dzialan nad elementem w kolejke przez kropke. Jak w Promisach.
+.filter(item => item[1] === 'persone') // filtrujemy i pobieramy tylko te tablice w ktorych 2 elementem bedzie znaczenie 'persone'. Item jest kazdym odzielna tablica [], a w srodku funkcji item[1] porowna drogi element w danej tablicy do potrzebnego nam znaczenia. Wynik: [[ 'ivan', 'persone' ], [ 'ann', 'persone' ]] - Glowna tablica z wlozonymi tablicami
+.map(item => item[0]); // dalej zeby dostac imiona z tablic, musimy przeksztawcic glowna tablice za popmoca metody do przeksztawcenia .map() i w srodku z wlozonych dwoch tablic zabrac 1 znaczenia, czyli imiona. Metoda na koncu zwroci wynik z nowa tablica. Wynik: ['ivan', 'ann']. 
+
+console.log(newArr);
+
+
+
+
+//--------------------------------------------------------------------------------------------------
 
