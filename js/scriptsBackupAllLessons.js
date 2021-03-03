@@ -3596,4 +3596,66 @@ console.log(newArr);
 
 
 //--------------------------------------------------------------------------------------------------
+   // Lesson - 58. Подробно про npm и проект. JSON-server
+    // Czesc Projektu - Food
+
+    // JSON server dokumentacja na github- https://github.com/typicode/json-server
+
+    // NPM package - pakiet npm, sa to kawawki jakiegos kodu rozmieszczonych na roznych serwerach ktore morzemy zainstalowac i wykorzystac dla swojego projektu. Popularne pakiety GULP, browser-sync oraz inne. Morzemy ich wziac funkcjonalnosci tych pakietow i zainstalowac dla swojego projektu. 
+
+    // Pakiety npm czesto powiazane miedzy soba, zeby funkcjonalnosc ich byla duza podzielone one na mniejsze pakiety w srodku duzego pakietu
+
+    // POCZATEK 
+    // Konfiguracja NPM pakieta
+    // wchodzimy w glowny katalog projektu dla jakiego chcemy zainstalowac npm pakiet. w naszym przypadku /lesson_38/Food
+
+    // npm init - inicjalizacja npm (poczatek roboty, od tego zaczynac jesli chcemy zainstalowac pakiet)
+    // odpowiadamy na pytania: nazwa pakiety dla naszego projektu (np. zadamy food), dalej morzemy nic nie wpisywac w: version, description, entry point (glowny plik projektu), test comand,  git reposytory(morzemy podac link do repozytorium projektu, a moremy nie podawac), keywords(slowa kluczowe ktore opisuja nasz projekt), author, licence
+    // Potwierdzamy i ma sie pojawic plik w projekcie z nazwa: package.json - w ktorym beda zapisane wszystkie nasze ustawienia dla projektu, a takze bedzie zawieral (po dalszej instalacji) wszystkie wykorzystane pakiety npm dla danego projektu, ich wersje itd.
+
+    // INSTALACJA NPM pakieta
+    // pakiety mozna instalowac lokalnie a mozna globalnie
+    // zazwyczaj dla projektu instalujemy lokalnie zeby:
+    // 1) bylo informacja powiazana z konkretnym pakietom i  jego konkretna wersja 
+    // 2) inna osoba ktora pobierze nasz projekt bedzie na 100% wiedziec z pliku package.json, ktore pakiety ma pobrac na swoj komp i w jakiej wersji rzeby wszystko dzilalo dla danego projektu
+    // jesli globalnie - to pakiet bedzie dzialal w calym systemie nie zaleznie czy byl instalowany w innym projekcie czy nie, zawsze do niego mozna sie podlaczyc
+    // podczas instalacji pakieta musimy na koncu komendy podac flage, co bedzie oznaczac czy pakiet bedzie wykorzystywany dla DZIALANIA PROJEKTU (np. JQuary, React inne): --save, Czy tylko dla TWORZENIA PROJEKTU (np. symulacja backendu json-server): --save-dev
+
+    // komenda dla lokalnej instalacji: npm i nazwa_pakietu lokalna_sciezka
+    // komenda dla globalnej instalacji: npm i nazwa_pakietu lokalna_sciezka -g
+
+    // Instalacja json-server dla symulacji beckednu, dla testowania naszych funkcji  projekcie
+    // JSON-server bedzie dodawac 
+    // npm install (lub i) json-server --save-dev
+
+    // zostana zainstalowane pakiety i stworzony folder node_modules - ktora ma wszystkie pakiety w srodku, ktore polaczone miedzy soba, dlatego tam nigdy nic nie zmieniamy. Recznie tez nie usuwamy tego folderu, a korzystamy z komendy. A najwazniejsze jest to, ze zainstalowac folder node_modules mozna jedna komenda (npm i) np. w sytuacji kiedy dzialamy nad projektem z innego komputera i do pobranego projektu mamy podciagnac wszystkie wykorzystywane npm pakiety ktore mozna bedzie sciagnac majac tylko plik w projekcie: package.json gdzie sa zapisane wykorzystywane pakiety. Wszystko zainstaluje sie automatycznie po wpisaniu komendy: npm i
+
+    // Dodajemy folder node_modules do .gitignore, zeby nie wysylac ciezki folder na gita.
+
+    // plik package-lock.json - jest plikiem gdzie zapisane wszystkie polaczenia modulow miedzy soba.
+
+    // JSON-SERVER - jest prostym serwerem dla pracy z plikami .json ktora my bedziemy wykorzystywac jak malo baze danych. Tutaj beda dzilac wiekszoc metod: GET i POST oraz inne.
+
+    // do projektu dodajemy plik db.json z ktorym bedziemy dzialac
+
+    
+    // za pomoca fetch API pobierzemy nasza baze danych db.json i wyswietlimy ja w consoli
+    /* fetch('db.json')
+        .then(data => data.json())
+        .then(res => console.log(res)); // Wyswitli sie Object ktory bedzie zawieral tablice Array z objektami danych z naszej bazy
+    */
+
+
+    // Zeby uruchomic JSON-server:
+    // npx json-server db.json  (dla Windows)
+
+    // teraz jak juz mamy uruchomiony to powyzszy kod fetch zamieniamy na inny:
+    fetch('http://localhost:3000/menu') // zamieniamy na link wygenrowany w terminalu po uruchomieniu json-server
+    .then(data => data.json())
+    .then(res => console.log(res)); 
+
+
+
+
+//--------------------------------------------------------------------------------------------------
 

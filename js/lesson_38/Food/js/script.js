@@ -555,7 +555,7 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
     // Lesson - 58. Подробно про npm и проект. JSON-server
     // Czesc Projektu - Food
 
-    // JSON server - https://github.com/typicode/json-server
+    // JSON server dokumentacja na github- https://github.com/typicode/json-server
 
     // NPM package - pakiet npm, sa to kawawki jakiegos kodu rozmieszczonych na roznych serwerach ktore morzemy zainstalowac i wykorzystac dla swojego projektu. Popularne pakiety GULP, browser-sync oraz inne. Morzemy ich wziac funkcjonalnosci tych pakietow i zainstalowac dla swojego projektu. 
 
@@ -594,9 +594,23 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
 
     // do projektu dodajemy plik db.json z ktorym bedziemy dzialac
 
-    fetch('db.json')
+    
+    // za pomoca fetch API pobierzemy nasza baze danych db.json i wyswietlimy ja w consoli
+    /* fetch('db.json')
         .then(data => data.json())
-        .then(res => console.log(res));
+        .then(res => console.log(res)); // Wyswitli sie Object ktory bedzie zawieral tablice Array z objektami danych z naszej bazy
+    */
+
+
+    // Zeby uruchomic JSON-server:
+    // npx json-server db.json  (dla Windows)
+
+    // teraz jak juz mamy uruchomiony to powyzszy kod fetch zamieniamy na inny:
+    fetch('http://localhost:3000/menu') // zamieniamy na link wygenrowany w terminalu po uruchomieniu json-server
+    .then(data => data.json())
+    .then(res => console.log(res)); 
+
+
 
 
 
