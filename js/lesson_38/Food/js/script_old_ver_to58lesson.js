@@ -355,29 +355,14 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
         failure: 'Cos poszlo nie tak'
     }
 
-
-    // Powiazania pobranych form ze strony pod funkcje bindPostData()
-    forms.forEach(item => { // przechodzmy po objektu za pomoca callback funkcji i w item zapisujemy forme ktora przekazemy do funkcji bindPostDate()
-        bindPostData(item); // klucze przekazujemy do funkcji jako zmieniajacy sie argument
+    // Powiazania pobranych form ze strony pod funkcje postData()
+    forms.forEach(item => { // przechodzmy po objektu za pomoca callback funkcji i w item zapisujemy forme ktora przekazemy do funkcji postDate()
+        postData(item); // klucze przekazujemy do funkcji jako zmieniajacy sie argument
     });
-
-    // LESSON 59 - Получение данных с сервера. Async/Await (ES8)
-    const postData = async (url, data) => { // function expresion - nazwa funkcji w JS
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: data
-        });
-
-        return res.json();
-    };
-    // KONIEC LESSON 59 (nizej w kodzie takze wylowujemy funkcje postData() przekazujac argumenty)
 
     // --- BLOK REALIZACJI FUNKCJALNOSCI W PROJEKCIE ---
     // Tworzymy funkcje ktora bedzie zbierac dane z formy i wysywac na serwere metoda POST
-    function bindPostData(form) { // przejmujemy argument z powyzszej callback funkcji 
+    function postData(form) { // przejmujemy argument z powyzszej callback funkcji 
         
         // --- blok kodu odpowiadajacy za zbieranie danych z formy---
         form.addEventListener('submit', (e) => { // ustawiamy sledzenia formy ktura przekazalismy jako argument do funkcji, Wlasciwosc: submit - bedzie wylowana w momencie klikniecia na przycisk wyslania formy
@@ -502,17 +487,13 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
             });
 
             // Fetch Api zamiast starej wersji rzadania XMLHttpRequest
-            /* fetch('server.php', {
+            fetch('server.php', {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(object)
-            }) */
-
-            // (odnoszenia do lesson 59), przerabiania na JSON za pomoca Fetch API ktorego przenieślimy w srodek funkcji postData z wykorzystaniemiem async,await - a tutaj wylolujemy ta funkcje przekazujac argumenty
-            postData('http://localhost:3000/requests', JSON.stringify(object)) // (url do pliku z backendem(pobrany z json-server z konsoli po uruchomieniu z baza danych db.json dla projektu), przeksztawcenie objektu w json dla wyslania na serwer)
-            // Z postDate nam zwroci sie Promise dlatego nizej wykorzystujemy theny do dzialania z danymi dalej
+            })
             // --- KONIEC przekstawcania danych w JSON
 
             // --- BLOK LANCUCHA PROMISE ---
@@ -535,7 +516,7 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
         }); // koniec sledzenie 'submit'
  
 
-    } // koniec funkcji bindPostData()
+    } // koniec funkcji postData()
 
 
     // Funkcjonal dodatkowy(lesson 54): Funkcja odpowiadajaca za Wyswietlania wiadomosci 
@@ -613,7 +594,7 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
 
     // do projektu dodajemy plik db.json z ktorym bedziemy dzialac
 
-
+    
     // za pomoca fetch API pobierzemy nasza baze danych db.json i wyswietlimy ja w consoli
     /* fetch('db.json')
         .then(data => data.json())
