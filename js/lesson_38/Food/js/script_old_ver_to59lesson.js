@@ -310,27 +310,16 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
         
     };
  
-    /* // czesc kodu z lesson 59
     getResource('http://localhost:3000/menu') // wylowania funkcji i przekazania url do bazy z objektem menu (url jest brany z konsoli, ktory jest wyswietlany po uruchomieniU json-server i bazy projektu db.json)
         .then(data => { // zwrot promisa ktory dostalismy po dzilaniu funkcji zapisujemy w argument data
             // przechodzimy po objektu i za pomoca destruktyryzacji {} wyciagamy wszystkie klucze z objektu przekazujac ich w callback funkcji jako argumenty
             data.forEach(({img, altimg, title, descr, price}) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render(); // pobrane argumenty przekazujemy do objektu MenuCard ktory bedzie renderowany na stronie, za pomoca naszej funkcji render()
             });
-        });  */
-
-        // Lesson 60 - biblioteka axios, teraz korzystamy z niej zamiast Fetch APi, i dostajemy taki sam rezultat przy miejszym kodzie porownujac do tego co wyzej.
-        axios.get('http://localhost:3000/menu')
-            // .then(data => console.log(data)); sprawdzamy czy udalo sie polaczyc z axios i co dostaniemy 
-            .then(data => { // pobrane dane z linku zapisujemy w argument callback funkcji
-                // pierwsza data jest naszym argument, druga data jest mentoda (w dokumentacji Axios rozdzial Response schema) dla wyciagniecia danych (odpowiedzi z serwera) z naszego argumentu.
-                data.data.forEach(({img, altimg, title, descr, price}) => {
-                    new MenuCard(img, altimg, title, descr, price, '.menu .container').render(); // pobrane argumenty przekazujemy do objektu MenuCard ktory bedzie renderowany na stronie, za pomoca naszej funkcji render()
-                });
-            });
+        }); 
 
     /* 
-    // To same co wyzej, stworzy kartki menu tylko jest to sposob jesli trzeba stworzyc jeden raz pojedyncze elementy odrazu na stronie (lesson 59 - (5min przed koncem filmiku)) 
+    // To same co wyzej, storzy kartki menu tylko jest to sposob jesli trzeba stworzyc jeden raz pojedyncze elementy odrazu na stronie (lesson 59 - (5min przed koncem filmiku)) 
 
     getResource('http://localhost:3000/menu')
     .then(data => createCard(data));
@@ -704,8 +693,8 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
 
     // teraz jak juz mamy uruchomiony to powyzszy kod fetch zamieniamy na inny:
     fetch('http://localhost:3000/menu') // zamieniamy na link wygenrowany w terminalu po uruchomieniu json-server
-        .then(data => data.json())
-        .then(res => console.log(res)); 
+    .then(data => data.json())
+    .then(res => console.log(res)); 
 
     
     
@@ -717,92 +706,6 @@ calcOrDouble(3); // przekazujemy tylko jeden argument, a drugi jesli nie przekaz
     // kod z tej leksji jest umieszczony wyzej w roznych czesciach projektu i podpisany lesson 59
 
     
-    
-    //--------------------------------------------------------------------------------------------------
-    // Lesson - 60. Дополнительно: Что такое библиотеки. Библиотека axios
-
-    // Создаем свою мини-библиотеку в ООП стиле | Javascript, LocalStorage - https://www.youtube.com/watch?v=5w5hmUgrTFo
-
-    // Biblioteka Axios - https://github.com/axios/axios
-    // Strona linkow i wersji do CDN bibliotek - CDNJS - https://cdnjs.com/
-
-    // Biblioteka - jest to zbiur gotowych rozwiazan dla konkretnych problem. Morzemy wziac rozwiazanie i wykorzystac w naszym projekcie.
-
-    // Axios - jest biblioteka w JS do dzialania z serwerem. Rzadania, otrzymania elemntow GET, wysywania POST oraz inne. 
-    // w projekcie Food my sami pisalismy sprawdzenie na blad, konwertacja w json format dla Fetch Api, a biblioteka juz zawiera w sworku te wszystkie sprawdzenia.  
-
-    // CDN - jest to miejsce w internecie (serwer) gdzie sa umieszczone gotowe pliki bibliotek i my morzemy podlaczyc te pliki przez link do naszego projektu.
-    // CDNJS.com  - https://cdnjs.com/ - jest to strona gdzie mozna wybrac rozne pliki bibliotek w roznych wersjach dla podlaczenia do swojego projektu
-    // PAMIENTAC: CDN biblioteki zawsze wstawiac w projekt przed glownym skryptem, zeby on najpierw sie zaladowaw a tylko potem mozna bylo jego wykorzystac w glownym pliku script.js 
-    
-    // 1. Dodajemy CDN link do biblioteki Axios w glownym pliku index.html 
-
-    // kod szukac wyzej podpisany lesson 60
-
-
-
-    //--------------------------------------------------------------------------------------------------
-    // Lesson 61 - tworzymy Slider, wariant 1 (prostszy)
-
-    const slides = document.querySelectorAll('.offer__slide'), // dostajemy bloki w ktorych zawarte zdjecia dla slidera
-          prev = document.querySelector('.offer__slider-prev'), // przycisk w lewo
-          next = document.querySelector('.offer__slider-next'), // przycisk w prawo
-          total = document.querySelector('#total'), // indeks odpowiedzialny za wyswietlenia zawartej ilosci sliderow na stronie 
-          current = document.querySelector('#current'); // indeks wyswietlenia liczby konkretnego slidera pod czas przeloczenia
-    let slideIndex = 1; // zmienna indeksu zaczyna od 1
-
-    showSlides(slideIndex); // wylowania ponizszej funkcji z usaawieniem indeksu na 1, zeby w momencie jak strona bedzie sie ladowac to slider bedzie wyswietlaw pierwszy element. Bez tego beda wyswietlany wszystkie zdjecia slidera jedne pod drugiem. 
-
-    // Dodajemy lub nie dodajemy 0 do liczb ktore wyswietlane jako podsumuwania wszystkich dodanych sliderow na stronie
-    if (slides.length < 10) { // dlugosc indeksow tablicy slides
-        total.textContent = `0${slides.length}`; // jesli mniej niz 10 to dodajemy 0 przed liczba
-    } else {
-        total.textContent = slides.length; // jesli wiecej niz 10 to ustaiwemy liczbe bez 0
-    }
-
-    // fiukcja odpowiedzialna za pokazania slidera
-    function showSlides(n) { // przyjmuje argument, liczbe slidow przekazana pod czas wylowania funkcji
-
-        // srawdzamy czy przekazany argument do funkcji jest wiekszy od dlugosci tablicy ze sliderami, jesli tak to ustawiamy slider na 1
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-
-        // jesli nie to ustawiamy liczbe ktora bedzie dlugosc tablicy ze sliderami, czyli 0
-        if (n < 1) {
-            slideIndex = slides.length;
-        }
-
-        slides.forEach(item => item.style.display = 'none'); // przechodzi po tablicy ze slidami i ustawia dla nich NIEWIDOSCONS
-
-        slides[slideIndex - 1].style.display = 'block'; // nastepnie dla jednego z ze sliderow ustawiamy WIDOCZNOSC
-
-        // Dodajemy lub nie 0(ZERO) przed liczbami ktore odpowiadaja za wyswietlenia konkretnego slidera pod czas przeloczenia. Jesli dojdzie za 10 to 0 juz nie bedzie wyswietlane, a tylko indeks z tablicy
-        if (slides.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
-    }
-
-    // funkcja dla stralek, zeby dodawac +1 indeks do liczby wyswietlanego slidera, tym samym przelaczac jego na inny
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    // Wieszamy sledzenie na przycisk w lewo
-    prev.addEventListener('click', () => {
-        plusSlides(-1); // przekazujemy -1 do funkcji, zeby Indeks byl odejmowany, bo + na - daje minus
-    });
-
-    // Wieszamy sledzenie na przycisk w prawo
-    next.addEventListener('click', () => {
-        plusSlides(1); // przekazujemy 1 do funkcji ktory bedzie zmienial o 1 indeksSlidera i przekazywal dalej do funkcji pokazywania slidera nastepnego o 1 slide.
-    });
-
-    
-
-
-
 
 }); // zamykania DOMContentLoaded()
+

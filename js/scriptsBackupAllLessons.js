@@ -3658,4 +3658,30 @@ console.log(newArr);
 
 
 //--------------------------------------------------------------------------------------------------
+// LESOON 59 (czesc projektu Food) - Получение данных с сервера. Async/Await (ES8)
+    // Пишем парсер на JavaScript | QA - https://www.youtube.com/watch?v=wPG7RgPzxmM
 
+    // kod z tej leksji jest umieszczony w roznych czesciach projektu i podpisany lesson 59 (szukac nie tutaj w a wprojekcie food)
+
+
+
+//--------------------------------------------------------------------------------------------------
+// Lesson - 60. Дополнительно: Что такое библиотеки. Библиотека axios
+
+    // Создаем свою мини-библиотеку в ООП стиле | Javascript, LocalStorage - https://www.youtube.com/watch?v=5w5hmUgrTFo
+
+    // Biblioteka Axios - https://github.com/axios/axios
+    // Strona linkow i wersji do CDN bibliotek - CDNJS - https://cdnjs.com/
+
+    // Biblioteka - jest to zbiur gotowych rozwiazan dla konkretnych problem. Morzemy wziac rozwiazanie i wykorzystac w naszym projekcie.
+
+    // Axios - jest biblioteka w JS do dzialania z serwerem. Rzadania, otrzymania elemntow GET, wysywania POST oraz inne. 
+    // w projekcie Food my sami pisalismy sprawdzenie na blad, konwertacja w json format dla Fetch Api, a biblioteka juz zawiera w sworku te wszystkie sprawdzenia.  
+
+    // CDN - jest to miejsce w internecie (serwer) gdzie sa umieszczone gotowe pliki bibliotek i my morzemy podlaczyc te pliki przez link do naszego projektu.
+    // CDNJS.com  - https://cdnjs.com/ - jest to strona gdzie mozna wybrac rozne pliki bibliotek w roznych wersjach dla podlaczenia do swojego projektu
+    // PAMIENTAC: CDN biblioteki zawsze wstawiac w projekt przed glownym skryptem, zeby on najpierw sie zaladowaw a tylko potem mozna bylo jego wykorzystac w glownym pliku script.js 
+    
+    // 1. Dodajemy CDN link do biblioteki Axios w glownym pliku index.html 
+    // kod z tej leksji jest umieszczony w roznych czesciach projektu i podpisany lesson 60 (szukac nie tutaj w a wprojekcie food)
+    
